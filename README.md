@@ -17,7 +17,22 @@ Hvordan varierer udbuddet og prisfastsættelsen af illegale fysiske produkter p�
 2. Hvilke lande anvendes hyppigst som afsendelses- og modtagerlande?
 3. Hvilke prisniveauer gælder for forskellige typer stoffer, og hvordan varierer disse med produktmængde og oprindelsesland?
 
----
+## ✅ User Stories
+
+1. **Som bruger** vil jeg kunne se et interaktivt verdenskort med handelsruter,  
+   så jeg kan forstå hvorfra og hvortil varer sendes.
+
+2. **Som samfundsinteresseret** vil jeg kunne se hvilke typer stoffer, der er mest udbredte,  
+   så jeg kan få overblik over darknet-handlens indhold.
+
+3. **Som journalist** vil jeg kunne se prisniveauer pr. land og kategori,  
+   så jeg kan analysere handelsmønstre.
+
+4. **Som studerende** vil jeg kunne filtrere data på produktkategori,  
+   så jeg kan fokusere på specifikke handelsområder.
+
+5. **Som bruger på mobil eller tablet** vil jeg have en responsiv visualisering,  
+   så jeg kan tilgå indholdet på alle enheder.
 
 ## 👥 Målgruppe
 Projektets primære målgruppe er samfundsinteresserede, journalister og undervisere med fokus på global handel, narkotikapolitik og cybersikkerhed. Visualiseringen skal give indsigt i den skjulte, digitale økonomi på darknet.

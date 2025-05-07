@@ -19,82 +19,70 @@ Hvordan varierer udbuddet og prisfastsættelsen af illegale fysiske produkter p�
 
 ## ✅ User Stories
 
-Brugerhistorie #1: Interaktivt verdenskort
-Opret interaktivt verdenskort med handelsruter
-Som en bruger
-Vil jeg gerne kunne se et interaktivt verdenskort med handelsruter
-Ved at visualisere datapunkter for afsender- og modtagerlande
-Fordi jeg vil forstå, hvorfra og hvortil varer sendes
+## 📍 Brugerhistorie #1: Interaktivt verdenskort
+**Som en** bruger  
+**Vil jeg gerne** kunne se et interaktivt verdenskort med handelsruter  
+**Ved at** visualisere datapunkter for afsender- og modtagerlande  
+**Fordi** jeg vil forstå, hvorfra og hvortil varer sendes  
 
-Acceptkriterier
+**✅ Acceptkriterier**
+- Verdenskort med markerede handelsruter
+- Ruter viser afsender- og modtagerland
+- Zoom og panorering muligt
+- Farvekoder for fx produktkategori eller volumen
 
-Der skal vises et verdenskort med markerede handelsruter
+---
 
-Hver rute skal indikere afsender- og modtagerland
+## 📊 Brugerhistorie #2: Udbredte produkter
+**Som en** samfundsinteresseret  
+**Vil jeg gerne** kunne se, hvilke typer stoffer der er mest udbredte  
+**Ved at** få vist en oversigt eller et diagram over produktkategorier  
+**Fordi** jeg vil have overblik over darknet-handlens indhold  
 
-Brugeren skal kunne zoome og panorere
+**✅ Acceptkriterier**
+- Diagram/liste over mest udbredte produktkategorier
+- Mulighed for sortering (antal, procent)
+- Interaktiv visualisering
 
-Ruter skal være farvekodet efter fx produktkategori eller volumen
+---
 
-Brugerhistorie #2: Udbredte produkter
-Vis mest udbredte produktkategorier
-Som en samfundsinteresseret
-Vil jeg gerne kunne se, hvilke typer stoffer der er mest udbredte
-Ved at få vist en oversigt eller et diagram over produktkategorier
-Fordi jeg vil have overblik over darknet-handlens indhold
+## 💰 Brugerhistorie #3: Prisniveauer
+**Som en** journalist  
+**Vil jeg gerne** kunne se prisniveauer pr. land og kategori  
+**Ved at** analysere priser ud fra datasættet  
+**Fordi** jeg vil analysere handelsmønstre  
 
-Acceptkriterier
+**✅ Acceptkriterier**
+- Tabel eller graf over prisniveauer (land + kategori)
+- Mulighed for at vælge specifikke lande/produkter
+- Pris pr. enhed og mængde vises klart
 
-Der skal vises en liste eller et diagram over de mest udbredte produktkategorier
+---
 
-Brugeren skal kunne sortere efter antal eller procentandel
+## 🧪 Brugerhistorie #4: Filtrering af data
+**Som en** studerende  
+**Vil jeg gerne** kunne filtrere data på produktkategori  
+**Ved at** bruge filtre eller dropdown-menu  
+**Fordi** jeg vil fokusere på specifikke handelsområder  
 
-Visualiseringen skal være interaktiv
+**✅ Acceptkriterier**
+- Filtrering på én eller flere produktkategorier
+- Visualisering opdateres dynamisk
+- Tydelig visning af aktive filtre
 
-Brugerhistorie #3: Prisniveauer
-Analysér prisniveauer på tværs af lande og kategorier
-Som en journalist
-Vil jeg gerne kunne se prisniveauer pr. land og kategori
-Ved at analysere priser ud fra datasættet
-Fordi jeg vil analysere handelsmønstre
+---
 
-Acceptkriterier
+## 📱 Brugerhistorie #5: Responsiv visualisering
+**Som en** bruger på mobil eller tablet  
+**Vil jeg gerne** have en responsiv visualisering  
+**Ved at** siden tilpasser sig min skærmstørrelse  
+**Fordi** jeg vil kunne tilgå indholdet på alle enheder  
 
-Der skal vises en tabel eller graf over priser fordelt på land og kategori
+**✅ Acceptkriterier**
+- Layout tilpasses automatisk til skærmstørrelse
+- Touch-elementer fungerer optimalt
+- Ingen information går tabt på mindre skærme
 
-Brugeren skal kunne vælge specifikke lande eller produkter
-
-Pris pr. enhed og pr. mængde skal være tydeligt angivet
-
-Brugerhistorie #4: Filtrering af data
-Filtrér data efter produktkategori
-Som en studerende
-Vil jeg gerne kunne filtrere data på produktkategori
-Ved at bruge et filter eller en dropdown-menu
-Fordi jeg vil fokusere på specifikke handelsområder
-
-Acceptkriterier
-
-Brugeren skal kunne vælge en eller flere produktkategorier
-
-Visualiseringerne skal opdatere dynamisk baseret på valgte filtre
-
-Det skal være tydeligt, hvilke filtre der er aktive
-
-Brugerhistorie #5: Responsiv visualisering
-Sørg for responsiv visualisering
-Som en bruger på mobil eller tablet
-Vil jeg gerne have en responsiv visualisering
-Ved at siden tilpasser sig min skærmstørrelse
-Fordi jeg vil kunne tilgå indholdet på alle enheder
-
-Acceptkriterier
-
-Visualiseringen skal tilpasse sig forskellige skærmstørrelser
-
-Interaktive elementer skal være tilgængelige på touch-enheder
-
-Ingen information må gå tabt på små skærme
 
 ## 👥 Målgruppe
 Projektets primære målgruppe er samfundsinteresserede, journalister og undervisere med fokus på global handel, narkotikapolitik og cybersikkerhed. Visualiseringen skal give indsigt i den skjulte, digitale økonomi på darknet.

@@ -86,13 +86,3 @@ Hvordan varierer udbuddet og prisfastsættelsen af illegale fysiske produkter p�
 
 ## Målgruppe
 Projektets primære målgruppe er samfundsinteresserede, journalister og undervisere med fokus på global handel, narkotikapolitik og cybersikkerhed. Visualiseringen skal give indsigt i den skjulte, digitale økonomi på darknet.
-
----
-
-## 🛠Teknologier og værktøjer
-- **Frontend**: HTML, CSS, JavaScript, D3.js
-- **Backend**: Node.js, Express.js
-- **Database**: PostgreSQL
-- **Visualisering**: D3.js (kort, grafer, interaktive elementer)
-- **Versionstyring**: Git & GitHub
-- **Hosting**: GitHub Pages (frontend), Render (backend)

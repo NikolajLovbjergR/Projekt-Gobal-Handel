@@ -25,7 +25,7 @@ Hvordan varierer udbuddet og prisfastsættelsen af illegale fysiske produkter p�
 **Ved at** visualisere datapunkter for afsender- og modtagerlande  
 **Fordi** jeg vil forstå, hvorfra og hvortil varer sendes  
 
-** Acceptkriterier**
+Acceptkriterier
 - Verdenskort med markerede handelsruter
 - Ruter viser afsender- og modtagerland
 - Zoom og panorering muligt
@@ -52,7 +52,7 @@ Hvordan varierer udbuddet og prisfastsættelsen af illegale fysiske produkter p�
 **Ved at** analysere priser ud fra datasættet  
 **Fordi** jeg vil analysere handelsmønstre  
 
-** Acceptkriterier**
+Acceptkriterier
 - Tabel eller graf over prisniveauer (land + kategori)
 - Mulighed for at vælge specifikke lande/produkter
 - Pris pr. enhed og mængde vises klart
@@ -65,7 +65,7 @@ Hvordan varierer udbuddet og prisfastsættelsen af illegale fysiske produkter p�
 **Ved at** bruge filtre eller dropdown-menu  
 **Fordi** jeg vil fokusere på specifikke handelsområder  
 
-** Acceptkriterier**
+Acceptkriterier
 - Filtrering på én eller flere produktkategorier
 - Visualisering opdateres dynamisk
 - Tydelig visning af aktive filtre
@@ -78,7 +78,7 @@ Hvordan varierer udbuddet og prisfastsættelsen af illegale fysiske produkter p�
 **Ved at** siden tilpasser sig min skærmstørrelse  
 **Fordi** jeg vil kunne tilgå indholdet på alle enheder  
 
-** Acceptkriterier**
+Acceptkriterier
 - Layout tilpasses automatisk til skærmstørrelse
 - Touch-elementer fungerer optimalt
 - Ingen information går tabt på mindre skærme

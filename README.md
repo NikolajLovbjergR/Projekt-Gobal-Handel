@@ -70,19 +70,6 @@ Acceptkriterier
 - Visualisering opdateres dynamisk
 - Tydelig visning af aktive filtre
 
----
-
-## Brugerhistorie #5: Responsiv visualisering
-**Som en** bruger på mobil eller tablet  
-**Vil jeg gerne** have en responsiv visualisering  
-**Ved at** siden tilpasser sig min skærmstørrelse  
-**Fordi** jeg vil kunne tilgå indholdet på alle enheder  
-
-Acceptkriterier
-- Layout tilpasses automatisk til skærmstørrelse
-- Touch-elementer fungerer optimalt
-- Ingen information går tabt på mindre skærme
-
 
 ## Målgruppe
 Projektets primære målgruppe er samfundsinteresserede, journalister og undervisere med fokus på global handel, narkotikapolitik og cybersikkerhed. Visualiseringen skal give indsigt i den skjulte, digitale økonomi på darknet.

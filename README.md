@@ -9,20 +9,21 @@ Projektet er udarbejdet som en del af 1. semesters tværfaglige eksamensprojekt 
 ---
 
 ## ❓ Problemformulering
-Hvordan har Danmarks handel med udlandet udviklet sig de seneste år, og hvilke lande og produkter dominerer henholdsvis import og eksport?
+Hvordan kan Danmarks vigtigste handelsrelationer og varekategorier visualiseres, så det bliver let at forstå, hvem vi handler mest med, hvad vi handler med – og hvordan det har udviklet sig fra 2018 til 2024?
 
 ---
 
 ## 🔍 Underspørgsmål
-- Hvilke lande er Danmarks vigtigste handelspartnere målt på import og eksport?
-- Hvilke produktkategorier udgør størstedelen af Danmarks eksport og import?
-- Hvilke ændringer ses i handelsmønstret efter 2020 i forbindelse med globale begivenheder?
+1. Hvordan fordeler Danmarks samlede import og eksport sig geografisk på de vigtigste handelspartnere?
+2. Hvilke lande importerer og eksporterer Danmark mest med hvert år?
+3. Hvilke varekategorier fylder mest i Danmarks import og eksport?
+4. Hvordan har Danmarks samlede udenrigshandel udviklet sig over tid, særligt i forbindelse med større begivenheder som covid-19 og krig?
 
 ---
 
 ## 🎯 Afgrænsning
 - **Tidsperiode:** 2018–2024 (hvis data er tilgængelige)  
-- **Fokus:** De 10 vigtigste lande for både import og eksport  
+- **Fokus:** De vigtigste lande for både import og eksport  
 - **Data:** Kun varehandel (ikke tjenesteydelser), og kun officielle handelsdata fra Danmarks Statistik
 
 ---
@@ -34,10 +35,10 @@ Samfundsinteresserede borgere, undervisere, gymnasieelever og studerende, der ø
 
 ## 🧩 User Stories
 
-### 🗺️ ID: 1 – Se handelsrelationer på verdenskort
+### 🗺️ User Story #1 – Se handelsrelationer på verdenskort
 **Som** bruger  
 **Ønsker jeg at** se hvilke lande Danmark handler mest med  
-**Ved at** interagere med et verdenskort, hvor linjer går fra Danmark til de 10 største handelspartnere  
+**Ved at** interagere med et verdenskort, hvor linjer går fra Danmark til de vigtigste handelspartnere  
 **Fordi** jeg gerne vil forstå Danmarks vigtigste eksport- og importforbindelser visuelt  
 
 **Acceptkriterier:**
@@ -49,7 +50,7 @@ Samfundsinteresserede borgere, undervisere, gymnasieelever og studerende, der ø
 
 ---
 
-### 📊 ID: 2 – Sammenlign handelspartnere i søjlediagram
+### 📊 User Story #2 – Sammenlign handelspartnere i søjlediagram
 **Som** bruger  
 **Ønsker jeg at** sammenligne Danmarks største import- og eksportlande  
 **Ved at** se to søjlediagrammer: ét for import og ét for eksport  
@@ -57,13 +58,13 @@ Samfundsinteresserede borgere, undervisere, gymnasieelever og studerende, der ø
 
 **Acceptkriterier:**
 - To bar charts: ét for eksport og ét for import
-- Viser top 5 lande med værdi og landnavn
+- Viser de vigtigste lande med værdi og landnavn
 - Brugeren kan vælge år
 - Diagrammer opdateres automatisk ved ændring af år
 
 ---
 
-### 🧱 ID: 3 – Visning af produktkategorier i treemap
+### 🧱 User Story #3 – Visning af produktkategorier i treemap
 **Som** bruger  
 **Ønsker jeg at** få overblik over hvilke typer varer Danmark handler mest med  
 **Ved at** se en treemap opdelt i produktkategorier for både import og eksport  
@@ -77,7 +78,7 @@ Samfundsinteresserede borgere, undervisere, gymnasieelever og studerende, der ø
 
 ---
 
-### 📈 ID: 4 – Tidslinje over udvikling i handel
+### 📈 User Story #4 – Tidslinje over udvikling i handel
 **Som** bruger  
 **Ønsker jeg at** følge hvordan Danmarks handel har udviklet sig over tid  
 **Ved at** bruge en interaktiv linjegraf med data fra 2018–2024  
@@ -93,11 +94,8 @@ Samfundsinteresserede borgere, undervisere, gymnasieelever og studerende, der ø
 ---
 
 ## 🗂️ Teknologier og værktøjer
-- HTML, CSS, JavaScript
-- D3.js (datavisualisering)
-- Node.js + Express (webserver)
-- PostgreSQL (database)
+- HTML, CSS, JavaScript  
+- D3.js (datavisualisering)  
+- Node.js + Express (webserver)  
+- PostgreSQL (database)  
 - GitHub Projects + Issues (projektstyring)
-
-
-

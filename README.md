@@ -21,8 +21,8 @@ Hvordan varierer udbuddet og prisfastsættelsen af illegale fysiske produkter p�
 
 ## Brugerhistorie #1: Interaktivt verdenskort
 **Som en** bruger  
-**Vil jeg gerne** kunne se et interaktivt verdenskort med handelsruter  
-**Ved at** visualisere datapunkter for afsender- og modtagerlande  
+**Vil jeg gerne** kunne interagere med et verdenskort med handelsruter  
+**Ved at** ved at hover over lande for at se oplysninger  
 **Fordi** jeg vil forstå, hvorfra og hvortil varer sendes  
 
 Acceptkriterier
@@ -30,32 +30,6 @@ Acceptkriterier
 - Ruter viser afsender- og modtagerland
 - Zoom og panorering muligt
 - Farvekoder for fx produktkategori eller volumen
-
----
-
-## Brugerhistorie #2: Udbredte produkter
-**Som en** samfundsinteresseret  
-**Vil jeg gerne** kunne se, hvilke typer stoffer der er mest udbredte  
-**Ved at** få vist en oversigt eller et diagram over produktkategorier  
-**Fordi** jeg vil have overblik over darknet-handlens indhold  
-
-** Acceptkriterier**
-- Diagram/liste over mest udbredte produktkategorier
-- Mulighed for sortering (antal, procent)
-- Interaktiv visualisering
-
----
-
-## Brugerhistorie #3: Prisniveauer
-**Som en** journalist  
-**Vil jeg gerne** kunne se prisniveauer pr. land og kategori  
-**Ved at** analysere priser ud fra datasættet  
-**Fordi** jeg vil analysere handelsmønstre  
-
-Acceptkriterier
-- Tabel eller graf over prisniveauer (land + kategori)
-- Mulighed for at vælge specifikke lande/produkter
-- Pris pr. enhed og mængde vises klart
 
 ---
 

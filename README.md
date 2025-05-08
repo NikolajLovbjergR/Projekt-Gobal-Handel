@@ -34,7 +34,7 @@ Samfundsinteresserede borgere, undervisere, gymnasieelever og studerende, der ø
 
 ## 🧩 User Stories
 
-### 🗺️ ID: 1 – Se handelsrelationer på verdenskort
+### 🗺️ User Stories #1 – Se handelsrelationer på verdenskort
 **Som** bruger  
 **Ønsker jeg at** se hvilke lande Danmark handler mest med  
 **Ved at** interagere med et verdenskort, hvor linjer går fra Danmark til de 10 største handelspartnere  
@@ -49,7 +49,7 @@ Samfundsinteresserede borgere, undervisere, gymnasieelever og studerende, der ø
 
 ---
 
-### 📊 ID: 2 – Sammenlign handelspartnere i søjlediagram
+### 📊 User Stories #2 – Sammenlign handelspartnere i søjlediagram
 **Som** bruger  
 **Ønsker jeg at** sammenligne Danmarks største import- og eksportlande  
 **Ved at** se to søjlediagrammer: ét for import og ét for eksport  
@@ -63,7 +63,7 @@ Samfundsinteresserede borgere, undervisere, gymnasieelever og studerende, der ø
 
 ---
 
-### 🧱 ID: 3 – Visning af produktkategorier i treemap
+### 🧱 User Stories #3 – Visning af produktkategorier i treemap
 **Som** bruger  
 **Ønsker jeg at** få overblik over hvilke typer varer Danmark handler mest med  
 **Ved at** se en treemap opdelt i produktkategorier for både import og eksport  

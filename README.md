@@ -22,14 +22,14 @@ Hvordan varierer udbuddet og prisfastsættelsen af illegale fysiske produkter p�
 ## Brugerhistorie #1: Interaktivt verdenskort
 **Som en** bruger  
 **Vil jeg gerne** kunne interagere med et verdenskort med handelsruter  
-**Ved at** ved at hover over lande for at se oplysninger  
+**Ved at** ved at hover over lande for at se relevante oplysninger  
 **Fordi** jeg vil forstå, hvorfra og hvortil varer sendes  
 
 Acceptkriterier
-- Verdenskort med markerede handelsruter
-- Ruter viser afsender- og modtagerland
-- Zoom og panorering muligt
-- Farvekoder for fx produktkategori eller volumen
+- Verdenskort med tydligt markerede handelsruter
+- Ruter skal vise både  afsender- og modtagerland
+- Bruger skal kunne Zoom og panorering frit rundt
+- Handelsruter skal være farvekodet fx efter produktkategori eller volumen
 
 ---
 

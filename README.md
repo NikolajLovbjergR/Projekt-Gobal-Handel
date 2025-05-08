@@ -77,7 +77,7 @@ Samfundsinteresserede borgere, undervisere, gymnasieelever og studerende, der ø
 
 ---
 
-### 📈 ID: 4 – Tidslinje over udvikling i handel
+### 📈 User Stories #4 – Tidslinje over udvikling i handel
 **Som** bruger  
 **Ønsker jeg at** følge hvordan Danmarks handel har udviklet sig over tid  
 **Ved at** bruge en interaktiv linjegraf med data fra 2018–2024  

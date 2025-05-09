@@ -4,75 +4,93 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 console.log('Connecting to database', process.env.PG_DATABASE);
+
 const db = new pg.Pool({
-    host:     process.env.PG_HOST,
-    port:     parseInt(process.env.PG_PORT),
-    database: process.env.PG_DATABASE,
-    user:     process.env.PG_USER,
-    password: process.env.PG_PASSWORD,
-    ssl:      { rejectUnauthorized: false },
+  host: process.env.PG_HOST,
+  port: parseInt(process.env.PG_PORT),
+  database: process.env.PG_DATABASE,
+  user: process.env.PG_USER,
+  password: process.env.PG_PASSWORD,
+  ssl: { rejectUnauthorized: false },
 });
-const dbResult = await db.query('select now()');
-console.log('Database connection established on', dbResult.rows[0].now);
 
+async function createTablesAndUploadData() {
+  const dbResult = await db.query('select now()');
+  console.log('Database connection established on', dbResult.rows[0].now);
 
-console.log('Recreating tables...');
-await db.query(`
-    drop table if exists land, tid, handelstype, varegruppe, måling;
-`); 
+  console.log('Dropping existing tables...');
+  await db.query(`
+    DROP TABLE IF EXISTS handle, samlede, eksport, import;
+  `);
 
-console.log('Tables recreated.');
+  console.log('Creating tables...');
+  await db.query(`
+    CREATE TABLE handle (
+      kvatal TEXT,
+      eksport NUMERIC,
+      import NUMERIC,
+      netto NUMERIC
+    );
+  `);
 
-console.log('Data inserted.')
-await db.query(`
-    create table land (
-    land_id      integer,
-    land_navn    text
-    )
-`);
+  await db.query(`
+    CREATE TABLE samlede (
+      land TEXT,
+      tid INTEGER,
+      import NUMERIC,
+      export NUMERIC
+    );
+  `);
 
-console.log('Data inserted.')
-await db.query(`
-    create table tid (
-    tid_id      integer,
-    år          integer,
-    kvatal      integer
-    )
-`);
+  await db.query(`
+    CREATE TABLE eksport (
+      eksport_id INTEGER,
+      land TEXT,
+      indhold NUMERIC,
+      sitc TEXT
+    );
+  `);
 
-console.log('Data inserted.')
-await db.query(`
-    create table handelstype (
-    handelstype_id      integer,
-    tid_id       integer,
-    land_id      integer,
-    varegruppe   integer,
-    handelstype  text,
-    værdi        decimal,
-    måling_id    integer
-    )
-`);
+  await db.query(`
+    CREATE TABLE import (
+      import_id INTEGER,
+      land TEXT,
+      sitc TEXT,
+      indhold NUMERIC
+    );
+  `);
 
-console.log('Data inserted.')
-await db.query(`
-    create table varegruppe (
-    varegruppe_id   integer,
-    sitc_kode       text
-    )
-`);
+  console.log('Uploading CSV files...');
 
-console.log('Data inserted.')
-await db.query(`
-    create table måling (
-    måling_id     integer,
-    navn          text,
-    enhed         text
-    )
-`);
-
-
-await upload(
+  await upload(
     db,
-    'db/danmark handle 2018-2025.csv',
-    'copy (album_id, title, artist_id, release_date, riaa_certificate) from stdin with csv header'
+    'db/Danmark handle 2018-2025.csv',
+    'COPY handle(kvatal, eksport, import, netto) FROM STDIN WITH CSV HEADER'
   );
+
+  await upload(
+    db,
+    'db/Danmarks samlede import og eksport.csv',
+    'COPY samlede(land, tid, import, export) FROM STDIN WITH CSV HEADER'
+  );
+
+  await upload(
+    db,
+    'db/Varegrupper - Eksport.csv',
+    'COPY eksport(eksport_id, land, indhold, sitc) FROM STDIN WITH CSV HEADER'
+  );
+
+  await upload(
+    db,
+    'db/Varegrupper - Import.csv',
+    'COPY import(import_id, land, sitc, indhold) FROM STDIN WITH CSV HEADER'
+  );
+
+  console.log('Alle CSV-data er nu indlæst.');
+  await db.end();
+}
+
+createTablesAndUploadData().catch((err) => {
+  console.error('Fejl under databaseopsætning:', err);
+  process.exit(1);
+});

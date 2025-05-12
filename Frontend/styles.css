@@ -17,3 +17,28 @@
     background-color: #28282B;
     margin: 25px 0;
   }
+
+.country {
+    fill: green;
+}
+
+.country:hover {
+    fill: red;
+}
+
+body { 
+    font-family: Arial, sans-serif; 
+    margin: 0;
+    padding: 100px 25px;
+}
+        
+.node { 
+    border: 1px solid #fff; 
+    text-align: center; 
+    overflow: hidden; 
+}
+        
+.node text { 
+    pointer-events: none; 
+    font-size: 12px; 
+}

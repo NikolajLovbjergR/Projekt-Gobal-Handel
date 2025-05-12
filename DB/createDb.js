@@ -51,46 +51,26 @@ async function createTablesAndUploadData() {
     );
   `);
 
-  await db.query(`
-    CREATE TABLE import (
-      import_id INTEGER,
-      land TEXT,
-      sitc TEXT,
-      indhold NUMERIC
-    );
-  `);
+console.log('Data inserted.')
+await db.query(`
+    create table varegruppe (
+    varegruppe_id   integer,
+    sitc_kode       text
+    )
+`);
 
-  console.log('Uploading CSV files...');
+console.log('Data inserted.')
+await db.query(`
+    create table måling (
+    måling_id     integer,
+    navn          text,
+    enhed         text
+    )
+`);
 
-  await upload(
-    db,
-    'db/Danmark handle 2018-2025.csv',
-    'COPY handle(kvatal, eksport, import, netto) FROM STDIN WITH CSV HEADER'
-  );
-
-  await upload(
-    db,
-    'db/Danmarks samlede import og eksport.csv',
-    'COPY samlede(land, tid, import, export) FROM STDIN WITH CSV HEADER'
-  );
 
   await upload(
     db,
-    'db/Varegrupper - Eksport.csv',
-    'COPY eksport(eksport_id, land, indhold, sitc) FROM STDIN WITH CSV HEADER'
+    'db/danmark handle 2018-2025.csv',
+    'copy (album_id, title, artist_id, release_date, riaa_certificate) from stdin with csv header'
   );
-
-  await upload(
-    db,
-    'db/Varegrupper - Import.csv',
-    'COPY import(import_id, land, sitc, indhold) FROM STDIN WITH CSV HEADER'
-  );
-
-  console.log('Alle CSV-data er nu indlæst.');
-  await db.end();
-}
-
-createTablesAndUploadData().catch((err) => {
-  console.error('Fejl under databaseopsætning:', err);
-  process.exit(1);
-});

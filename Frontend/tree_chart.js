@@ -19,6 +19,7 @@ var svg = d3.select("#treemap")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 var currentDataFile = '/DB/treemap_import.csv';
+var colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 
 // Funktion til at opdatere treemappet baseret på CSV-fil
 function updateTreemap(dataFile) {
@@ -59,7 +60,7 @@ function updateTreemap(dataFile) {
       .attr('width', function (d) { return d.x1 - d.x0; })
       .attr('height', function (d) { return d.y1 - d.y0; })
       .style("stroke", "black")
-      .style("fill", "#69b3a2");
+      .style("fill", function(d) { return colorScale(d.data.LAND); });
 
     svg.selectAll("text")
       .data(root.leaves())

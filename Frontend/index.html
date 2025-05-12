@@ -24,14 +24,23 @@
 </div>
 <div class="map-container">
 <!--Verdenskort-->
-<svg width="1350" height="750"></svg>
+<svg id="map-svg" width="1350" height="850"></svg>
 </div>
 <script type="module" src="/Frontend/map.js"></script>
 
 <h1>Tree map over DKs Import og Eksport</h1>
 <div id="treemap"></div>
+
+<h2>Import & Eksport pr. land</h2>
+
+<label for="yearSelect">Vælg år:</label>
+<select id="yearSelect"></select>
+
+<svg id="bar-svg" width="1000" height="500"></svg>
+
 <script type="module" src="/Frontend/map.js"></script>
 <script type="module" src="/Frontend/tree_chart.js"></script>
+<script type="module" src="/Frontend/BarChart.js"></script>
 
 </body>
 </html>

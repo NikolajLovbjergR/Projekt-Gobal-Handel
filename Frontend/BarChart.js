@@ -1,8 +1,10 @@
+import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
+
 const margin = { top: 40, right: 30, bottom: 50, left: 100 },
       width = 1000 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 
-const svg = d3.select("svg")
+const svg = d3.select("#bar-svg")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -20,7 +22,6 @@ const dropdown = d3.select("#yearSelect");
 // Tooltip container
 const tooltip = d3.select("body")
   .append("div")
-  .style("position", "absolute")
   .style("padding", "6px 10px")
   .style("background", "#ffffff")
   .style("border", "1px solid #ccc")

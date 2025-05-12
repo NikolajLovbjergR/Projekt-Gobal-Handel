@@ -1,0 +1,25 @@
+body {
+  font-family: sans-serif;
+  margin: 30px;
+}
+
+.bar {
+  fill-opacity: 0.7;
+}
+
+.import {
+  fill: #e74c3c; /* Rød */
+}
+
+.export {
+  fill: #2ecc71; /* Grøn */
+}
+
+.axis path, .axis line {
+  stroke: #000;
+}
+
+.label {
+  font-size: 12px;
+  text-anchor: middle;
+}

@@ -16,6 +16,7 @@
         .data(countries.features)
         .enter()
         .append('path')
+        .attr('class', 'country')
         .attr('d', pathGenerator)
         .attr('fill', '#f9f6ee')
         .attr('stroke', '#28282B');

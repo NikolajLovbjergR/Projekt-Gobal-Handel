@@ -57,6 +57,14 @@ header {
     margin: 25px 0;
   }
 
+.country {
+    fill: green;
+}
+
+.country:hover {
+    fill: red;
+}
+
 body { 
     font-family: Arial, sans-serif; 
     margin: 0;

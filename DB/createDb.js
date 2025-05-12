@@ -70,9 +70,18 @@ await db.query(`
     )
 `);
 
+console.log('Data inserted.')
+await db.query(`
+    create table kort_data (
+    land_navn     text,
+    latitude      float,
+    longitude     float
+    )
+`);
+
 
 await upload(
     db,
-    'db/danmark handle 2018-2025.csv',
-    'copy (album_id, title, artist_id, release_date, riaa_certificate) from stdin with csv header'
+    'DB/map_cord.csv',
+    'copy (land_navn, latitude, longitude) from stdin with csv header'
   );

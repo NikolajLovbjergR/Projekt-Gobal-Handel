@@ -40,11 +40,15 @@ header {
   color: #f9f6ee;
 }
 
+.map-container svg {
+    width: 1350px;
+    height: 750px;
+    background-color: #28282B;
+}
 
 .map-container {
   display: flex;
   justify-content: center;
-@@ -55,29 +16,4 @@ header {
   height: 850px;
   background-color: #28282B;
   margin: 25px 0;
@@ -74,4 +78,3 @@ body {
   pointer-events: none; 
   font-size: 12px; 
 } 
-}

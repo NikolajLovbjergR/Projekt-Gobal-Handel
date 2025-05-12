@@ -41,18 +41,20 @@ header {
 }
 
 .map-container svg {
-    width: 1350px;
-    height: 750px;
-    background-color: #28282B;
-}
-
+  height: 850px;
+  width: 1350px;
+  background-color: #28282B;
+  margin: 25px 0;
+    
+  }
 .map-container {
   display: flex;
   justify-content: center;
-  height: 850px;
+  align-items: center;
+  margin-top: 20px;
   background-color: #28282B;
-  margin: 25px 0;
-}
+  border-radius: 10px;
+  }
 
 .country {
   fill: green;

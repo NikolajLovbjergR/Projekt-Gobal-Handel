@@ -62,7 +62,7 @@ header {
 }
 
 .country:hover {
-    fill: red;
+    fill: rgb(50, 50, 50);
 }
 
 body { 

@@ -96,6 +96,7 @@ function updateTreemap(dataFile) {
       .attr("font-size", "12px")
       .attr("fill", "white");
 
+
   }).catch(function(error) {
     console.error("Fejl ved indlæsning af data:", error);
   });

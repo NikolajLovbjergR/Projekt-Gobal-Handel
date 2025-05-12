@@ -74,3 +74,4 @@ await db.query(`
     'db/danmark handle 2018-2025.csv',
     'copy (album_id, title, artist_id, release_date, riaa_certificate) from stdin with csv header'
   );
+};

@@ -1,74 +1,69 @@
-// Margener og størrelser
-const margin = { top: 40, right: 50, bottom: 50, left: 100 },
-      width = 900 - margin.left - margin.right,
-      height = 400 - margin.top - margin.bottom;
+const margin = { top: 40, right: 30, bottom: 50, left: 100 },
+      width = 1000 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
 
-// Opret SVG
 const svg = d3.select("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
   .append("g")
   .attr("transform", `translate(${margin.left},${margin.top})`);
 
-// Skalaer
 const x = d3.scaleLinear().range([0, width]);
 const y = d3.scaleBand().range([0, height]).padding(0.2);
 
-// Akse-grupper
-const xAxis = svg.append("g").attr("transform", `translate(0,${height})`);
+const xAxis = svg.append("g")
+  .attr("transform", `translate(0,${height})`);
 const yAxis = svg.append("g");
 
-// Dropdown
-const dropdown = d3.select("#landSelect");
+const dropdown = d3.select("#yearSelect");
 
-// Indlæs CSV-fil (vigtigt: korrekt navn!)
-d3.csv("BarChart.csv").then(data => {
-  // Find årstal
-  const years = [...new Set(data.map(d => d["År"]))].sort();
+// Tooltip container
+const tooltip = d3.select("body")
+  .append("div")
+  .style("position", "absolute")
+  .style("padding", "6px 10px")
+  .style("background", "#ffffff")
+  .style("border", "1px solid #ccc")
+  .style("border-radius", "4px")
+  .style("pointer-events", "none")
+  .style("box-shadow", "0px 2px 6px rgba(0,0,0,0.1)")
+  .style("font-size", "13px")
+  .style("color", "#333")
+  .style("opacity", 0);
 
-  // Find lande ud fra kolonnenavne
-  const lande = Object.keys(data[0])
-    .filter(k => k.startsWith("Import - "))
-    .map(k => k.replace("Import - ", ""));
+Promise.all([
+  d3.csv("/DB/BarChart_import.csv"),
+  d3.csv("/DB/BarChart_eksport.csv")
+]).then(([importData, eksportData]) => {
+  const years = [...new Set(importData.map(d => d["År"]))].sort();
 
-  // Tilføj dropdown-indstillinger (år + "Samlet")
   dropdown.selectAll("option")
-    .data([...years, "Samlet"])
+    .data(years)
     .enter()
     .append("option")
     .text(d => d);
 
-  // Funktion der strukturerer data
-  function getData(valgtÅr) {
-    return lande.map(land => {
-      let importSum = 0, exportSum = 0;
+  function update(year) {
+    const imp = importData.filter(d => d["År"] === year);
+    const exp = eksportData.filter(d => d["År"] === year);
 
-      const rows = (valgtÅr === "Samlet") ? data : data.filter(d => d["År"] === valgtÅr);
-
-      rows.forEach(row => {
-        importSum += +row[`Import - ${land}`];
-        exportSum += +row[`Eksport - ${land}`];
-      });
-
+    const data = imp.map(d => {
+      const match = exp.find(e => e.LAND === d.LAND);
       return {
-        land,
-        import: -importSum,  // venstre side
-        export: exportSum    // højre side
+        land: d.LAND,
+        import: -(+d.IMPORT),
+        export: match ? +match.EKSPORT : 0
       };
     });
-  }
 
-  // Opdater diagrammet
-  function update(valgtÅr) {
-    const bars = getData(valgtÅr);
-
-    const maxVal = d3.max(bars, d => Math.max(Math.abs(d.import), Math.abs(d.export)));
-
+    const maxVal = d3.max(data, d => Math.max(Math.abs(d.import), Math.abs(d.export)));
     x.domain([-maxVal, maxVal]);
-    y.domain(bars.map(d => d.land));
+    y.domain(data.map(d => d.land));
 
-    xAxis.call(d3.axisBottom(x));
-    yAxis.call(d3.axisLeft(y));
+    xAxis.transition().duration(500).call(d3.axisBottom(x));
+    yAxis.transition().duration(500).call(d3.axisLeft(y));
 
-    const groups = svg.selectAll(".barGroup").data(bars, d => d.land);
+    const groups = svg.selectAll(".barGroup").data(data, d => d.land);
 
     const newGroups = groups.enter()
       .append("g")
@@ -78,29 +73,54 @@ d3.csv("BarChart.csv").then(data => {
     newGroups.append("rect").attr("class", "bar import");
     newGroups.append("rect").attr("class", "bar export");
 
-    // IMPORT-bars
+    // IMPORT bars
     groups.merge(newGroups).select(".import")
       .transition().duration(500)
       .attr("x", d => x(d.import))
       .attr("width", d => x(0) - x(d.import))
-      .attr("height", y.bandwidth());
+      .attr("height", y.bandwidth())
+      .attr("fill", "#e74c3c");
 
-    // EKSPORT-bars
+    groups.merge(newGroups).select(".import")
+      .on("mouseover", (event, d) => {
+        tooltip.style("opacity", 1)
+               .html(`<strong>Import:</strong> ${Math.abs(d.import).toLocaleString()} kr`);
+      })
+      .on("mousemove", (event) => {
+        tooltip.style("left", (event.pageX + 10) + "px")
+               .style("top", (event.pageY - 28) + "px");
+      })
+      .on("mouseout", () => {
+        tooltip.style("opacity", 0);
+      });
+
+    // EKSPORT bars
     groups.merge(newGroups).select(".export")
       .transition().duration(500)
       .attr("x", x(0))
       .attr("width", d => x(d.export) - x(0))
-      .attr("height", y.bandwidth());
+      .attr("height", y.bandwidth())
+      .attr("fill", "#2ecc71");
 
-    // Fjern grupper der ikke længere bruges
+    groups.merge(newGroups).select(".export")
+      .on("mouseover", (event, d) => {
+        tooltip.style("opacity", 1)
+               .html(`<strong>Eksport:</strong> ${d.export.toLocaleString()} kr`);
+      })
+      .on("mousemove", (event) => {
+        tooltip.style("left", (event.pageX + 10) + "px")
+               .style("top", (event.pageY - 28) + "px");
+      })
+      .on("mouseout", () => {
+        tooltip.style("opacity", 0);
+      });
+
     groups.exit().remove();
   }
 
-  // Event: skift år
   dropdown.on("change", function () {
     update(this.value);
   });
 
-  // Startvisning med første år
   update(years[0]);
 });

@@ -1,19 +1,17 @@
-* {
-    background-color: #f9f6ee;
+body {
+  font-family: sans-serif;
+  margin: 30px;
 }
 
-.map-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    background-color: #28282B;
-    border-radius: 10px;
-  }
+.bar {
+  fill-opacity: 0.8;
+}
 
-.map-container svg {
-    width: 1350px;
-    height: 850px;
-    background-color: #28282B;
-    margin: 25px 0;
-  }
+.axis path, .axis line {
+  stroke: #000;
+}
+
+label {
+  font-size: 16px;
+  margin-right: 10px;
+}

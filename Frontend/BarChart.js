@@ -1,65 +1,64 @@
-// Opsætning af marginer og størrelser
+// Margener og størrelser
 const margin = { top: 40, right: 50, bottom: 50, left: 100 },
       width = 900 - margin.left - margin.right,
       height = 400 - margin.top - margin.bottom;
 
-// Opret SVG-container
+// Opret SVG
 const svg = d3.select("svg")
   .append("g")
   .attr("transform", `translate(${margin.left},${margin.top})`);
 
-// Skalaer og akser
+// Skalaer
 const x = d3.scaleLinear().range([0, width]);
 const y = d3.scaleBand().range([0, height]).padding(0.2);
 
+// Akse-grupper
 const xAxis = svg.append("g").attr("transform", `translate(0,${height})`);
 const yAxis = svg.append("g");
 
-// Dropdown-elementet
+// Dropdown
 const dropdown = d3.select("#landSelect");
 
-// Indlæs CSV
-d3.csv("Danmarks samlede import og eksport.csv").then(data => {
-  // Find alle år i datasættet
+// Indlæs CSV-fil (vigtigt: korrekt navn!)
+d3.csv("BarChart.csv").then(data => {
+  // Find årstal
   const years = [...new Set(data.map(d => d["År"]))].sort();
 
-  // Find alle lande baseret på kolonnenavne
+  // Find lande ud fra kolonnenavne
   const lande = Object.keys(data[0])
     .filter(k => k.startsWith("Import - "))
     .map(k => k.replace("Import - ", ""));
 
-  // Tilføj år + "Samlet" til dropdown
+  // Tilføj dropdown-indstillinger (år + "Samlet")
   dropdown.selectAll("option")
     .data([...years, "Samlet"])
     .enter()
     .append("option")
     .text(d => d);
 
-  // Funktion der samler og strukturerer data for valgt år/samlet
-  function getData(year) {
+  // Funktion der strukturerer data
+  function getData(valgtÅr) {
     return lande.map(land => {
       let importSum = 0, exportSum = 0;
 
-      const filtered = (year === "Samlet")
-        ? data
-        : data.filter(d => d["År"] === year);
+      const rows = (valgtÅr === "Samlet") ? data : data.filter(d => d["År"] === valgtÅr);
 
-      filtered.forEach(row => {
+      rows.forEach(row => {
         importSum += +row[`Import - ${land}`];
         exportSum += +row[`Eksport - ${land}`];
       });
 
       return {
         land,
-        import: -importSum,  // negativ til venstreside
-        export: exportSum    // positiv til højreside
+        import: -importSum,  // venstre side
+        export: exportSum    // højre side
       };
     });
   }
 
-  // Funktion der opdaterer visualiseringen
-  function update(year) {
-    const bars = getData(year);
+  // Opdater diagrammet
+  function update(valgtÅr) {
+    const bars = getData(valgtÅr);
 
     const maxVal = d3.max(bars, d => Math.max(Math.abs(d.import), Math.abs(d.export)));
 
@@ -67,7 +66,7 @@ d3.csv("Danmarks samlede import og eksport.csv").then(data => {
     y.domain(bars.map(d => d.land));
 
     xAxis.call(d3.axisBottom(x));
-    yAxis.call(d3.axisLeft(y).tickFormat(String));
+    yAxis.call(d3.axisLeft(y));
 
     const groups = svg.selectAll(".barGroup").data(bars, d => d.land);
 
@@ -79,14 +78,14 @@ d3.csv("Danmarks samlede import og eksport.csv").then(data => {
     newGroups.append("rect").attr("class", "bar import");
     newGroups.append("rect").attr("class", "bar export");
 
-    // Import-bars
+    // IMPORT-bars
     groups.merge(newGroups).select(".import")
       .transition().duration(500)
       .attr("x", d => x(d.import))
       .attr("width", d => x(0) - x(d.import))
       .attr("height", y.bandwidth());
 
-    // Eksport-bars
+    // EKSPORT-bars
     groups.merge(newGroups).select(".export")
       .transition().duration(500)
       .attr("x", x(0))
@@ -97,11 +96,11 @@ d3.csv("Danmarks samlede import og eksport.csv").then(data => {
     groups.exit().remove();
   }
 
-  // Lyt til dropdown-ændringer
+  // Event: skift år
   dropdown.on("change", function () {
     update(this.value);
   });
 
-  // Start med første år valgt
+  // Startvisning med første år
   update(years[0]);
 });

@@ -8,7 +8,9 @@ var margin = {top: 10, right: 10, bottom: 10, left: 10},
 var buttonContainer = d3.select("#treemap").append("div").attr("class", "button-container");
 buttonContainer.append("button")
   .attr("id", "toggleData")
-  .text("Vis Eksport");
+  .text("Vis Eksport")
+  .style("display","block")
+  .style("margin","0 auto");
 
 // Opret en SVG-container
 var svg = d3.select("#treemap")

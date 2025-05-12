@@ -2,6 +2,42 @@
     background-color: #f9f6ee;
 }
 
+li, a {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #28282B;
+    text-decoration: none;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li {
+    display: inline-block;
+}
+
+.nav-links li a {
+    transition: all 0.8 ease 0s;
+    padding: 9px 10px;
+}
+
+.nav-links li a:hover {
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(40, 40, 43, 1);
+    color: #f9f6ee;
+}
+
+
 .map-container {
     display: flex;
     justify-content: center;
@@ -17,3 +53,18 @@
     background-color: #28282B;
     margin: 25px 0;
   }
+
+body { 
+    font-family: Arial, sans-serif; 
+}
+        
+.node { 
+    border: 1px solid #fff; 
+    text-align: center; 
+    overflow: hidden; 
+}
+        
+.node text { 
+    pointer-events: none; 
+    font-size: 12px; 
+}

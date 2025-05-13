@@ -1,8 +1,8 @@
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 // Sæt dimensionerne og margenerne for grafen
 var margin = {top: 10, right: 10, bottom: 10, left: 10},
-  width = 1250 - margin.left - margin.right,
-  height = 600 - margin.top - margin.bottom;
+  width = 1350 - margin.left - margin.right,
+  height = 775 - margin.top - margin.bottom;
 
 // Tilføj en knap til at skifte data
 var buttonContainer = d3.select("#treemap").append("div").attr("class", "button-container");
@@ -21,6 +21,18 @@ var svg = d3.select("#treemap")
   .style("margin", "0 auto")
   .append("g")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  // Tooltip
+var tooltip = d3.select("body")
+  .append("div")
+  .attr("class", "tooltip")
+  .style("position", "absolute")
+  .style("background", "white")
+  .style("color", "black")
+  .style("padding", "5px")
+  .style("border-radius", "3px")
+  .style("pointer-events", "none")
+  
 
 var currentDataFile = '/DB/treemap_import.csv';
 var colorScale = d3.scaleOrdinal(d3.schemeCategory10);
@@ -64,7 +76,20 @@ function updateTreemap(dataFile) {
       .attr('width', function (d) { return d.x1 - d.x0; })
       .attr('height', function (d) { return d.y1 - d.y0; })
       .style("stroke", "black")
-      .style("fill", function(d) { return colorScale(d.data.LAND); });
+      .style("fill", function(d) { return colorScale(d.data.LAND); })
+      .on("click", function(event, d) {
+        tooltip.style("opacity", 1)
+               .html("Land: " + d.data.LAND)
+               .style("left", (event.pageX + 10) + "px")
+               .style("top", (event.pageY + 10) + "px");
+      })
+      .on("mousemove", function(event) {
+        tooltip.style("left", (event.pageX + 10) + "px")
+               .style("top", (event.pageY + 10) + "px");
+      })
+      .on("mouseout", function() {
+        tooltip.style("opacity", 0);
+      });
 
     svg.selectAll("text")
       .data(root.leaves())

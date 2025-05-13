@@ -30,7 +30,7 @@ const svg = d3.select('#map-svg');
 
 const projection = d3.geoMercator()
   .scale(250)
-  .translate([1350 / 2, 850 / 1.4]);
+  .translate([1350 / 2, 850 / 1.55]);
 
 const pathGenerator = d3.geoPath().projection(projection);
 

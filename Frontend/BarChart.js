@@ -130,12 +130,7 @@ Promise.all([
     groups.merge(newGroups).select(".export")
       .on("mouseover", (event, d) => {
         tooltip.style("opacity", 1)
-               .html(`<strong>Eksport:</strong> ${(d.export / 1_000_000).toLocaleString('da-DK', {
-  style: 'currency',
-  currency: 'millioner',
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2
-})} kr`);
+               .html(`<strong>Eksport:</strong> ${d.export.toLocaleString()} kr`);
       })
       .on("mousemove", (event) => {
         tooltip.style("left", (event.pageX + 10) + "px")

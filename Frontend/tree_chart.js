@@ -29,7 +29,7 @@ Promise.all([
   d3.csv('/DB/treemap_export.csv')
 ]).then(function([importData, exportData]) {
 
-  // Behandler importdata
+// Behandler importdata ved at tilføje parent og konvertere indhold til tal 
   importData.forEach(function(d) {
     d.parent = "root";
     d.value = +d.INDHOLD;
@@ -37,7 +37,7 @@ Promise.all([
     d.name = "Import";
   });
 
-  // Behandler eksportdata
+  // Behandler eksportdata ved at tilføje parent og konvertere indhold til tal
   exportData.forEach(function(d) {
     d.parent = "root";
     d.value = +d.INDHOLD;
@@ -45,7 +45,7 @@ Promise.all([
     d.name = "Eksport";
   });
 
-  // Samler data i én datastruktur
+  // Samler/kombiner data i en datastruktur
   var data = [...importData, ...exportData];
 
   // Tilføjer rodnode
@@ -145,8 +145,9 @@ svg.selectAll("rect")
       .text(function(d){ return 'Indhold: ' + d.data.INDHOLD })
       .attr("font-size", "12px")
       .attr("fill", "white");
-
+// Tilføjer tid tekst 
       svg.selectAll(".indhold")
+      // Binder data  til rektangler
       .data(root.leaves())
       .enter()
       .append("text")

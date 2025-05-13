@@ -24,17 +24,14 @@ const yAxis = svg.append("g");
 const dropdown = d3.select("#yearSelect");
 
 // Tooltip til mus-over
-const tooltip = d3.select("body")
+var tooltip = d3.select("body")
   .append("div")
-  .style("padding", "6px 10px")
-  .style("background", "#ffffff")
-  .style("border", "1px solid #ccc")
-  .style("border-radius", "4px")
-  .style("pointer-events", "none")
-  .style("box-shadow", "0px 2px 6px rgba(0,0,0,0.1)")
-  .style("font-size", "13px")
-  .style("color", "#333")
-  .style("opacity", 0);
+  .attr("class", "tooltip") //giver en class
+  .style("position", "absolute")
+  .style("background", "white")
+  .style("color", "black")
+  .style("padding", "5px")
+  .style("border-radius", "5px")
 
 // Læs data fra én CSV-fil
 d3.csv("/DB/BarChart.csv").then(data => {

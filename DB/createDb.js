@@ -26,7 +26,8 @@ async function createTablesAndUploadData() {
   console.log('Creating tables...');
   await db.query(`
     CREATE TABLE handel (
-      kvatal TEXT,
+      LineChart_id INTEGER,
+      tid TEXT,
       eksport NUMERIC,
       import NUMERIC,
       netto NUMERIC
@@ -63,8 +64,8 @@ async function createTablesAndUploadData() {
 
   await upload(
     db,
-    'DB/danmark handle 2018-2025.csv',
-    'copy handel (kvatal, eksport, import, netto) from stdin with csv header'
+    'DB/LineChart.csv',
+    'copy handel (id, tid, eksport, import, netto) from stdin with csv header'
   );
 
   await upload(

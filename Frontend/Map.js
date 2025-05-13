@@ -84,7 +84,7 @@ d3.json('https://unpkg.com/world-atlas@2.0.2/countries-110m.json').then(worldDat
       path
         .attr('stroke-dashoffset', totalLength) // Reset to fully hidden
         .transition() // Start a transition
-        .duration(1500) // Animation duration in milliseconds
+        .duration(800) // Animation duration in milliseconds
         .ease(d3.easeLinear) // Constant speed
         .attr('stroke-dashoffset', 0) // Draw the line by reducing dash offset to 0
         .on('end', () => {
@@ -92,9 +92,11 @@ d3.json('https://unpkg.com/world-atlas@2.0.2/countries-110m.json').then(worldDat
           setTimeout(() => {
             path.attr('stroke-dashoffset', totalLength); // Reset
             animate(); // Loop again
-          }, 2000);
+          }, 5000);
         });
     }
+
+    
 
     // Start the animation loop
     animate();

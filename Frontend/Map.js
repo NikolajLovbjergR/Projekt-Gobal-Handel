@@ -17,7 +17,7 @@ const pathGenerator = d3.geoPath().projection(projection);
 // Define a set of hardcoded geographic coordinates [longitude, latitude] for selected countries
 // These are the origin (Denmark) and targets for animated lines
 const locations = {
-  Denmark: [10.4515, 56.2639],               // Origin country
+  Denmark: [10.4515, 56.2639],// Origin country
   Germany: [10.4515, 51.1657],
   Sweden: [15.6435, 61.1282],
   China: [104.1954, 35.8617],
@@ -50,7 +50,8 @@ d3.json('https://unpkg.com/world-atlas@2.0.2/countries-110m.json').then(worldDat
 
   // Loop over each entry in the locations object to draw a line from Denmark to the target
   Object.entries(locations).forEach(([name, toGeo]) => {
-    if (name === 'Denmark') return; // Skip Denmark itself (no line to self)
+    if (name === 'Denmark') 
+      return; // Skip Denmark itself (no line to self)
 
     // Create a GeoJSON LineString object representing a line between Denmark and the target country
     const line = {

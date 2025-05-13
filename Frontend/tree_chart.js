@@ -9,7 +9,7 @@ var buttonContainer = d3.select("#treemap").append("div").attr("class", "button-
 buttonContainer.append("button")
   .attr("id", "toggleData")
   .text("Vis Eksport")
-  .style("display","block")
+  .style("display","block") //centrere knappen
   .style("margin","0 auto");
 
 // Opret en SVG-container
@@ -25,13 +25,14 @@ var svg = d3.select("#treemap")
   // Tooltip
 var tooltip = d3.select("body")
   .append("div")
-  .attr("class", "tooltip")
+  .attr("class", "tooltip") //giver en class
   .style("position", "absolute")
   .style("background", "white")
   .style("color", "black")
   .style("padding", "5px")
   .style("border-radius", "3px")
-  .style("pointer-events", "none")
+  .style("width","400px")
+  .style("height","100px")
   
 
 var currentDataFile = '/DB/treemap_import.csv';
@@ -39,6 +40,7 @@ var colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 
 // Funktion til at opdatere treemappet baseret på CSV-fil
 function updateTreemap(dataFile) {
+   // Indlæs CSV-filen
   d3.csv(dataFile).then(function(data) {
 
     // Sørg for at INDHOLD er numerisk
@@ -55,18 +57,19 @@ function updateTreemap(dataFile) {
       .parentId(function(d) { return d.parent; })
       (data);
 
-    // Skab et hierarki med summen af INDHOLD
+    // Beregn størrelse for hver node
     root.sum(function(d) { return d.INDHOLD; });
 
     // Anvend treemap layout
     d3.treemap()
-      .size([width, height])
-      .padding(4)
+      .size([width, height]) // Sæt størrelse på treemap
+      .padding(4) //afstand mellem rektanglerne 
       (root);
 
     svg.selectAll("rect").remove();
     svg.selectAll("text").remove();
 
+      // Tegn rektangler baseret på data
     svg.selectAll("rect")
       .data(root.leaves())
       .enter()
@@ -78,12 +81,14 @@ function updateTreemap(dataFile) {
       .style("stroke", "black")
       .style("fill", function(d) { return colorScale(d.data.LAND); })
       .on("click", function(event, d) {
+        // Vis tooltip ved klik
         tooltip.style("opacity", 1)
-               .html("Land: " + d.data.LAND)
-               .style("left", (event.pageX + 10) + "px")
-               .style("top", (event.pageY + 10) + "px");
+              .html("<p>Land: " + d.data.LAND + "</p><p>Indhold: " + d.data.INDHOLD + "</p>")
+              .style("left", (event.pageX + 10) + "px")
+              .style("top", (event.pageY + 10) + "px");
       })
-     
+
+       // Tilføj tekst til hvert rektangel
     svg.selectAll("text")
       .data(root.leaves())
       .enter()
@@ -122,8 +127,9 @@ function updateTreemap(dataFile) {
 
 updateTreemap(currentDataFile);
 
-
+// Event listener til knappen, der skifter data
 d3.select("#toggleData").on("click", function() {
+ // Skift mellem import og eksport data
   if (currentDataFile === '/DB/treemap_import.csv') {
     currentDataFile = '/DB/treemap_export.csv';
     d3.select("#toggleData").text("Vis Import");

@@ -130,7 +130,7 @@ Promise.all([
     groups.merge(newGroups).select(".export")
       .on("mouseover", (event, d) => {
         tooltip.style("opacity", 1)
-               .html(`<strong>Eksport:</strong> ${d.export.toLocaleString()} kr`);
+               .html(`<strong>Eksport:</strong> ${d.export.toLocaleString()} Millioner`);
       })
       .on("mousemove", (event) => {
         tooltip.style("left", (event.pageX + 10) + "px")

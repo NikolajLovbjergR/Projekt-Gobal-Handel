@@ -19,7 +19,7 @@ console.log('Database connection established on', dbResult.rows[0].now);
 console.log('Initialising webserver...');
 const port = 3001;
 const server = express();
-server.use(express.static('frontend'));
+server.use(express.static('Frontend'));
 server.get('/api/handel', onGetHandel);
 server.use(onEachRequest)
 

@@ -20,7 +20,7 @@ async function createTablesAndUploadData() {
 
   console.log('Dropping existing tables...');
   await db.query(`
-    DROP TABLE IF EXISTS handle, samlede, eksport, import;
+    DROP TABLE IF EXISTS handel, samlede, eksport, import;
   `);
 
   console.log('Creating tables...');
@@ -35,10 +35,11 @@ async function createTablesAndUploadData() {
 
   await db.query(`
     CREATE TABLE samlede (
+      id INTEGER,
       land TEXT,
       tid INTEGER,
       import NUMERIC,
-      export NUMERIC
+      eksport NUMERIC
     );
   `);
 
@@ -69,7 +70,7 @@ async function createTablesAndUploadData() {
   await upload(
     db,
     'DB/BarChart.csv',
-    'copy samlede (, land, indhold, sitc) from stdin with csv header'
+    'copy samlede (id, tid, land, import, eksport) from stdin with csv header'
   );
 
   await upload(
@@ -83,6 +84,5 @@ async function createTablesAndUploadData() {
     'DB/Varegrupper - Import.csv',
     'copy import (import_id, land, indhold, sitc) from stdin with csv header'
   );
-
 
 };

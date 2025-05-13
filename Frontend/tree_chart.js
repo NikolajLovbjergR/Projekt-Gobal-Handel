@@ -31,9 +31,7 @@ var tooltip = d3.select("body")
   .style("color", "black")
   .style("padding", "5px")
   .style("border-radius", "3px")
-  .style("width","400px")
-  .style("height","100px")
-  
+
 
 var currentDataFile = '/DB/treemap_import.csv';
 var colorScale = d3.scaleOrdinal(d3.schemeCategory10);

@@ -81,7 +81,7 @@ function updateTreemap(dataFile) {
       .on("click", function(event, d) {
         // Vis tooltip ved klik
         tooltip.style("opacity", 1)
-              .html("<p>Land: " + d.data.LAND + "</p><p>Indhold: " + d.data.INDHOLD * 1000 + "kr" + "</p>")
+              .html("<p>Land: " + d.data.LAND + "</p><p>Indhold: " + (d.data.INDHOLD * 1000).toLocaleString('da-DK') + " kr</p>")
               .style("left", (event.pageX + 10) + "px")
               .style("top", (event.pageY + 10) + "px");
       })
@@ -119,6 +119,18 @@ function updateTreemap(dataFile) {
       .text(function(d){ return 'SITC: ' + d.data.SITC })
       .attr("font-size", "12px")
       .attr("fill", "white");
+
+       svg.selectAll("text.tid")
+      .data(root.leaves())
+      .enter()
+      .append("text")
+      .attr("x", function(d){ return d.x0 + 10 })
+      .attr("y", function(d){ return d.y0 + 65 })
+      .text(function(d){ return 'tid: ' + d.data.TID })
+      .attr("font-size", "12px")
+      .attr("fill", "white");
+        
+
 
 
   }).catch(function(error) {

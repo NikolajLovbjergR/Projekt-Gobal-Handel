@@ -81,7 +81,7 @@ function updateTreemap(dataFile) {
       .on("click", function(event, d) {
         // Vis tooltip ved klik
         tooltip.style("opacity", 1)
-              .html("<p>Land: " + d.data.LAND + "</p><p>Indhold: " + d.data.INDHOLD + "</p>")
+              .html("<p>Land: " + d.data.LAND + "</p><p>Indhold: " + d.data.INDHOLD * 1000 + "kr" + "</p>")
               .style("left", (event.pageX + 10) + "px")
               .style("top", (event.pageY + 10) + "px");
       })

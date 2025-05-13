@@ -83,14 +83,7 @@ function updateTreemap(dataFile) {
                .style("left", (event.pageX + 10) + "px")
                .style("top", (event.pageY + 10) + "px");
       })
-      .on("mousemove", function(event) {
-        tooltip.style("left", (event.pageX + 10) + "px")
-               .style("top", (event.pageY + 10) + "px");
-      })
-      .on("mouseout", function() {
-        tooltip.style("opacity", 0);
-      });
-
+     
     svg.selectAll("text")
       .data(root.leaves())
       .enter()

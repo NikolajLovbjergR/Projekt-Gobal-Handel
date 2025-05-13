@@ -96,7 +96,7 @@ d3.csv("/DB/BarChart.csv").then(data => {
     groups.merge(newGroups).select(".import")
       .on("mouseover", (event, d) => {
         tooltip.style("opacity", 1)
-               .html(`<strong>Import:</strong> ${Math.abs(d.import).toLocaleString('da-DK')} Millioner`);
+               .html(`<strong>Import:</strong> ${Math.abs(d.import).toLocaleString('da-DK')} milliarder kroner`);
       })
       .on("mousemove", (event) => {
         tooltip.style("left", (event.pageX + 10) + "px")
@@ -118,7 +118,7 @@ d3.csv("/DB/BarChart.csv").then(data => {
     groups.merge(newGroups).select(".export")
       .on("mouseover", (event, d) => {
         tooltip.style("opacity", 1)
-               .html(`<strong>Eksport:</strong> ${d.export.toLocaleString('da-DK')} Millioner`);
+               .html(`<strong>Eksport:</strong> ${d.export.toLocaleString('da-DK')} milliarder kroner`);
       })
       .on("mousemove", (event) => {
         tooltip.style("left", (event.pageX + 10) + "px")

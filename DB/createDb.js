@@ -25,7 +25,7 @@ async function createTablesAndUploadData() {
 
   console.log('Creating tables...');
   await db.query(`
-    CREATE TABLE handle (
+    CREATE TABLE handel (
       kvatal TEXT,
       eksport NUMERIC,
       import NUMERIC,
@@ -51,40 +51,37 @@ async function createTablesAndUploadData() {
     );
   `);
 
-console.log('Data inserted.')
-await db.query(`
-    create table varegruppe (
-    varegruppe_id   integer,
-    sitc_kode       text
-    )
-`);
-
-console.log('Data inserted.')
-await db.query(`
-    create table måling (
-    måling_id     integer,
-    navn          text,
-    enhed         text
-    )
-`);
-
+  await db.query(`
+    CREATE TABLE import (
+      import_id INTEGER,
+      land TEXT,
+      indhold NUMERIC,
+      sitc TEXT
+    );
+  `);
 
   await upload(
     db,
     'DB/danmark handle 2018-2025.csv',
-    'copy (kvatal, eksport, import, netto) from stdin with csv header'
+    'copy handel (kvatal, eksport, import, netto) from stdin with csv header'
+  );
+
+  await upload(
+    db,
+    'DB/BarChart.csv',
+    'copy samlede (, land, indhold, sitc) from stdin with csv header'
   );
 
   await upload(
     db,
     'DB/Varegrupper - Eksport.csv',
-    'copy (eksport_id, land, indhold, sitc) from stdin with csv header'
+    'copy eksport (eksport_id, land, indhold, sitc) from stdin with csv header'
   );
 
   await upload(
     db,
     'DB/Varegrupper - Import.csv',
-    'copy (import_id, land, indhold, sitc) from stdin with csv header'
+    'copy import (import_id, land, indhold, sitc) from stdin with csv header'
   );
 
 

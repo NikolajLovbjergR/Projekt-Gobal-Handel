@@ -15,7 +15,7 @@ const db = new pg.Pool({
 const dbResult = await db.query('select now() as now');
 console.log('Database connection established on', dbResult.rows[0].now);
 
-/*
+
 console.log('Initialising webserver...');
 const port = 3001;
 const server = express();
@@ -38,4 +38,3 @@ async function onGetHandel(request, response) {
     const dbResult = await db.query('select * from Handel');
     response.json(dbResult.rows);
 }
-*/

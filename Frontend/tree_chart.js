@@ -69,15 +69,21 @@ function updateTreemap(dataFile) {
 
       // Tegn rektangler baseret på data
     svg.selectAll("rect")
+     // Bind data til rektanglerne
       .data(root.leaves())
       .enter()
       .append("rect")
+       // Indstil x-positionen for hvert rektangel
       .attr('x', function (d) { return d.x0; })
+        // Indstil y-positionen for hvert rektangel
       .attr('y', function (d) { return d.y0; })
+      // Indstil bredden af hvert rektangel
       .attr('width', function (d) { return d.x1 - d.x0; })
+      // Indstil højden af hvert rektangel
       .attr('height', function (d) { return d.y1 - d.y0; })
       .style("stroke", "black")
       .style("fill", function(d) { return colorScale(d.data.LAND); })
+      //hånter mus knap 
       .on("click", function(event, d) {
         // Vis tooltip ved klik
         tooltip.style("opacity", 1)
@@ -94,7 +100,9 @@ function updateTreemap(dataFile) {
       .data(root.leaves())
       .enter()
       .append("text")
+       // Indstil x-positionen for text
       .attr("x", function(d){ return d.x0 + 10 })
+        // Indstil y-positionen for text
       .attr("y", function(d){ return d.y0 + 20 })
       .text(function(d){ return d.data.LAND })
       .attr("font-size", "12px")
@@ -106,6 +114,7 @@ function updateTreemap(dataFile) {
       .append("text")
       .attr("x", function(d){ return d.x0 + 10 })
       .attr("y", function(d){ return d.y0 + 35 })
+       // Tekstindholdet er landets navn i dette tilfælde, som hentes fra dataobjektet
       .text(function(d){ return 'Indhold: ' + d.data.INDHOLD })
       .attr("font-size", "12px")
       .attr("fill", "white");

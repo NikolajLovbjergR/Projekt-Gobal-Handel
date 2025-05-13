@@ -71,7 +71,21 @@ await db.query(`
 
   await upload(
     db,
-    'db/danmark handle 2018-2025.csv',
-    'copy (album_id, title, artist_id, release_date, riaa_certificate) from stdin with csv header'
+    'DB/danmark handle 2018-2025.csv',
+    'copy (kvatal, eksport, import, netto) from stdin with csv header'
   );
+
+  await upload(
+    db,
+    'DB/Varegrupper - Eksport.csv',
+    'copy (eksport_id, land, indhold, sitc) from stdin with csv header'
+  );
+
+  await upload(
+    db,
+    'DB/Varegrupper - Import.csv',
+    'copy (import_id, land, indhold, sitc) from stdin with csv header'
+  );
+
+
 };

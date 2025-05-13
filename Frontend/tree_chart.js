@@ -146,6 +146,16 @@ svg.selectAll("rect")
       .attr("font-size", "12px")
       .attr("fill", "white");
 
+      svg.selectAll(".indhold")
+      .data(root.leaves())
+      .enter()
+      .append("text")
+      .attr("x", function(d){ return d.x0 + 10 })
+      .attr("y", function(d){ return d.y0 + 65 })
+      .text(function(d){ return 'Tid: ' + d.data.TID })
+      .attr("font-size", "12px")
+      .attr("fill", "white");
+
 }).catch(function(error) {
   console.error("Fejl ved indlæsning af data:", error);
 });

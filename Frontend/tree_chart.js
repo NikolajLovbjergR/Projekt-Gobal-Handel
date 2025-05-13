@@ -31,9 +31,7 @@ var tooltip = d3.select("body")
   .style("color", "black")
   .style("padding", "5px")
   .style("border-radius", "3px")
-  .style("width","400px")
-  .style("height","100px")
-  
+
 
 var currentDataFile = '/DB/treemap_import.csv';
 var colorScale = d3.scaleOrdinal(d3.schemeCategory10);
@@ -87,7 +85,10 @@ function updateTreemap(dataFile) {
               .style("left", (event.pageX + 10) + "px")
               .style("top", (event.pageY + 10) + "px");
       })
-
+       .on("mouseout", function() {
+        // Skjul tooltip ved mouseout
+        tooltip.style("opacity", 0);
+      });
        // Tilføj tekst til hvert rektangel
     svg.selectAll("text")
       .data(root.leaves())

@@ -14,7 +14,7 @@ d3.select("body").append("div").attr("id", "controls").style("margin-bottom", "2
   .text(function(d) { return d; });
 
 // Tilføjer SVG-objektet til siden
-d3.select("body").append("div").attr("id", "treemap-container").style("width", width + "px").style("height", height + "px").style("border", "1px solid #ccc").style("position", "relative");
+d3.select("body").append("div").attr("id", "treemap-container");
 
 var svg = d3.select("#treemap-container")
   .append("svg")

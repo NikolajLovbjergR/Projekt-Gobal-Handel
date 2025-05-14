@@ -37,13 +37,32 @@ d3.json('https://unpkg.com/world-atlas@2.0.2/countries-110m.json').then(worldDat
 
   // Draw the base map (all countries)
   svg.selectAll('path')
-    .data(countries) // Bind one path per country
-    .enter()
-    .append('path') // Append a <path> SVG element for each country
-    .attr('class', 'country')
-    .attr('d', pathGenerator) // Use the path generator to convert GeoJSON to SVG path
-    .attr('fill', '#green') // Country fill color
-    .attr('stroke', '#28282B'); // Country border color
+  .data(countries)
+  .enter()
+  .append('path')
+  .attr('class', 'country')
+  .attr('d', pathGenerator)
+  .attr('fill', '#f9f6ee')
+  .attr('stroke', '#28282B')
+  .on('click', (event, d) => {
+    const infoBox = document.getElementById('info-box');
+
+    // Get country name (fallback if not available)
+    const countryName = d.properties?.name || `ID: ${d.id}`;
+
+    // Show and populate the info box
+    infoBox.style.display = 'block';
+    infoBox.innerHTML = `
+      <strong>${countryName}</strong><br>
+      <b>Centroid:</b> ${d3.geoCentroid(d).map(c => c.toFixed(2)).join(', ')}
+    `;
+
+    // Optional: place near mouse
+    // const [x, y] = d3.pointer(event);
+    // infoBox.style.left = `${x + 20}px`;
+    // infoBox.style.top = `${y + 20}px`;
+  });
+    
 
   // Define the origin country ("from") as Denmark using the hardcoded location
   const fromGeo = locations['Denmark']; // Still in [longitude, latitude]
@@ -75,6 +94,7 @@ d3.json('https://unpkg.com/world-atlas@2.0.2/countries-110m.json').then(worldDat
       .attr('stroke-dashoffset', function () {
         return this.getTotalLength();
       });
+      
 
     // Store the length to use for animation
     const totalLength = path.node().getTotalLength();

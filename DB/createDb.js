@@ -14,20 +14,16 @@ const db = new pg.Pool({
   ssl: { rejectUnauthorized: false },
 });
 
-async function createTablesAndUploadData() {
-  const dbResult = await db.query('select now()');
-  console.log('Database connection established on', dbResult.rows[0].now);
+const dbResult = await db.query('select now()');
+console.log('Database connection established on', dbResult.rows[0].now);
 
-  console.log('Dropping existing tables...');
-  await db.query(`
-    DROP TABLE IF EXISTS handel, samlede, eksport, import;
-  `);
 
-  console.log('Creating tables...');
+  console.log('recreating tables...');
   await db.query(`
+    drop table if exists handel;
     CREATE TABLE handel (
-      LineChart_id INTEGER,
-      tid INTEGER,
+      id INTEGER,
+      tid TEXT,
       eksport NUMERIC,
       import NUMERIC,
       netto NUMERIC
@@ -35,6 +31,7 @@ async function createTablesAndUploadData() {
   `);
 
   await db.query(`
+    drop table if exists samlede;
     CREATE TABLE samlede (
       id INTEGER,
       tid INTEGER,
@@ -45,27 +42,33 @@ async function createTablesAndUploadData() {
   `);
 
   await db.query(`
+    drop table if exists eksport;
     CREATE TABLE eksport (
       eksport_id INTEGER,
       land TEXT,
+      tid   INTEGER,
       indhold NUMERIC,
       sitc TEXT
     );
   `);
 
   await db.query(`
+    drop table if exists import;
     CREATE TABLE import (
       import_id INTEGER,
       land TEXT,
+      tid   INTEGER,
       indhold NUMERIC,
       sitc TEXT
     );
   `);
 
+  console.log('Tables recreated.');
+  
   await upload(
     db,
     'DB/LineChart.csv',
-    'copy handel (LineChart_id, tid, eksport, import, netto) from stdin with csv header'
+    'copy handel (id, tid, eksport, import, netto) from stdin with csv header'
   );
 
   await upload(
@@ -77,13 +80,15 @@ async function createTablesAndUploadData() {
   await upload(
     db,
     'DB/Varegrupper - Eksport.csv',
-    'copy eksport (eksport_id, land, indhold, sitc) from stdin with csv header'
+    'copy eksport (eksport_id, land, tid, indhold, sitc) from stdin with csv header'
   );
 
   await upload(
     db,
     'DB/Varegrupper - Import.csv',
-    'copy import (import_id, land, indhold, sitc) from stdin with csv header'
+    'copy import (import_id, land, tid, sitc, indhold) from stdin with csv header'
   );
 
-};
+  await db.end();
+console.log('All data inserted.');
+

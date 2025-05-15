@@ -27,7 +27,7 @@ async function createTablesAndUploadData() {
   await db.query(`
     CREATE TABLE handel (
       LineChart_id INTEGER,
-      tid TEXT,
+      tid INTEGER,
       eksport NUMERIC,
       import NUMERIC,
       netto NUMERIC
@@ -37,8 +37,8 @@ async function createTablesAndUploadData() {
   await db.query(`
     CREATE TABLE samlede (
       id INTEGER,
-      land TEXT,
       tid INTEGER,
+      land TEXT,
       import NUMERIC,
       eksport NUMERIC
     );
@@ -65,7 +65,7 @@ async function createTablesAndUploadData() {
   await upload(
     db,
     'DB/LineChart.csv',
-    'copy handel (id, tid, eksport, import, netto) from stdin with csv header'
+    'copy handel (LineChart_id, tid, eksport, import, netto) from stdin with csv header'
   );
 
   await upload(

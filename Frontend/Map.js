@@ -51,16 +51,16 @@ d3.json('https://unpkg.com/world-atlas@2.0.2/countries-110m.json').then(worldDat
     const countryName = d.properties?.name || `ID: ${d.id}`;
 
     // Show and populate the info box
-    infoBox.style.display = 'block';
-    infoBox.innerHTML = `
+    //infoBox.style.display = 'block';
+     infoBox.innerHTML = `
       <strong>${countryName}</strong><br>
       <b>Centroid:</b> ${d3.geoCentroid(d).map(c => c.toFixed(2)).join(', ')}
     `;
 
     // Optional: place near mouse
-    // const [x, y] = d3.pointer(event);
-    // infoBox.style.left = `${x + 20}px`;
-    // infoBox.style.top = `${y + 20}px`;
+    const [x, y] = d3.pointer(event);
+    infoBox.style.left = `${x + 20}px`;
+    infoBox.style.top = `${y + 20}px`;
   });
     
 
@@ -108,7 +108,7 @@ d3.json('https://unpkg.com/world-atlas@2.0.2/countries-110m.json').then(worldDat
         .ease(d3.easeLinear) // Constant speed
         .attr('stroke-dashoffset', 0) // Draw the line by reducing dash offset to 0
         .on('end', () => {
-          // After animation ends, wait 2 seconds and repeat
+          // After animation ends, wait 5 seconds and repeat
           setTimeout(() => {
             path.attr('stroke-dashoffset', totalLength); // Reset
             animate(); // Loop again

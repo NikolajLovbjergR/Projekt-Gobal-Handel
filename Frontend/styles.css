@@ -50,11 +50,15 @@ header {
 .map-container {
   display: flex;
   justify-content: center;
-  align-items: center;
   margin-top: 20px;
   background-color: #28282B;
   border-radius: 10px;
+  gap: 25px;
   }
+
+#info-box {
+  margin-top: 50px
+}
 
 .country {
   fill: green;

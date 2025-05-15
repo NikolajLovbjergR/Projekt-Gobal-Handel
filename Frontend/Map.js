@@ -18,8 +18,9 @@ const navnMap = {
   "Norge": "Norway",
   "Frankrig og Monaco": "France",
   "Storbritannien": "United Kingdom",
-  "Rusland": "Russia",
-  "Nederlandene": "Netherlands"
+  "Nederlandene": "Netherlands",
+  "Italien": "Italy",
+  "Polen": "Poland"
 };
 
 const locations = {
@@ -32,7 +33,8 @@ const locations = {
   France: [2.2137, 46.2276],
   Norway: [8.4689, 60.472],
   'United Kingdom': [-3.436, 55.3781],
-  Russia: [105.3188, 61.524]
+  Poland: [19.1451, 51.9194],
+  Italy: [12.5674, 41.8719]
 };
 
 // Handelsdata gemmes her

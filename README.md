@@ -95,4 +95,4 @@ Samfundsinteresserede borgere, undervisere, gymnasieelever og studerende, der ø
 - Node.js + Express (backend og API)
 - PostgreSQL (database)
 - GitHub Projects + Issues (SCRUM board)
-- Netlify / GitHub Pages (frontend hosting)
+- GitHub Pages (frontend hosting)

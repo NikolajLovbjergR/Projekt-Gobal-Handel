@@ -68,7 +68,7 @@ console.log('Database connection established on', dbResult.rows[0].now);
   await upload(
     db,
     'DB/LineChart.csv',
-    'copy handel (LineChart_id, tid, eksport, import, netto) from stdin with csv header'
+    'copy handel (id, tid, eksport, import, netto) from stdin with csv header'
   );
 
   await upload(

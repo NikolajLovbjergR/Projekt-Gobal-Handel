@@ -34,8 +34,8 @@ console.log('Database connection established on', dbResult.rows[0].now);
     drop table if exists samlede;
     CREATE TABLE samlede (
       id INTEGER,
-      land TEXT,
       tid INTEGER,
+      land TEXT,
       import NUMERIC,
       eksport NUMERIC
     );
@@ -68,7 +68,7 @@ console.log('Database connection established on', dbResult.rows[0].now);
   await upload(
     db,
     'DB/LineChart.csv',
-    'copy handel (id, tid, eksport, import, netto) from stdin with csv header'
+    'copy handel (LineChart_id, tid, eksport, import, netto) from stdin with csv header'
   );
 
   await upload(

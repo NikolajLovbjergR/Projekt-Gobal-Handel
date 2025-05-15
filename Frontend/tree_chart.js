@@ -14,7 +14,7 @@ d3.select("body").append("div").attr("id", "controls").style("margin-bottom", "2
   .text(function(d) { return d; });
 
 // Tilføjer SVG-objektet til siden
-d3.select("body").append("div").attr("id", "treemap-container").style("width", width + "px").style("height", height + "px").style("border", "1px solid #ccc").style("position", "relative");
+d3.select("body").append("div").attr("id", "treemap-container");
 
 var svg = d3.select("#treemap-container")
   .append("svg")
@@ -63,13 +63,13 @@ function updateTreemap(selectedYear) {
     // Behandler eksportdata
     exportData.forEach(function(d) {
       data.push({
-        name: d.LAND + ' Export ' + d.TID,
+        name: d.LAND + ' Eksport ' + d.TID,
         parent: "root",
         value: +d.INDHOLD,
         LAND: d.LAND,
         TID: d.TID,
         SITC: d.SITC,
-        type: "Export"
+        type: "Eksport"
       });
     });
 
@@ -131,7 +131,7 @@ function updateTreemap(selectedYear) {
       .attr("fill", "white")
       .text(function(d) { return d.data.SITC; });
 
-      svg.selectAll("text")
+      svg.selectAll("Tid")
       .data(root.leaves())
       .enter()
       .append("text")
@@ -140,6 +140,17 @@ function updateTreemap(selectedYear) {
       .attr("font-size", "12px")
       .attr("fill", "white")
       .text(function(d) { return d.data.TID; });
+
+    // Tilføjer Import/Eksport tekst
+    svg.selectAll(".type")
+      .data(root.leaves())
+      .enter()
+      .append("text")
+      .attr("x", function(d) { return d.x0 + 10; })
+      .attr("y", function(d) { return d.y0 + 50; })
+      .attr("font-size", "12px")
+      .attr("fill", "white")
+      .text(function(d) { return d.data.type; });
 
   }).catch(function(error) {
     console.error("Fejl ved indlæsning af data:", error);

@@ -127,7 +127,7 @@ function updateTreemap(selectedYear) {
       .append("text")
       .attr("x", function(d) { return d.x0 + 10; })
       .attr("y", function(d) { return d.y0 + 20; })
-      .attr("font-size", "12px")
+      .attr("font-size", "10.60px")
       .attr("fill", "white")
       .text(function(d) { return d.data.SITC; });
 
@@ -137,7 +137,7 @@ function updateTreemap(selectedYear) {
       .append("text")
       .attr("x", function(d) { return d.x0 + 10; })
       .attr("y", function(d) { return d.y0 + 35; })
-      .attr("font-size", "12px")
+      .attr("font-size", "11px")
       .attr("fill", "white")
       .text(function(d) { return d.data.TID; });
 
@@ -148,7 +148,7 @@ function updateTreemap(selectedYear) {
       .append("text")
       .attr("x", function(d) { return d.x0 + 10; })
       .attr("y", function(d) { return d.y0 + 50; })
-      .attr("font-size", "12px")
+      .attr("font-size", "11px")
       .attr("fill", "white")
       .text(function(d) { return d.data.type; });
 

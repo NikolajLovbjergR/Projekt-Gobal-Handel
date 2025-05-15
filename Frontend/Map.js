@@ -16,7 +16,7 @@ const navnMap = {
   "Kina": "China",
   "USA": "United States of America",
   "Norge": "Norway",
-  "Frankrig": "France",
+  "Frankrig og Monaco": "France",
   "Storbritannien": "United Kingdom",
   "Rusland": "Russia",
   "Nederlandene": "Netherlands"

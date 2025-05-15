@@ -141,7 +141,8 @@ function updateTreemap(selectedYear) {
       .attr("fill", "white")
       .text(function(d) { return d.data.TID; });
 
-      svg.selectAll("Import/eksport")
+    // Tilføjer Import/Eksport tekst
+    svg.selectAll(".type")
       .data(root.leaves())
       .enter()
       .append("text")

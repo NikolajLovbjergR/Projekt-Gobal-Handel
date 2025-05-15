@@ -19,9 +19,6 @@ console.log('Database connection established on', dbResult.rows[0].now);
 console.log('Initialising webserver...');
 const port = 3001;
 const server = express();
-server.use(express.static('Frontend'));
-server.get('/api/handel', onGetHandel);
-server.use(onEachRequest)
 
 server.listen(port, onServerReady);
 
@@ -34,7 +31,3 @@ function onServerReady() {
     console.log('Webserver running on port', port);
 }
 
-async function onGetHandel(request, response) {
-    const dbResult = await db.query('select * from Handel');
-    response.json(dbResult.rows);
-}

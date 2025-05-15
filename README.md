@@ -22,8 +22,8 @@ Hvordan kan Danmarks vigtigste handelsrelationer og varekategorier visualiseres,
 ---
 
 ## 🎯 Afgrænsning
-- **Tidsperiode:** 2018–2024 (hvis data er tilgængelige)  
-- **Fokus:** De vigtigste lande for både import og eksport  
+- **Tidsperiode:** 2018–2024 (hvis data er tilgængelige) 
+- **Fokus:** De vigtigste lande for både import og eksport 
 - **Data:** Kun varehandel (ikke tjenesteydelser), og kun officielle handelsdata fra Danmarks Statistik
 
 ---
@@ -40,7 +40,6 @@ Samfundsinteresserede borgere, undervisere, gymnasieelever og studerende, der ø
 **Ønsker jeg at** se hvilke lande Danmark handler mest med  
 **Ved at** interagere med et verdenskort, hvor linjer går fra Danmark til de vigtigste handelspartnere  
 **Fordi** jeg gerne vil forstå Danmarks vigtigste eksport- og importforbindelser visuelt  
-
 **Acceptkriterier:**
 - Visualisering med verdenskort skal være tilgængelig
 - Kortet viser linjer fra Danmark til andre lande
@@ -55,7 +54,6 @@ Samfundsinteresserede borgere, undervisere, gymnasieelever og studerende, der ø
 **Ønsker jeg at** sammenligne Danmarks største import- og eksportlande  
 **Ved at** se to søjlediagrammer: ét for import og ét for eksport  
 **Fordi** jeg gerne vil se forskellene og prioriteterne i Danmarks udenrigshandel  
-
 **Acceptkriterier:**
 - To bar charts: ét for eksport og ét for import
 - Viser de vigtigste lande med værdi og landnavn
@@ -69,7 +67,6 @@ Samfundsinteresserede borgere, undervisere, gymnasieelever og studerende, der ø
 **Ønsker jeg at** få overblik over hvilke typer varer Danmark handler mest med  
 **Ved at** se en treemap opdelt i produktkategorier for både import og eksport  
 **Fordi** jeg vil vide, hvilke varegrupper der dominerer Danmarks handel  
-
 **Acceptkriterier:**
 - Treemappen viser import og eksport fordelt på varekategorier
 - Felternes størrelse angiver værdi
@@ -83,7 +80,6 @@ Samfundsinteresserede borgere, undervisere, gymnasieelever og studerende, der ø
 **Ønsker jeg at** følge hvordan Danmarks handel har udviklet sig over tid  
 **Ved at** bruge en interaktiv linjegraf med data fra 2018–2024  
 **Fordi** jeg gerne vil se, hvordan fx covid-19 og krig har påvirket handelen  
-
 **Acceptkriterier:**
 - Linjegrafer viser import og eksport over tid
 - Mulighed for at vælge specifikke lande og varetyper
@@ -93,9 +89,10 @@ Samfundsinteresserede borgere, undervisere, gymnasieelever og studerende, der ø
 
 ---
 
-## 🗂️ Teknologier og værktøjer
-- HTML, CSS, JavaScript  
-- D3.js (datavisualisering)  
-- Node.js + Express (webserver)  
-- PostgreSQL (database)  
-- GitHub Projects + Issues (projektstyring)
+## 🛠️ Teknologier og værktøjer
+- HTML, CSS, JavaScript
+- D3.js (datavisualisering)
+- Node.js + Express (backend og API)
+- PostgreSQL (database)
+- GitHub Projects + Issues (SCRUM board)
+- GitHub Pages (frontend hosting)

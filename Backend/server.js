@@ -1,6 +1,7 @@
 import express from 'express';
 import pg from 'pg';
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 dotenv.config(); 
 console.log('Connecting to database', process.env.PG_DATABASE);
@@ -19,6 +20,8 @@ console.log('Database connection established on', dbResult.rows[0].now);
 console.log('Initialising webserver...');
 const port = 3001;
 const server = express();
+server.use(cors());
+server.use(express.json());
 
 server.listen(port, onServerReady);
 
@@ -31,3 +34,22 @@ function onServerReady() {
     console.log('Webserver running on port', port);
 }
 
+server.get('/api/handel', async (req, res) => {
+  try {
+    const result = await db.query(`
+       SELECT
+        COALESCE(imp.land, exp.land) AS land,
+        SUM(imp.indhold) AS total_import,
+        SUM(exp.indhold) AS total_eksport
+      FROM
+        import imp
+      FULL OUTER JOIN eksport exp ON imp.land = exp.land AND imp.tid = exp.tid
+      GROUP BY COALESCE(imp.land, exp.land)
+      ORDER BY land;
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Fejl ved hentning af data fra import/eksport:', err);
+    res.status(500).send('Databasefejl');
+  }
+});

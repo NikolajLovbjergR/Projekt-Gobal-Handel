@@ -22,26 +22,24 @@
 <!--Verdenskort-->
 <svg id="map-svg" width="1350" height="850"></svg>
 <div id="info-box" style="
+  position: absolute;
+  display: none;
+  background: white;
+  color: black;
+  padding: 10px;
+  border: 1px solid black;
+  font-family: sans-serif;
   top: 20px;
   right: 20px;
-  background: white;
-  border: 1px solid #ccc;
-  padding: 10px;
-  font-family: sans-serif;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  width: 350px;
-  height: 150px;
+  width: 200px;
+  height: auto;
+  z-index: 999;
 "></div>
 </div>
 <div class="verdenskort">
 <h2>Danmarks største handelspartnere</h2>
 <p>Dette interaktive kort viser, hvilke lande Danmark handler mest med målt på import og eksport. Kortet er baseret på data fra 2018 til 2022 og fremhæver vores vigtigste handelspartnere såsom Tyskland, Sverige, USA og Kina. Klik på et land for at se handelsdata og sammenlign, hvordan Danmarks samhandel har udviklet sig over tid.</p>
 </div>
-<div class="map-container">
-<!--Verdenskort-->
-<svg id="map-svg" width="1350" height="850"></svg>
-</div>
-<script type="module" src="/Frontend/map.js"></script>
 
 <h1>Tree map over DKs Import og Eksport</h1>
 <div id="treemap"></div>

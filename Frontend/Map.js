@@ -249,7 +249,7 @@ d3.json('https://unpkg.com/world-atlas@2.0.2/countries-110m.json').then(worldDat
       .datum(line)
       .attr('d', pathGenerator)
       .attr('fill', 'none')
-      .attr('stroke', 'black')
+      .attr('stroke', '#f9f6ee')
       .attr('stroke-width', 2)
       .attr('stroke-dasharray', function () {
         const length = this.getTotalLength();

@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
   background-color: #f9f6ee;
+  font-family: "Montserrat", sans-serif;
 }
 
 li, a {
@@ -14,10 +17,10 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
+  align-content: center;
   top: 0;
-  width: 100%;
   height: 100px;
+  border: solid 2px #28282B;
 }
 
 .nav-links {
@@ -40,6 +43,26 @@ header {
   color: #f9f6ee;
 }
 
+.hero {
+  font-family: "Montserrat", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 200px 0 250px 0;
+  gap: 150px;
+}
+
+.right-side img {
+  width: 1000px;
+  height: 600px;
+  border-radius: 10px;
+  margin-right: 50px;
+}
+
+.left-side {
+  margin-left: 50px;
+}
+
 .map-container svg {
   height: 850px;
   width: 1350px;
@@ -49,17 +72,21 @@ header {
 .map-container {
   display: flex;
   justify-content: center;
+  align-items: center;
   background-color: #28282B;
-  gap: 25px;
+  gap: 100px;
+  padding: 25px 0 0 0;
   }
 
-.kort-over {
+#kort-over {
   font-family: "Montserrat", sans-serif;
   text-align: center;
   font-size: 28px;
   font-weight: 700;
-  margin-top: 150px;
-  color: #28282B;
+  color: #f9f6ee;
+  margin: 150px 0 0 0;
+  padding-top: 25px;
+  background-color: #28282B;
 }
 
 #info-box {
@@ -74,8 +101,12 @@ header {
   fill: red;
 }
 
-body { 
-  font-family: Arial, sans-serif; 
+.kort-text {
+  background-color: #28282B;
+  padding: 25px;
+}
+
+body {  
   margin: 0;
 }
 

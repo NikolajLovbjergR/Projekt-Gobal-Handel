@@ -12,12 +12,14 @@
     <nav>
         <ul class="nav-links">
             <li><a href="#">Verdenskort</a></li>
-            <li><a href="#treemao">Import vs Eksport</a></li>
+            <li><a href="#treemap">Varegrupper</a></li>
+            <li><a href="#">Pr land</a></li>
+            <li><a href="#">Corona</a></li>
         </ul>
     </nav>
 </header>
 
-
+<h2 class="kort-over">Danmarks største handelspartnere</h2>
 <div class="map-container">
 <!--Verdenskort-->
 <svg id="map-svg" width="1350" height="850"></svg>
@@ -36,33 +38,26 @@
 "></div>
 </div>
 <div class="verdenskort">
-<h2>Danmarks største handelspartnere</h2>
 <p>Dette interaktive kort viser, hvilke lande Danmark handler mest med målt på import og eksport. Kortet er baseret på data fra 2018 til 2022 og fremhæver vores vigtigste handelspartnere såsom Tyskland, Sverige, USA og Kina. Klik på et land for at se handelsdata og sammenlign, hvordan Danmarks samhandel har udviklet sig over tid.</p>
 </div>
+<h1>Tree map over DKs Import og Eksport</h1>
+<div id="treemap"></div>
 
 <h2>Import & Eksport pr. land</h2>
 
 <label for="yearSelect">Vælg år:</label>
 <select id="yearSelect"></select>
+
 <svg id="bar-svg" width="1000" height="500"></svg>
 
-<div>xxxxxxx</div>
 
-<h2>Danmarks Import, Eksport og Nettooverskud over tid</h2>
 <div id="chart"></div>
-xxxxxx
-
-
-<h2>Tree map over DKs Import og Eksport</h2>   
-<div id="treemap"></div>
-
- 
 
 <script type="module" src="/Frontend/map.js"></script>
+<script type="module" src="/Frontend/tree_chart.js"></script>
 <script type="module" src="/Frontend/BarChart.js"></script>
 <script type="module" src="/Frontend/LineChart.js"></script>
-<script type="module" src="/Frontend/tree_chart.js"></script>
 
-
+    
 </body>
 </html>

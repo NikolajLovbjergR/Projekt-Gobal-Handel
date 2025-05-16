@@ -152,7 +152,7 @@ function updateTreemap(selectedYear) {
       .style("stroke", "white")
       .on("mouseover", function(event, d) {
         tooltip.style("display", "block")
-               .html(`${d.data.LAND}<br>Type: ${d.data.type}<br>Value: ${d.data.value},<br>SITC: ${d.data.SITC} `)
+               .html(`${d.data.LAND}<br>Type: ${d.data.type}<br>Value: ${d.data.value},<br>SITC: ${d.data.SITC},<br>Tid: ${d.data.TID} `)
                .style("left", `${event.pageX + 10}px`)
                .style("top", `${event.pageY + 10}px`);
       })

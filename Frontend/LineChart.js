@@ -119,7 +119,7 @@ d3.csv("/DB/LineChart.csv", d3.autoType).then(data => {
     .attr("text-anchor", "middle")
     .style("font-size", "20px")
     .style("font-weight", "bold")
-    .text("Danmarks Import, Eksport og Nettooverskud over tid");
+
 
   // Tekst på Y-aksen
   svg.append("text")

@@ -20,7 +20,10 @@ const navnMap = {
   "Storbritannien": "United Kingdom",
   "Nederlandene": "Netherlands",
   "Italien": "Italy",
-  "Polen": "Poland"
+  "Polen": "Poland",
+  "Rusland": "Russia",
+  "Finland": "Finland",
+  "Irland": "Ireland"
 };
 
 const locations = {

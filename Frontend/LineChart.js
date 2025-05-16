@@ -39,7 +39,6 @@ d3.csv("/DB/LineChart.csv", d3.autoType).then(data => {
     .append("div")
     .attr("class", "tooltip")
     .style("position", "absolute")
-    .style("background", "white")
     .style("color", "black")
     .style("padding", "5px")
     .style("border", "1px solid #ccc")

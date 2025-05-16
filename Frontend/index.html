@@ -12,9 +12,9 @@
     <nav>
         <ul class="nav-links">
             <li><a href="#">Verdenskort</a></li>
-            <li><a href="#treemap">Varegrupper</a></li>
             <li><a href="#">Pr land</a></li>
             <li><a href="#">Corona</a></li>
+            <li><a href="#treemap">Varegrupper</a></li>
         </ul>
     </nav>
 </header>
@@ -40,23 +40,30 @@
 <div class="verdenskort">
 <p>Dette interaktive kort viser, hvilke lande Danmark handler mest med målt på import og eksport. Kortet er baseret på data fra 2018 til 2022 og fremhæver vores vigtigste handelspartnere såsom Tyskland, Sverige, USA og Kina. Klik på et land for at se handelsdata og sammenlign, hvordan Danmarks samhandel har udviklet sig over tid.</p>
 </div>
-<h1>Tree map over DKs Import og Eksport</h1>
-<div id="treemap"></div>
 
-<h2>Import & Eksport pr. land</h2>
+
+<h2 class="BarChart">Import & Eksport pr. land</h2>
 
 <label for="yearSelect">Vælg år:</label>
 <select id="yearSelect"></select>
 
 <svg id="bar-svg" width="1000" height="500"></svg>
+<p>Denne graf viser Danmarks import og eksport fordelt på de 9 lande, vi handler mest med. Hver søjle repræsenterer enten import eller eksport i et valgt år, så du nemt kan sammenligne mængden af varer, vi køber og sælger. Grafen gør det tydeligt, hvor vi har handelsoverskud – og hvor vi importerer mere, end vi eksporterer.</p>
 
-
+<h2 class="BarChart">Udvikling i Danmarks handel over tid</h2>
 <div id="chart"></div>
+<p>Her kan du følge udviklingen i Danmarks import, eksport og handelsoverskud fra 2018 til 2024. Grafen viser, hvordan vores samhandel med verden har ændret sig over tid – og gør det muligt at se effekten af globale begivenheder, som f.eks. pandemien. Du får et klart billede af, hvordan Danmarks økonomiske relationer har udviklet sig gennem årene.</p>
+
+
+<h1>Tree map over DKs Import og Eksport</h1>
+<div id="treemap"></div>
+<p>Denne treemap-visualisering viser, hvilke typer varer Danmark handler mest med. Hver firkant repræsenterer en varekategori, og størrelsen viser, hvor stor en del af den samlede handel den udgør. Du kan hurtigt få overblik over, hvilke varer fylder mest i både vores import og eksport, og hvordan de enkelte sektorer bidrager til dansk samhandel.</p>
+
 
 <script type="module" src="/Frontend/map.js"></script>
-<script type="module" src="/Frontend/tree_chart.js"></script>
 <script type="module" src="/Frontend/BarChart.js"></script>
 <script type="module" src="/Frontend/LineChart.js"></script>
+<script type="module" src="/Frontend/tree_chart.js"></script>
 
     
 </body>

@@ -149,7 +149,20 @@ function updateTreemap(selectedYear) {
       .attr("width", d => d.x1 - d.x0)
       .attr("height", d => d.y1 - d.y0)
       .style("fill", d => d.data.type === 'Import' ? importColor(d.data.value) : exportColor(d.data.value))
-      .style("stroke", "white");
+      .style("stroke", "white")
+      .on("mouseover", function(event, d) {
+        tooltip.style("display", "block")
+               .html(`${d.data.LAND}<br>Type: ${d.data.type}<br>Value: ${d.data.value},<br>SITC: ${d.data.SITC} `)
+               .style("left", `${event.pageX + 10}px`)
+               .style("top", `${event.pageY + 10}px`);
+      })
+      .on("mousemove", function(event) {
+        tooltip.style("left", `${event.pageX + 10}px`)
+               .style("top", `${event.pageY + 10}px`);
+      })
+      .on("mouseout", function() {
+        tooltip.style("display", "none");
+      });;
 
     // Tilføjer SITC tekst med bindestreg
     svg.selectAll(".text-label")

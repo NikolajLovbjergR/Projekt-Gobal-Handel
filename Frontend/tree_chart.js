@@ -2,16 +2,11 @@ import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 
 // === Konfiguration af dimensioner og margener ===
 const margin = { top: 10, right: 20, bottom: 60, left: 20 };
-const width = 1200 - margin.left - margin.right;
-const height = 600 - margin.top - margin.bottom;
+const width = 1000 - margin.left - margin.right;
+const height = 500 - margin.top - margin.bottom;
 
 // === Dropdown-menu for valg af årstal ===
-d3.select("body")
-  .append("div")
-  .attr("id", "controls")
-  .style("margin-bottom", "20px")
-  .append("select")
-  .attr("id", "yearDropdown")
+d3.select("#yearDropdown")
   .selectAll("option")
   .data(["2018", "2019", "2020", "2021"])
   .enter()
@@ -20,9 +15,8 @@ d3.select("body")
   .text(d => d);
 
 // === SVG-container oprettelse ===
-const svg = d3.select("body")
-  .append("div")
-  .attr("id", "treemap-container")
+
+  const svg = d3.select("#treemap-container")
   .append("svg")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
@@ -30,7 +24,7 @@ const svg = d3.select("body")
   .attr("transform", `translate(${margin.left},${margin.top})`);
 
 // === Tooltip-opsætning ===
-const tooltip = d3.select("body")
+const tooltip = d3.select("#treemap-container")
   .append("div")
   .attr("class", "tooltip")
   .style("position", "absolute")
@@ -64,13 +58,13 @@ svg.append("rect")
   .attr("y", legendY)
   .attr("width", 20)
   .attr("height", 20)
-  .style("fill", "red");
+  .style("fill", "#ffb6c1");
 
 svg.append("text")
   .attr("x", width / 2 + 60)
   .attr("y", legendY + 15)
   .attr("font-size", "12px")
-  .attr("fill", "red")
+  .attr("fill", "#ff0066")
   .style("font-weight", "bold")
   .text("Eksport");
 
@@ -152,8 +146,6 @@ function updateTreemap(selectedYear) {
       .on("mouseover", function(event, d) {
         tooltip.style("display", "block")
                .html(`${d.data.LAND}<br>Type: ${d.data.type}<br>Value: ${d.data.value},<br>SITC: ${d.data.SITC},<br>Tid: ${d.data.TID} `)
-               .style("left", `${event.pageX + 10}px`)
-               .style("top", `${event.pageY + 10}px`);
       })
       .on("mousemove", function(event) {
         tooltip.style("left", `${event.pageX + 10}px`)

@@ -48,13 +48,13 @@ svg.append("rect")
   .attr("y", legendY)
   .attr("width", 20)
   .attr("height", 20)
-  .style("fill", "#2e86c1");
+  .style("fill", "lightgreen");
 
 svg.append("text")
   .attr("x", width / 2 - 70)
   .attr("y", legendY + 15)
   .attr("font-size", "12px")
-  .attr("fill", "lightblue")
+  .attr("fill", "green")
   .style("font-weight", "bold")
   .text("Import");
 
@@ -64,13 +64,13 @@ svg.append("rect")
   .attr("y", legendY)
   .attr("width", 20)
   .attr("height", 20)
-  .style("fill", "#e67e22");
+  .style("fill", "red");
 
 svg.append("text")
   .attr("x", width / 2 + 60)
   .attr("y", legendY + 15)
   .attr("font-size", "12px")
-  .attr("fill", "orange")
+  .attr("fill", "red")
   .style("font-weight", "bold")
   .text("Eksport");
 
@@ -121,9 +121,8 @@ function updateTreemap(selectedYear) {
     const maxValue = d3.max(data, d => d.value);
 
     // Farveskalaer
-    const importColor = d3.scaleLinear().domain([0, maxValue]).range(["#d4e6f1", "#2e86c1"]);
-    const exportColor = d3.scaleLinear().domain([0, maxValue]).range(["#fdebd0", "#e67e22"]);
-
+    const importColor = d3.scaleLinear().domain([0, maxValue]).range(["#f5b7b1", "#c0392b"]);
+    const exportColor = d3.scaleLinear().domain([0, maxValue]).range(["#d4efdf", "#27ae60"]);
     // Hierarkisk struktur til treemap
     const root = d3.stratify()
       .id(d => d.name)

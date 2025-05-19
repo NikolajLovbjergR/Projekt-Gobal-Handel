@@ -161,3 +161,58 @@ header {
   display: none;
 }
 
+.yearselect {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#BarChart {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  text-align: center;
+  margin: 150px 0 50px 0;
+}
+
+.bar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+.bar-right {
+  max-width: 600px;
+  border: #28282B 2px solid;
+  border-radius: 5px;
+  padding: 15px;
+  font-size: 16px;
+  color: #28282B;
+}
+
+/* line chart */
+
+.LineChart {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  text-align: center;
+  margin: 150px 0 50px 0;
+}
+
+.line-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 250px;
+}
+
+.line-text {
+  font-size: 16px;
+  color: #28282B;
+  max-width: 600px;
+  border: #28282B 2px solid;
+  border-radius: 5px;
+  padding: 15px;
+}

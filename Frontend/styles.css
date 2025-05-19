@@ -180,6 +180,7 @@ header {
   justify-content: center;
   align-items: center;
   gap: 50px;
+  margin-bottom: 250px;
 }
 
 .bar-right {
@@ -193,12 +194,37 @@ header {
 
 /* line chart */
 
+.linebg {
+  background-color: #28282B;
+}
+
+.tooltip-line {
+  position: absolute;
+  background-color: #28282B;
+  border: 1px solid #f9f6ee;
+  padding: 6px 10px;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  pointer-events: none;
+  display: none;
+  color: #f9f6ee;
+}
+
+.tooltip-line strong,
+.tooltip-line p {
+  background: none;
+  color: #f9f6ee;
+}
+
 .LineChart {
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: 28px;
   text-align: center;
-  margin: 150px 0 50px 0;
+  margin: 125px 0 50px 0;
+  background-color: #28282B;
+  color: #f9f6ee;
+  padding-top: 25px;
 }
 
 .line-container {
@@ -206,13 +232,20 @@ header {
   justify-content: center;
   align-items: center;
   gap: 250px;
+  margin-bottom: 250px;
+  background-color: #28282B;
 }
 
 .line-text {
   font-size: 16px;
-  color: #28282B;
+  color: #f9f6ee;
   max-width: 600px;
-  border: #28282B 2px solid;
+  border: #f9f6ee 2px solid;
   border-radius: 5px;
   padding: 15px;
+  background-color: #28282B;
+}
+
+#chart {
+  background-color: #28282B;
 }

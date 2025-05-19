@@ -19,7 +19,7 @@ fetch("http://localhost:3001/api/linechart")
       .append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
-      .style("font-family", "sans-serif")
+      .style("background-color", "#28282B")
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
@@ -40,22 +40,20 @@ fetch("http://localhost:3001/api/linechart")
 
     const tooltip = d3.select("body")
       .append("div")
-      .attr("class", "tooltip")
-      .style("position", "absolute")
-      .style("background", "#fff")
-      .style("border", "1px solid #ccc")
-      .style("padding", "6px 10px")
-      .style("border-radius", "4px")
-      .style("box-shadow", "0 0 5px rgba(0,0,0,0.1)")
-      .style("pointer-events", "none")
-      .style("display", "none");
+      .attr("class", "tooltip-line")
 
     // Akser
     svg.append("g")
       .attr("transform", `translate(0,${height})`)
-      .call(d3.axisBottom(x));
+      .call(d3.axisBottom(x))
+      .selectAll("path, line, text")
+      .attr("stroke", "white")
+
     svg.append("g")
-      .call(d3.axisLeft(y));
+      .call(d3.axisLeft(y))
+      .selectAll("path, line, text")
+      .attr("stroke", "white")
+
 
     // Linjefunktion
     const line = key => d3.line()

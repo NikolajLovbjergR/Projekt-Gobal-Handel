@@ -93,6 +93,8 @@ header {
   right: 20px;
   width: 250px;
   height: auto;
+  border: 1px solid #f9f6ee;
+  border-radius: 5px;
 }
 
 #info-box strong,

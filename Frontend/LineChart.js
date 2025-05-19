@@ -12,8 +12,8 @@ fetch("http://localhost:3001/api/linechart")
     });
 
     const margin = { top: 60, right: 180, bottom: 60, left: 70 },
-          width = 900 - margin.left - margin.right,
-          height = 500 - margin.top - margin.bottom;
+          width = 1000 - margin.left - margin.right,
+          height = 600 - margin.top - margin.bottom;
 
     const svg = d3.select("#chart")
       .append("svg")
@@ -47,12 +47,12 @@ fetch("http://localhost:3001/api/linechart")
       .attr("transform", `translate(0,${height})`)
       .call(d3.axisBottom(x))
       .selectAll("path, line, text")
-      .attr("stroke", "white")
+      .attr("stroke", "#f9f6ee")
 
     svg.append("g")
       .call(d3.axisLeft(y))
       .selectAll("path, line, text")
-      .attr("stroke", "white")
+      .attr("stroke", "#f9f6ee")
 
 
     // Linjefunktion
@@ -105,6 +105,7 @@ fetch("http://localhost:3001/api/linechart")
     legend.append("text")
       .attr("x", 25)
       .attr("y", 15)
+      .attr("fill", "#f9f6ee")
       .text(d => d);
   })
   .catch(error => {

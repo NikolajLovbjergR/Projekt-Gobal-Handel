@@ -20,20 +20,23 @@ header {
   align-content: center;
   top: 0;
   height: 100px;
-  border: solid 2px #28282B;
+
 }
 
 .nav-links {
   list-style: none;
+
 }
 
 .nav-links li {
   display: inline-block;
+
 }
 
 .nav-links li a {
   transition: all 0.8 ease 0s;
-  padding: 9px 10px;
+  padding: 10px 10px;
+
 }
 
 .nav-links li a:hover {
@@ -49,7 +52,7 @@ header {
   justify-content: center;
   align-items: center;
   margin: 200px 0 250px 0;
-  gap: 150px;
+  gap: 100px;
 }
 
 .right-side img {

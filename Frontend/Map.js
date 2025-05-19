@@ -193,13 +193,15 @@ d3.json('https://unpkg.com/world-atlas@2.0.2/countries-110m.json').then(worldDat
     .then(res => res.json())
     .then(data => {
       // Build lookup keyed by lowercase country names
-      data.forEach(entry => {
-        const key = entry.land.toLowerCase();
-        handelsdata[key] = {
-          eksport: parseFloat(entry.total_eksport),
-          import: parseFloat(entry.total_import)
-        };
-      });
+data.forEach(entry => {
+  const country = entry.land?.toLowerCase();
+  const year = entry.tid;
+  if (!handelsdata[country]) handelsdata[country] = {};
+  handelsdata[country][year] = {
+    import: parseFloat(entry.total_import),
+    eksport: parseFloat(entry.total_eksport)
+  };
+});
 
       // Color countries based on eksport
       svg.selectAll('path')
@@ -214,26 +216,32 @@ d3.json('https://unpkg.com/world-atlas@2.0.2/countries-110m.json').then(worldDat
         });
 
       // Info box on click
-      svg.selectAll('path')
-        .on('click', (event, d) => {
-          const infoBox = document.getElementById('info-box');
-          const name = d.properties.name;
-          const key = name.toLowerCase();
-          const info = handelsdata[key];
+svg.selectAll('path')
+  .on('click', (event, d) => {
+    const infoBox = document.getElementById('info-box');
+    const name = d.properties.name;
+    const key = name.toLowerCase();
+    const countryData = handelsdata[key];
 
-          if (infoBox) {
-            if (info) {
-              infoBox.innerHTML = `
-                <strong>${name}</strong><br>
-                <b>Eksport:</b> ${info.eksport.toLocaleString()} DKK<br>
-                <b>Import:</b> ${info.import.toLocaleString()} DKK
-              `;
-            } else {
-              infoBox.innerHTML = `<strong>${name}</strong><br>Ingen handelsdata`;
-            }
-            infoBox.style.display = 'block';
-          }
+    if (infoBox) {
+      if (countryData) {
+        let html = `<strong>${name}</strong><br>`;
+        const years = Object.keys(countryData).sort();
+        years.forEach(year => {
+          const entry = countryData[year];
+          html += `
+            <b>${year}</b><br>
+            Eksport: ${entry.eksport.toLocaleString()} DKK<br>
+            Import: ${entry.import.toLocaleString()} DKK<br><br>
+          `;
         });
+        infoBox.innerHTML = html;
+      } else {
+        infoBox.innerHTML = `<strong>${name}</strong><br>Ingen handelsdata`;
+      }
+      infoBox.style.display = 'block';
+    }
+  });
 
         // Tegn linjer
   const fromGeo = locations['Denmark'];

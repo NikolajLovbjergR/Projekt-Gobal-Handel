@@ -20,6 +20,7 @@ li, a {
 
 header {
   display: flex;
+  position: sticky;
   justify-content: space-around;
   align-items: center;
   top: 0;

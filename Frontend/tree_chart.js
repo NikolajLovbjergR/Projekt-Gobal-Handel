@@ -1,8 +1,8 @@
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 
 const margin = { top: 10, right: 20, bottom: 10, left: 20 },
-      width = 2000 - margin.left - margin.right,
-      height = 750 - margin.top - margin.bottom;
+      width = 1500 - margin.left - margin.right,
+      height = 700 - margin.top - margin.bottom;
 
 const svg = d3.select("#treemap")
   .append("svg")
@@ -30,43 +30,41 @@ fetch("http://localhost:3001/api/treemap")
       d.year = d.year.toString();
     });
 
-    const years = [...new Set(data.map(d => d.year))].sort();
+   const years = [...new Set(data.map(d => d.year))].sort();
 
-    const dropdown = d3.select("#treemap")
-      .insert("div", ":first-child")
-      .attr("id", "controls")
-      .style("margin-bottom", "20px")
-      .append("select")
-      .attr("id", "yearDropdown");
+const dropdown = d3.select("#yearDropdown");
 
-    dropdown.selectAll("option")
-      .data(years)
-      .enter()
-      .append("option")
-      .attr("value", d => d)
-      .text(d => d);
+dropdown.selectAll("option")
+  .data(years)
+  .enter()
+  .append("option")
+  .attr("value", d => d)
+  .text(d => d);
 
-    dropdown.on("change", function () {
-      updateTreemap(this.value);
-    });
+dropdown.on("change", function () {
+  const selectedYear = this.value;
+  updateTreemap(selectedYear);
+});
 
-    const legend = d3.select("#treemap")
+   const legend = d3.select("#treemap")
   .append("div")
   .attr("id", "legend")
-  .style("margin-top", "20px")
+  .style("margin-top", "10px")
   .style("display", "flex")
-  .style("gap", "20px")
+  .style("justify-content", "center")  // Centering
+  .style("gap", "30px")  // Adjust gap as needed
   .style("font-family", "sans-serif");
 
-legend.append("div").html(`
-  <div style="width:20px;height:20px;background:mediumseagreen;display:inline-block;margin-right:8px;"></div>
-  Eksport
-`);
 
-legend.append("div").html(`
-  <div style="width:20px;height:20px;background:tomato;display:inline-block;margin-right:8px;"></div>
-  Import
-`);
+    legend.append("div").html(`
+      <div style="width:20px;height:20px;background:mediumseagreen;display:inline-block;margin-right:8px;"></div>
+      Eksport
+    `);
+
+    legend.append("div").html(`
+      <div style="width:20px;height:20px;background:tomato;display:inline-block;margin-right:8px;"></div>
+      Import
+    `);
 
     updateTreemap(years[0]);
 
@@ -83,7 +81,8 @@ legend.append("div").html(`
               name: d.produkt,
               value: d.værdi,
               type: d.type,
-              land: d.land
+              land: d.land,
+              Tid: d.year
             }))
         }))
       };
@@ -98,9 +97,14 @@ legend.append("div").html(`
       treemapLayout(root);
 
       const colorScale = {
-        "Eksport": "mediumseagreen",
-        "Import": "tomato"
+        "Eksport": d3.scaleLinear()
+            .domain([0, d3.max(yearData, d => d.værdi)])
+            .range(['lightgreen', 'green']),
+        "Import": d3.scaleLinear()
+            .domain([0, d3.max(yearData, d => d.værdi)])
+            .range(['#ffcccb', 'red'])
       };
+
 
       const nodes = svg.selectAll("g.node")
         .data(root.leaves(), d => d.data.name + d.data.type + d.data.land);
@@ -113,10 +117,10 @@ legend.append("div").html(`
       nodeEnter.append("rect")
         .attr("width", d => d.x1 - d.x0)
         .attr("height", d => d.y1 - d.y0)
-        .attr("fill", d => colorScale[d.data.type])
+        .attr("fill", d => colorScale[d.data.type](d.data.value))
         .on("mouseover", (event, d) => {
           tooltip.style("display", "block")
-            .html(`<strong>${d.data.name}</strong><br>${d.data.type} fra <em>${d.data.land}</em>:<br>${d.data.value.toLocaleString()} kr.`);
+            .html(`<strong>${d.data.name}</strong><br>${d.data.type} fra <em>${d.data.land}</em>:<br>${d.data.Tid}<br>${d.data.value.toLocaleString()} kr.`);
         })
         .on("mousemove", event => {
           tooltip
@@ -128,7 +132,13 @@ legend.append("div").html(`
       nodeEnter.append("text")
         .attr("x", 4)
         .attr("y", 14)
-        .text(d => d.data.name)
+        .selectAll("tspan")
+        .data(d => d.data.name.split(" "))
+        .enter()
+        .append("tspan")
+        .attr("x", 4)
+        .attr("dy", "1.2em")
+        .text(word => word)
         .style("font-size", "12px")
         .style("fill", "white");
 

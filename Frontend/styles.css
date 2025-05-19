@@ -1,57 +1,62 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   background-color: #f9f6ee;
   font-family: "Montserrat", sans-serif;
 }
+/* Header */
 
 li, a {
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
   font-size: 16px;
-  color: #28282B;
+  color: #f9f6ee;
   text-decoration: none;
+  background-color: #28282B;
 }
 
 header {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  align-content: center;
   top: 0;
   height: 100px;
-
+  background-color: #28282B;
 }
 
 .nav-links {
-  list-style: none;
-
+  display: flex;
 }
 
 .nav-links li {
   display: inline-block;
-
 }
 
 .nav-links li a {
   transition: all 0.8 ease 0s;
   padding: 10px 10px;
-
+  margin: 0;
 }
 
 .nav-links li a:hover {
   border: none;
   border-radius: 5px;
-  background-color: rgba(40, 40, 43, 1);
-  color: #f9f6ee;
+  padding: 10px 10px;
+  background-color: rgba(249, 246, 238, 1);
+  color: #28282B;
 }
+
+/* Hero */
 
 .hero {
   font-family: "Montserrat", sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 200px 0 250px 0;
+  margin: 150px 0 250px 0;
   gap: 100px;
 }
 
@@ -65,6 +70,8 @@ header {
 .left-side {
   margin-left: 50px;
 }
+
+/* Map */
 
 .map-container svg {
   height: 850px;
@@ -87,7 +94,7 @@ header {
   background-color: #28282B;
   color: #f9f6ee;
   padding: 10px;
-  font-family: Montserrat, sans-serif;
+  font-family: "Montserrat", sans-serif;
   text-align: center;
   top: 20px;
   right: 20px;
@@ -142,17 +149,15 @@ header {
   margin-bottom: 100px;
 }
 
-body {  
-  margin: 0;
+/* Bar chart */
+
+.tooltip {
+  position: absolute;
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  pointer-events: none;
+  display: none;
 }
 
-.node { 
-  border: 1px solid #fff; 
-  text-align: center; 
-  overflow: hidden; 
-}
-
-.node text { 
-  pointer-events: none; 
-  font-size: 12px; 
-} 

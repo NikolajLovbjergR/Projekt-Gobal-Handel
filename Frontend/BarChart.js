@@ -25,14 +25,6 @@ const dropdown = d3.select("#yearSelect");
 // Tooltip
 const tooltip = d3.select("body").append("div")
   .attr("class", "tooltip")
-  .style("position", "absolute")
-  .style("background", "#fff")
-  .style("border", "1px solid #ccc")
-  .style("padding", "6px 10px")
-  .style("border-radius", "4px")
-  .style("box-shadow", "0 0 5px rgba(0,0,0,0.1)")
-  .style("pointer-events", "none")
-  .style("display", "none");
 
 // Hent data fra server
 fetch("http://localhost:3001/api/samlede")

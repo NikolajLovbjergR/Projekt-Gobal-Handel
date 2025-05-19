@@ -14,13 +14,6 @@ const svg = d3.select("#treemap")
 const tooltip = d3.select("body")
   .append("div")
   .attr("class", "tooltip-tree")
-  .style("position", "absolute")
-  .style("background", "white")
-  .style("color", "black")
-  .style("padding", "5px 10px")
-  .style("border-radius", "4px")
-  .style("box-shadow", "0 0 5px rgba(0,0,0,0.15)")
-  .style("display", "none");
 
 fetch("http://localhost:3001/api/treemap")
   .then(res => res.json())

@@ -270,3 +270,17 @@ header {
   background: none;
   color: #28282B;
 }
+
+#treemap-os {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  text-align: center;
+  margin: 150px 0 50px 0;
+}
+
+#yearDropdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

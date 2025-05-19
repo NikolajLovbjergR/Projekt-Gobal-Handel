@@ -87,7 +87,7 @@ fetch("http://localhost:3001/api/samlede")
         .attr("fill", "tomato")
         .on("mouseover", function (event, d) {
           tooltip.style("display", "block")
-                 .html(`<strong>${d.land}</strong><br>Import: ${d.import.toLocaleString()}`);
+                 .html(`<strong>Import:</strong> ${Math.abs(d.import).toLocaleString('da-DK')} milliarder kroner`);
         })
         .on("mousemove", function (event) {
           tooltip
@@ -105,7 +105,7 @@ fetch("http://localhost:3001/api/samlede")
         .attr("fill", "mediumseagreen")
         .on("mouseover", function (event, d) {
           tooltip.style("display", "block")
-                 .html(`<strong>${d.land}</strong><br>Eksport: ${d.eksport.toLocaleString()}`);
+                 .html(`<strong>Eksport:</strong> ${Math.abs(d.eksport).toLocaleString('da-DK')} milliarder kroner`);
         })
         .on("mousemove", function (event) {
           tooltip

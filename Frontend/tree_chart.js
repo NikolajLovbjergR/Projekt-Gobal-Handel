@@ -74,40 +74,23 @@ function wrapText(text) {
   return words.map(word => `${word}`).join("\n");
 }
 
-// === Funktion: updateTreemap - Opdaterer treemap baseret på valgt år ===
 function updateTreemap(selectedYear) {
-  // Henter data fra CSV-filerne
-  Promise.all([
-    d3.csv('/DB/treemap_import_max.csv'),
-    d3.csv('/DB/treemap_export_max.csv')
-  ]).then(([importData, exportData]) => {
+  fetch('http://localhost:3001/api/handel')
+    .then(res => res.json())
+    .then(data => {
+      const dataProcessed = [];
 
-    const data = [];
-
-    // Filtrerer data baseret på valgt år
-    importData.filter(d => d.TID === selectedYear).forEach(d => {
-      data.push({
-        name: `${d.LAND} Import ${d.TID}`,
-        parent: "root",
-        value: +d.INDHOLD,
-        LAND: d.LAND,
-        TID: d.TID,
-        SITC: d.SITC,
-        type: "Import"
-      });
-    });
-
-    exportData.filter(d => d.TID === selectedYear).forEach(d => {
-      data.push({
-        name: `${d.LAND} Eksport ${d.TID}`,
-        parent: "root",
-        value: +d.INDHOLD,
-        LAND: d.LAND,
-        TID: d.TID,
-        SITC: d.SITC,
-        type: "Eksport"
-      });
-    });
+      data.filter(entry => entry.year === selectedYear).forEach(entry => {
+        dataProcessed.push({
+          name: `${entry.land} ${entry.type} ${entry.year}`,
+          parent: "root",
+          value: +entry.value,
+          LAND: entry.land,
+          TID: entry.year,
+          SITC: entry.sitc,
+          type: entry.type
+        });
+      }); 
 
     data.push({ name: "root", parent: null, value: 0 });
 
@@ -145,7 +128,7 @@ function updateTreemap(selectedYear) {
       .style("stroke", "white")
       .on("mouseover", function(event, d) {
         tooltip.style("display", "block")
-               .html(`${d.data.LAND}<br>Type: ${d.data.type}<br>Value: ${d.data.value},<br>SITC: ${d.data.SITC},<br>Tid: ${d.data.TID} `)
+               .html(`${d.data.LAND}<br>Type: ${d.data.type}<br>Value: ${(d.data.value * 1000).toLocaleString('da-DK')},<br>SITC: ${d.data.SITC},<br>Tid: ${d.data.TID} `)
       })
       .on("mousemove", function(event) {
         tooltip.style("left", `${event.pageX + 10}px`)

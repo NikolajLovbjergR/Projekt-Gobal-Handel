@@ -81,6 +81,27 @@ header {
   padding: 25px 0 0 0;
   }
 
+#info-box {
+  position: relative;
+  display: none;
+  background-color: #28282B;
+  color: #f9f6ee;
+  padding: 10px;
+  font-family: Montserrat, sans-serif;
+  text-align: center;
+  top: 20px;
+  right: 20px;
+  width: 250px;
+  height: auto;
+}
+
+#info-box strong,
+#info-box b
+{
+  background: none;
+  color: #f9f6ee;
+}
+
 #kort-over {
   font-family: "Montserrat", sans-serif;
   text-align: center;
@@ -104,9 +125,19 @@ header {
   fill: red;
 }
 
-.kort-text {
+.textbg {
   background-color: #28282B;
-  padding: 25px;
+}
+
+.kort-text {
+  text-align: center;
+  background-color: #28282B;
+  padding: 35px;
+  color: #f9f6ee;
+  font-size: 18px;
+  max-width: 1000px;
+  margin: auto;
+  margin-bottom: 100px;
 }
 
 body {  

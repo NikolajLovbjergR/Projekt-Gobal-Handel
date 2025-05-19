@@ -128,11 +128,11 @@ header {
 }
 
 .country {
-  fill: green;
+  fill: #27ae60;
 }
 
 .country:hover {
-  fill: red;
+  fill: #c0392b;
 }
 
 .textbg {

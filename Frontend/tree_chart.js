@@ -13,7 +13,7 @@ const svg = d3.select("#treemap")
 
 const tooltip = d3.select("body")
   .append("div")
-  .attr("class", "tooltip")
+  .attr("class", "tooltip-tree")
   .style("position", "absolute")
   .style("background", "white")
   .style("color", "black")

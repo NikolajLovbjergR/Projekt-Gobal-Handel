@@ -154,9 +154,9 @@ header {
 
 .tooltip {
   position: absolute;
-  border: 1px solid #ccc;
+  border: 2px solid #28282B;
   padding: 6px 10px;
-  border-radius: 4px;
+  border-radius: 5px;
   box-shadow: 0 0 5px rgba(0,0,0,0.1);
   pointer-events: none;
   display: none;
@@ -185,11 +185,12 @@ header {
 }
 
 .bar-right {
+  font-family: "Montserrat", sans-serif;
   max-width: 600px;
   border: #28282B 2px solid;
   border-radius: 5px;
   padding: 15px;
-  font-size: 16px;
+  font-size: 18px;
   color: #28282B;
 }
 
@@ -202,9 +203,9 @@ header {
 .tooltip-line {
   position: absolute;
   background-color: #28282B;
-  border: 1px solid #f9f6ee;
+  border: 2px solid #f9f6ee;
   padding: 6px 10px;
-  border-radius: 4px;
+  border-radius: 5px;
   box-shadow: 0 0 5px rgba(0,0,0,0.1);
   pointer-events: none;
   display: none;
@@ -238,7 +239,8 @@ header {
 }
 
 .line-text {
-  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
   color: #f9f6ee;
   max-width: 600px;
   border: #f9f6ee 2px solid;
@@ -249,4 +251,22 @@ header {
 
 #chart {
   background-color: #28282B;
+}
+
+/* Tree map */
+
+.tooltip-tree {
+  position: absolute;
+  color: #28282B;
+  padding: 5px 10px;
+  border: 2px #28282B solid;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.15);
+  display: none;
+}
+
+.tooltip-tree strong,
+.tooltip-tree p {
+  background: none;
+  color: #28282B;
 }

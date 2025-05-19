@@ -1,177 +1,147 @@
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 
-// === Konfiguration af dimensioner og margener ===
-const margin = { top: 10, right: 20, bottom: 60, left: 20 };
-const width = 1000 - margin.left - margin.right;
-const height = 500 - margin.top - margin.bottom;
+const margin = { top: 10, right: 20, bottom: 10, left: 20 },
+      width = 2000 - margin.left - margin.right,
+      height = 750 - margin.top - margin.bottom;
 
-// === Dropdown-menu for valg af årstal ===
-d3.select("#yearDropdown")
-  .selectAll("option")
-  .data(["2018", "2019", "2020", "2021"])
-  .enter()
-  .append("option")
-  .attr("value", d => d)
-  .text(d => d);
-
-// === SVG-container oprettelse ===
-
-  const svg = d3.select("#treemap-container")
+const svg = d3.select("#treemap")
   .append("svg")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
   .append("g")
   .attr("transform", `translate(${margin.left},${margin.top})`);
 
-// === Tooltip-opsætning ===
-const tooltip = d3.select("#treemap-container")
+const tooltip = d3.select("body")
   .append("div")
   .attr("class", "tooltip")
   .style("position", "absolute")
+  .style("background", "white")
   .style("color", "black")
-  .style("padding", "5px")
-  .style("border-radius", "3px")
+  .style("padding", "5px 10px")
+  .style("border-radius", "4px")
+  .style("box-shadow", "0 0 5px rgba(0,0,0,0.15)")
   .style("display", "none");
 
-// === Farveindikatorer for Import og Eksport ===
-const legendY = height + 30;
+fetch("http://localhost:3001/api/treemap")
+  .then(res => res.json())
+  .then(data => {
+    data.forEach(d => {
+      d.værdi = +d.værdi;
+      d.year = d.year.toString();
+    });
 
-// Import (Blå)
-svg.append("rect")
-  .attr("x", width / 2 - 100)
-  .attr("y", legendY)
-  .attr("width", 20)
-  .attr("height", 20)
-  .style("fill", "lightgreen");
+    const years = [...new Set(data.map(d => d.year))].sort();
 
-svg.append("text")
-  .attr("x", width / 2 - 70)
-  .attr("y", legendY + 15)
-  .attr("font-size", "12px")
-  .attr("fill", "green")
-  .style("font-weight", "bold")
-  .text("Import");
+    const dropdown = d3.select("#treemap")
+      .insert("div", ":first-child")
+      .attr("id", "controls")
+      .style("margin-bottom", "20px")
+      .append("select")
+      .attr("id", "yearDropdown");
 
-// Eksport (Orange)
-svg.append("rect")
-  .attr("x", width / 2 + 30)
-  .attr("y", legendY)
-  .attr("width", 20)
-  .attr("height", 20)
-  .style("fill", "#ffb6c1");
-
-svg.append("text")
-  .attr("x", width / 2 + 60)
-  .attr("y", legendY + 15)
-  .attr("font-size", "12px")
-  .attr("fill", "#ff0066")
-  .style("font-weight", "bold")
-  .text("Eksport");
-
-// === Funktion: wrapText - Opdeler tekst i linjer med bindestreg ===
-function wrapText(text) {
-  const words = text.split(" ");
-  return words.map(word => `${word}`).join("\n");
-}
-
-function updateTreemap(selectedYear) {
-  fetch('http://localhost:3001/api/handel')
-    .then(res => res.json())
-    .then(data => {
-      const dataProcessed = [];
-
-      data.filter(entry => entry.year === selectedYear).forEach(entry => {
-        dataProcessed.push({
-          name: `${entry.land} ${entry.type} ${entry.year}`,
-          parent: "root",
-          value: +entry.value,
-          LAND: entry.land,
-          TID: entry.year,
-          SITC: entry.sitc,
-          type: entry.type
-        });
-      }); 
-
-    data.push({ name: "root", parent: null, value: 0 });
-
-    // Maksimal værdi bruges til farveskala
-    const maxValue = d3.max(data, d => d.value);
-
-    // Farveskalaer
-    const importColor = d3.scaleLinear().domain([0, maxValue]).range(["#f5b7b1", "#c0392b"]);
-    const exportColor = d3.scaleLinear().domain([0, maxValue]).range(["#d4efdf", "#27ae60"]);
-    // Hierarkisk struktur til treemap
-    const root = d3.stratify()
-      .id(d => d.name)
-      .parentId(d => d.parent)(data);
-
-    root.sum(d => d.value);
-
-    // Tegner treemap
-    d3.treemap().size([width, height]).padding(1)(root);
-
-    // Rydder tidligere rektangler og labels
-    svg.selectAll(".data-rect").remove();
-    svg.selectAll(".text-label").remove();
-
-    // Tegner rektangler
-    svg.selectAll("rect.data-rect")
-      .data(root.leaves())
+    dropdown.selectAll("option")
+      .data(years)
       .enter()
-      .append("rect")
-      .attr("class", "data-rect")
-      .attr("x", d => d.x0)
-      .attr("y", d => d.y0)
-      .attr("width", d => d.x1 - d.x0)
-      .attr("height", d => d.y1 - d.y0)
-      .style("fill", d => d.data.type === 'Import' ? importColor(d.data.value) : exportColor(d.data.value))
-      .style("stroke", "white")
-      .on("mouseover", function(event, d) {
-        tooltip.style("display", "block")
-               .html(`${d.data.LAND}<br>Type: ${d.data.type}<br>Value: ${(d.data.value * 1000).toLocaleString('da-DK')},<br>SITC: ${d.data.SITC},<br>Tid: ${d.data.TID} `)
-      })
-      .on("mousemove", function(event) {
-        tooltip.style("left", `${event.pageX + 10}px`)
-               .style("top", `${event.pageY + 10}px`);
-      })
-      .on("mouseout", function() {
-        tooltip.style("display", "none");
-      });;
-
-    // Tilføjer SITC tekst med bindestreg
-    svg.selectAll(".text-label")
-      .data(root.leaves())
-      .enter()
-      .append("text")
-      .attr("class", "text-label")
-      .attr("x", d => d.x0 + 5)
-      .attr("y", d => d.y0 + 15)
-      .attr("font-size", "10px")
-      .attr("fill", "white")
-      .style("font-weight", "bold")
-      .selectAll("tspan")
-      .data(d => wrapText(d.data.SITC).split("\n"))
-      .enter()
-      .append("tspan")
-      .attr("x", function(_, i, nodes) {
-        return d3.select(nodes[i].parentNode).attr("x");
-      })
-      .attr("dy", (d, i) => i === 0 ? 0 : 12)
+      .append("option")
+      .attr("value", d => d)
       .text(d => d);
 
-  }).catch(error => {
-    console.error("Fejl ved indlæsning af data:", error);
+    dropdown.on("change", function () {
+      updateTreemap(this.value);
+    });
+
+    const legend = d3.select("#treemap")
+  .append("div")
+  .attr("id", "legend")
+  .style("margin-top", "20px")
+  .style("display", "flex")
+  .style("gap", "20px")
+  .style("font-family", "sans-serif");
+
+legend.append("div").html(`
+  <div style="width:20px;height:20px;background:mediumseagreen;display:inline-block;margin-right:8px;"></div>
+  Eksport
+`);
+
+legend.append("div").html(`
+  <div style="width:20px;height:20px;background:tomato;display:inline-block;margin-right:8px;"></div>
+  Import
+`);
+
+    updateTreemap(years[0]);
+
+    function updateTreemap(selectedYear) {
+      const yearData = data.filter(d => d.year === selectedYear);
+
+      const hierarchyData = {
+        name: "root",
+        children: ["Eksport", "Import"].map(type => ({
+          name: type,
+          children: yearData
+            .filter(d => d.type === type)
+            .map(d => ({
+              name: d.produkt,
+              value: d.værdi,
+              type: d.type,
+              land: d.land
+            }))
+        }))
+      };
+
+      const root = d3.hierarchy(hierarchyData)
+        .sum(d => d.value);
+
+      const treemapLayout = d3.treemap()
+        .size([width, height])
+        .padding(1);
+
+      treemapLayout(root);
+
+      const colorScale = {
+        "Eksport": "mediumseagreen",
+        "Import": "tomato"
+      };
+
+      const nodes = svg.selectAll("g.node")
+        .data(root.leaves(), d => d.data.name + d.data.type + d.data.land);
+
+      const nodeEnter = nodes.enter()
+        .append("g")
+        .attr("class", "node")
+        .attr("transform", d => `translate(${d.x0},${d.y0})`);
+
+      nodeEnter.append("rect")
+        .attr("width", d => d.x1 - d.x0)
+        .attr("height", d => d.y1 - d.y0)
+        .attr("fill", d => colorScale[d.data.type])
+        .on("mouseover", (event, d) => {
+          tooltip.style("display", "block")
+            .html(`<strong>${d.data.name}</strong><br>${d.data.type} fra <em>${d.data.land}</em>:<br>${d.data.value.toLocaleString()} kr.`);
+        })
+        .on("mousemove", event => {
+          tooltip
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 20) + "px");
+        })
+        .on("mouseout", () => tooltip.style("display", "none"));
+
+      nodeEnter.append("text")
+        .attr("x", 4)
+        .attr("y", 14)
+        .text(d => d.data.name)
+        .style("font-size", "12px")
+        .style("fill", "white");
+
+      nodes.transition()
+        .duration(500)
+        .attr("transform", d => `translate(${d.x0},${d.y0})`)
+        .select("rect")
+        .attr("width", d => d.x1 - d.x0)
+        .attr("height", d => d.y1 - d.y0);
+
+      nodes.exit().remove();
+    }
+  })
+  .catch(error => {
+    console.error("Fejl ved hentning af treemap-data:", error);
   });
-}
-
-// Initielt kald ved første indlæsning
-updateTreemap("2018");
-
-// Event listener for dropdown-menuen
-d3.select("#yearDropdown").on("change", function() {
-  const selectedYear = d3.select(this).property("value");
-  updateTreemap(selectedYear);
-});
-
-
-

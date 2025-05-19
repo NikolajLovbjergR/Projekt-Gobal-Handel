@@ -1,16 +1,19 @@
 {
+    "name": "p25-projekt",
+    "version": "1.0.0",
     "private": true,
     "type": "module",
     "scripts": {
-        "createDb": "node DB/createDb.js",
-        "dev": "nodemon Backend/server.js"
+      "createDb": "node DB/createDb.js",
+      "dev": "nodemon Backend/server.js"
     },
     "dependencies": {
-        "cors": "^2.8.5",
-        "dotenv": "16.4.7",
-        "express": "4.21.2",
-        "nodemon": "3.1.9",
-        "pg": "8.13.1",
-        "pg-upload": "0.0.3"
+      "cors": "^2.8.5",
+      "dotenv": "16.4.7",
+      "express": "4.21.2",
+      "nodemon": "3.1.9",
+      "pg": "8.13.1",
+      "pg-upload": "0.0.3"
     }
-}
+  }
+  

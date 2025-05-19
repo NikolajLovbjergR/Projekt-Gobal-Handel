@@ -83,3 +83,48 @@ server.get('/api/linechart', async (req, res) => {
     res.status(500).send('Databasefejl');
   }
 });
+
+server.get('/api/treemap', async (req, res) => {
+  try {
+    const result = await db.query(`
+      WITH eksport_ranked AS (
+        SELECT
+          tid AS year,
+          land,
+          sitc AS produkt,
+          'Eksport' AS type,
+          SUM(indhold) AS værdi,
+          ROW_NUMBER() OVER (PARTITION BY tid, sitc ORDER BY SUM(indhold) DESC) AS rk
+        FROM eksport
+        GROUP BY tid, sitc, land
+      ),
+      import_ranked AS (
+        SELECT
+          tid AS year,
+          land,
+          sitc AS produkt,
+          'Import' AS type,
+          SUM(indhold) AS værdi,
+          ROW_NUMBER() OVER (PARTITION BY tid, sitc ORDER BY SUM(indhold) DESC) AS rk
+        FROM import
+        GROUP BY tid, sitc, land
+      )
+
+      SELECT year, land, produkt, type, værdi
+      FROM eksport_ranked
+      WHERE rk = 1
+
+      UNION ALL
+
+      SELECT year, land, produkt, type, værdi
+      FROM import_ranked
+      WHERE rk = 1
+
+      ORDER BY year, type, værdi DESC;
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Fejl ved hentning af treemap-data:', err);
+    res.status(500).send('Databasefejl');
+  }
+});

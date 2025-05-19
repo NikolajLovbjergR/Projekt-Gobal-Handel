@@ -43,24 +43,24 @@ console.log('Database connection established on', dbResult.rows[0].now);
 
   await db.query(`
     drop table if exists eksport;
-    CREATE TABLE eksport (
-      eksport_id INTEGER,
-      land TEXT,
-      tid   INTEGER,
-      indhold NUMERIC,
-      sitc TEXT
-    );
+   CREATE TABLE eksport (
+  eksport_id INTEGER,
+  land TEXT,
+  tid INTEGER,
+  indhold NUMERIC,
+  sitc TEXT
+);
   `);
 
   await db.query(`
     drop table if exists import;
     CREATE TABLE import (
-      import_id INTEGER,
-      land TEXT,
-      tid   INTEGER,
-      indhold NUMERIC,
-      sitc TEXT
-    );
+  import_id INTEGER,
+  land TEXT,
+  tid INTEGER,
+  indhold NUMERIC,
+  sitc TEXT
+);
   `);
 
   console.log('Tables recreated.');

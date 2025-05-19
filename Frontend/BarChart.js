@@ -1,11 +1,10 @@
-import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';  // Importerer D3.js biblioteket
+import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 
 // Margener og tegneområde
-const margin = { top: 40, right: 30, bottom: 50, left: 100 },
+const margin = { top: 40, right: 30, bottom: 50, left: 120 },
       width = 1000 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
+      height = 600 - margin.top - margin.bottom;
 
-// Vælger SVG og tilføjer en <g> gruppe med margin
 const svg = d3.select("#bar-svg")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
@@ -13,126 +12,122 @@ const svg = d3.select("#bar-svg")
   .attr("transform", `translate(${margin.left},${margin.top})`);
 
 // Skalaer
-const x = d3.scaleLinear().range([0, width]);     // vandret skala (import/eksport)
-const y = d3.scaleBand().range([0, height]).padding(0.2); // lodret skala (lande)
+const x = d3.scaleLinear().range([0, width]);
+const y = d3.scaleBand().range([0, height]).padding(0.2);
 
-// Akse-elementer
+// Akser
 const xAxis = svg.append("g").attr("transform", `translate(0,${height})`);
 const yAxis = svg.append("g");
 
-// Dropdown til at vælge årstal
+// Dropdown
 const dropdown = d3.select("#yearSelect");
 
-// Tooltip til mus-over
-var tooltip = d3.select("body")
-  .append("div")
-  .attr("class", "tooltip") //giver en class
+// Tooltip
+const tooltip = d3.select("body").append("div")
+  .attr("class", "tooltip")
   .style("position", "absolute")
-  .style("color", "black")
-  .style("padding", "5px")
-  .style("border-radius", "5px")
+  .style("background", "#fff")
+  .style("border", "1px solid #ccc")
+  .style("padding", "6px 10px")
+  .style("border-radius", "4px")
+  .style("box-shadow", "0 0 5px rgba(0,0,0,0.1)")
+  .style("pointer-events", "none")
+  .style("display", "none");
 
-// Læs data fra én CSV-fil
-d3.csv("/DB/BarChart.csv").then(data => {
-  const years = [...new Set(data.map(d => d["År"]))].sort();  // Find årstal
+// Hent data fra server
+fetch("http://localhost:3001/api/samlede")
+  .then(res => res.json())
+  .then(data => {
+    data.forEach(d => {
+      d.import = +d.import;
+      d.eksport = +d.eksport;
+      d.tid = +d.tid;
+    });
 
-  // Fyld dropdown med år
-  dropdown.selectAll("option")
-    .data(years)
-    .enter()
-    .append("option")
-    .text(d => d);
+    const years = [...new Set(data.map(d => d.tid))].sort();
+    dropdown.selectAll("option")
+      .data(years)
+      .enter()
+      .append("option")
+      .text(d => d);
 
-  // Funktion der tegner/opdaterer grafen
-  function update(year) {
-    // Filtrer data for det valgte år
-    const filtered = data.filter(d => d["År"] === year);
+    updateChart(years[0]);
 
-    // Konverter værdier til tal
-    const parsed = filtered.map(d => ({
-      land: d.LAND,
-      import: -(+d.IMPORT),         // import til venstre (negativ)
-      export: +d["Eksport"]         // eksport til højre (positiv)
-    }));
+    dropdown.on("change", function () {
+      updateChart(+this.value);
+    });
 
-    // Find maksimum værdi til begge sider
-    const maxVal = d3.max(parsed, d => Math.max(Math.abs(d.import), Math.abs(d.export)));
+    function updateChart(selectedYear) {
+      const yearData = data.filter(d => d.tid === selectedYear);
 
-    // Opdater skalaer
-    x.domain([-maxVal, maxVal]);
-    y.domain(parsed.map(d => d.land));
+      // Sortering efter største værdi (import eller eksport)
+      yearData.sort((a, b) => Math.max(b.import, b.eksport) - Math.max(a.import, a.eksport));
 
-    // Opdater akser med dansk format på tal
-    xAxis.transition().duration(500).call(
-      d3.axisBottom(x).tickFormat(d => d.toLocaleString('da-DK'))
-    );
-    yAxis.transition().duration(500).call(d3.axisLeft(y));
+      const maxValue = d3.max(yearData, d => Math.max(d.import, d.eksport));
+      x.domain([-maxValue, maxValue]);
+      y.domain(yearData.map(d => d.land));
 
-    // Bind data til grupper
-    const groups = svg.selectAll(".barGroup").data(parsed, d => d.land);
+      xAxis.transition().duration(800).call(d3.axisBottom(x).ticks(10));
+      yAxis.transition().duration(800).call(d3.axisLeft(y));
 
-    const newGroups = groups.enter()
-      .append("g")
-      .attr("class", "barGroup")
-      .attr("transform", d => `translate(0, ${y(d.land)})`);
+      const bars = svg.selectAll("g.bar-group")
+        .data(yearData, d => d.land);
 
-    // Tilføj søjler
-    newGroups.append("rect").attr("class", "bar import");
-    newGroups.append("rect").attr("class", "bar export");
+      const barsEnter = bars.enter()
+        .append("g")
+        .attr("class", "bar-group")
+        .attr("transform", d => `translate(0, ${y(d.land)})`);
 
-    // Import søjle
-    groups.merge(newGroups).select(".import")
-      .transition().duration(500)
-      .attr("x", d => x(d.import))
-      .attr("width", d => x(0) - x(d.import))
-      .attr("height", y.bandwidth())
-      .attr("fill", "#e74c3c");  // Rød
+      // Import (venstre, rød)
+      barsEnter.append("rect")
+        .attr("x", d => x(-d.import))
+        .attr("y", 0)
+        .attr("height", y.bandwidth())
+        .attr("width", d => x(0) - x(-d.import))
+        .attr("fill", "tomato")
+        .on("mouseover", function (event, d) {
+          tooltip.style("display", "block")
+                 .html(`<strong>${d.land}</strong><br>Import: ${d.import.toLocaleString()}`);
+        })
+        .on("mousemove", function (event) {
+          tooltip
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 20) + "px");
+        })
+        .on("mouseout", () => tooltip.style("display", "none"));
 
-    // Tooltip for import
-    groups.merge(newGroups).select(".import")
-      .on("mouseover", (event, d) => {
-        tooltip.style("opacity", 1)
-               .html(`<strong>Import:</strong> ${Math.abs(d.import).toLocaleString('da-DK')} milliarder kroner`);
-      })
-      .on("mousemove", (event) => {
-        tooltip.style("left", (event.pageX + 10) + "px")
-               .style("top", (event.pageY - 28) + "px");
-      })
-      .on("mouseout", () => {
-        tooltip.style("opacity", 0);
-      });
+      // Eksport (højre, grøn)
+      barsEnter.append("rect")
+        .attr("x", x(0))
+        .attr("y", 0)
+        .attr("height", y.bandwidth())
+        .attr("width", d => x(d.eksport) - x(0))
+        .attr("fill", "mediumseagreen")
+        .on("mouseover", function (event, d) {
+          tooltip.style("display", "block")
+                 .html(`<strong>${d.land}</strong><br>Eksport: ${d.eksport.toLocaleString()}`);
+        })
+        .on("mousemove", function (event) {
+          tooltip
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 20) + "px");
+        })
+        .on("mouseout", () => tooltip.style("display", "none"));
 
-    // Eksport søjle
-    groups.merge(newGroups).select(".export")
-      .transition().duration(500)
-      .attr("x", x(0))
-      .attr("width", d => x(d.export) - x(0))
-      .attr("height", y.bandwidth())
-      .attr("fill", "#2ecc71");  // Grøn
+      // UPDATE
+      bars.selectAll("rect")
+        .data(d => [d, d])
+        .transition()
+        .duration(800)
+        .attr("x", (d, i) => i === 0 ? x(-d.import) : x(0))
+        .attr("width", (d, i) => i === 0 ? x(0) - x(-d.import) : x(d.eksport) - x(0))
+        .attr("height", y.bandwidth())
+        .attr("fill", (d, i) => i === 0 ? "tomato" : "mediumseagreen");
 
-    // Tooltip for eksport
-    groups.merge(newGroups).select(".export")
-      .on("mouseover", (event, d) => {
-        tooltip.style("opacity", 1)
-               .html(`<strong>Eksport:</strong> ${d.export.toLocaleString('da-DK')} milliarder kroner`);
-      })
-      .on("mousemove", (event) => {
-        tooltip.style("left", (event.pageX + 10) + "px")
-               .style("top", (event.pageY - 28) + "px");
-      })
-      .on("mouseout", () => {
-        tooltip.style("opacity", 0);
-      });
-
-    // Fjern gamle grupper
-    groups.exit().remove();
-  }
-
-  // Håndter ændring i dropdown
-  dropdown.on("change", function () {
-    update(this.value);
+      // EXIT
+      bars.exit().remove();
+    }
+  })
+  .catch(error => {
+    console.error("Fejl ved hentning af data:", error);
   });
-
-  // Start med første år
-  update(years[0]);
-});

@@ -55,11 +55,11 @@ server.get('/api/handel', async (req, res) => {
   }
 });
 
-server.get('/api/bar', async (req, res) => {
+server.get('/api/samlede', async (req, res) => {
+
   try {
     const result = await db.query(`
-      SELECT tid AS år, land, import, eksport
-      FROM samlede
+      SELECT tid, land, import, eksport FROM samlede
       ORDER BY tid, land
     `);
     res.json(result.rows);

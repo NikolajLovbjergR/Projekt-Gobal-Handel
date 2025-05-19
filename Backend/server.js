@@ -54,3 +54,17 @@ server.get('/api/handel', async (req, res) => {
     res.status(500).send('Databasefejl');
   }
 });
+
+server.get('/api/bar', async (req, res) => {
+  try {
+    const result = await db.query(`
+      SELECT tid AS år, land, import, eksport
+      FROM samlede
+      ORDER BY tid, land
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Fejl ved hentning af bar chart data:', err);
+    res.status(500).send('Databasefejl');
+  }
+});

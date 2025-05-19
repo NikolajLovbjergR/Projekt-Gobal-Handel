@@ -68,3 +68,18 @@ server.get('/api/samlede', async (req, res) => {
     res.status(500).send('Databasefejl');
   }
 });
+
+
+server.get('/api/linechart', async (req, res) => {
+  try {
+    const result = await db.query(`
+      SELECT tid AS "Tid", eksport AS "Eksport", import AS "Import", netto AS "Netto"
+      FROM handel
+      ORDER BY tid;
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Fejl ved hentning af linechart-data:', err);
+    res.status(500).send('Databasefejl');
+  }
+});

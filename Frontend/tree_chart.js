@@ -92,10 +92,10 @@ dropdown.on("change", function () {
       const colorScale = {
         "Eksport": d3.scaleLinear()
             .domain([0, d3.max(yearData, d => d.værdi)])
-            .range(['lightgreen', 'green']),
+            .range(['lightgreen', '#27ae60']),
         "Import": d3.scaleLinear()
             .domain([0, d3.max(yearData, d => d.værdi)])
-            .range(['#ffcccb', 'red'])
+            .range(['#ffcccb', '#c0392b'])
       };
 
 

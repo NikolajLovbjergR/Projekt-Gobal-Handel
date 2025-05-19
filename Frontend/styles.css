@@ -279,8 +279,24 @@ header {
   margin: 150px 0 50px 0;
 }
 
-#yearDropdown {
+.yearselect {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#treemap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Montserrat", sans-serif;
+}
+
+.tree-text {
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
+  color: #28282B;
+  max-width: 1200px;
+  margin: 50px auto;
+
 }

@@ -1,7 +1,6 @@
 // Importerer D3.js biblioteket fra CDN
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 
-// Henter data fra lokal server (fra din backend)
 fetch("http://localhost:3001/api/linechart")
   .then(res => res.json())
   .then(data => {

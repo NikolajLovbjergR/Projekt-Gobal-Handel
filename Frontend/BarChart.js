@@ -28,7 +28,7 @@ const dropdown = d3.select("#yearSelect");
 const tooltip = d3.select("body").append("div")
   .attr("class", "tooltip");
 
-// Hent data fra lokal server
+// Hent data fra server
 fetch("http://localhost:3001/api/samlede")
   .then(res => res.json())
   .then(data => {

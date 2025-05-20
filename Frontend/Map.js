@@ -39,7 +39,7 @@ d3.json('https://unpkg.com/world-atlas@2.0.2/countries-110m.json').then(worldDat
     .attr('fill', '#ccc') // default fill
     .attr('stroke', '#28282B');
 
-  fetch('http://localhost:3001/api/handel')
+  fetch('/api/handel')
     .then(res => res.json())
     .then(data => {
 data.forEach(entry => {

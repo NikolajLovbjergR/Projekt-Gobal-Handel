@@ -26,6 +26,18 @@ const locations = {
   Italy: [12.5674, 41.8719]
 };
 
+  fetch('/api/handel')
+    .then(res => res.json())
+    .then(data => {
+data.forEach(entry => {
+  const country = entry.land?.toLowerCase();
+  const year = entry.tid;
+  if (!handelsdata[country]) handelsdata[country] = {};
+  handelsdata[country][year] = {
+    import: parseFloat(entry.total_import),
+    eksport: parseFloat(entry.total_eksport)
+  };
+
 // D3 henter en verdenskort fil i TopoJSON format fra internettet. Når kortet er hentet kalder vi worldData
 d3.json('https://unpkg.com/world-atlas@2.0.2/countries-110m.json').then(worldData => {
   const countries = feature(worldData, worldData.objects.countries).features; // Her bliver TopoJSON konveteret til geoJSON som D3 kan forstå
@@ -38,18 +50,6 @@ d3.json('https://unpkg.com/world-atlas@2.0.2/countries-110m.json').then(worldDat
     .attr('d', pathGenerator)
     .attr('fill', '#ccc') // default fill
     .attr('stroke', '#28282B');
-
-  fetch('/api/handel')
-    .then(res => res.json())
-    .then(data => {
-data.forEach(entry => {
-  const country = entry.land?.toLowerCase();
-  const year = entry.tid;
-  if (!handelsdata[country]) handelsdata[country] = {};
-  handelsdata[country][year] = {
-    import: parseFloat(entry.total_import),
-    eksport: parseFloat(entry.total_eksport)
-  };
 
 
       // Info box on click

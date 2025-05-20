@@ -1,7 +1,7 @@
 // Importerer D3.js biblioteket fra CDN
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 
-fetch("http://localhost:3001/api/linechart")
+fetch("/api/linechart")
   .then(res => res.json())
   .then(data => {
     // Forbered data: konverter tekst til tal og ensret formater

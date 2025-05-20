@@ -2,9 +2,9 @@ import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 // Importerer D3-biblioteket fra CDN
 
 // Definér marginer og dimensioner for treemappet
-const margin = { top: 10, right: 20, bottom: 10, left: 20 },
-      width = 1500 - margin.left - margin.right,
-      height = 700 - margin.top - margin.bottom;
+const margin = { top: 5, right: 0, bottom: 10, left: 0 },
+      width = 1175 - margin.left - margin.right,
+      height = 650 - margin.top - margin.bottom;
 // Opretter SVG-container som diagrammet skal tegnes i
 const svg = d3.select("#treemap")
   .append("svg")
@@ -132,11 +132,11 @@ dropdown.on("change", function () {
         .enter()
         .append("tspan")
         .attr("x", 4)
-        .attr("dy", "1.2em")
+        .attr("dy", "1em")
         .text(word => word)
         .style("font-family", "Montserrat, sans-serif")
         .style("font-size", "14px")
-        .style("fill", "#28282B");
+        .style("fill", "#28282B")
 // Opdaterer eksisterende grupper med overgang
        treemapGroups.transition()
         .duration(500)

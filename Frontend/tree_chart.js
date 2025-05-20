@@ -88,7 +88,7 @@ legend.append("div")
       const colorScale = {
         "Eksport": d3.scaleLinear()
             .domain([0, d3.max(yearData, d => d.værdi)])
-            .range(['lightgreen', '#27ae60']),
+            .range(['#b4e8c9', '#27ae60']),
         "Import": d3.scaleLinear()
             .domain([0, d3.max(yearData, d => d.værdi)])
             .range(['#ffcccb', '#c0392b'])

@@ -15,7 +15,7 @@ const tooltip = d3.select("body")
   .append("div")
   .attr("class", "tooltip-tree")
 
-fetch("http://localhost:3001/api/treemap")
+fetch("/api/treemap")
   .then(res => res.json())
   .then(data => {
     data.forEach(d => {

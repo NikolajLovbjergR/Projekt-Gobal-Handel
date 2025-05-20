@@ -27,7 +27,7 @@ const tooltip = d3.select("body").append("div")
   .attr("class", "tooltip")
 
 // Hent data fra server
-fetch("http://localhost:3001/api/samlede")
+fetch("/api/samlede")
   .then(res => res.json())
   .then(data => {
     data.forEach(d => {

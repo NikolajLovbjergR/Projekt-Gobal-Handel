@@ -1,6 +1,6 @@
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';  // Importerer D3.js biblioteket
 
-fetch("http://localhost:3001/api/linechart")
+fetch("/api/linechart")
   .then(res => res.json())
   .then(data => {
     // Konverter tal og sortér

@@ -137,12 +137,15 @@ header {
 
 .textbg {
   background-color: #28282B;
+  height: 200px;
 }
 
 .kort-text {
   text-align: center;
   background-color: #28282B;
-  padding: 35px;
+  border: #f9f6ee 2px solid;
+  border-radius: 5px;
+  padding: 15px;
   color: #f9f6ee;
   font-size: 18px;
   max-width: 1000px;
@@ -298,5 +301,7 @@ header {
   color: #28282B;
   max-width: 1200px;
   margin: 50px auto;
-
+  border: #28282B 2px solid;
+  border-radius: 5px;
+  padding: 15px;
 }

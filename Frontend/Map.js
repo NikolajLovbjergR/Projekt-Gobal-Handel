@@ -50,7 +50,7 @@ data.forEach(entry => {
     import: parseFloat(entry.total_import),
     eksport: parseFloat(entry.total_eksport)
   };
-});
+
 
       // Info box on click
 svg.selectAll('path')
@@ -124,4 +124,5 @@ svg.selectAll('path')
     animate();
   });
     });
+});
 });

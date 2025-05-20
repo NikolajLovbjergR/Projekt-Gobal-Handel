@@ -2,9 +2,9 @@ import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 // Importerer D3-biblioteket fra CDN
 
 // Definér marginer og dimensioner for treemappet
-const margin = { top: 10, right: 20, bottom: 10, left: 20 },
-      width = 1500 - margin.left - margin.right,
-      height = 700 - margin.top - margin.bottom;
+const margin = { top: 5, right: 0, bottom: 10, left: 0 },
+      width = 1175 - margin.left - margin.right,
+      height = 650 - margin.top - margin.bottom;
 // Opretter SVG-container som diagrammet skal tegnes i
 const svg = d3.select("#treemap")
   .append("svg")
@@ -42,22 +42,17 @@ dropdown.on("change", function () {
   updateTreemap(selectedYear);
 });
 // Tilføjer forklaringsboks (legend) med farver for eksport/import
-   const legend = d3.select("#treemap")
+ const legend = d3.select("#treemap")
   .append("div")
-  .attr("id", "legend")
-  .style("margin-top", "10px")
-  .style("font-family", "Montserrat, sans-seriff");
+  .attr("id", "legend");
 
+legend.append("div")
+  .attr("class", "legend-item eksport")
+  .text("Eksport");
 
-    legend.append("div").html(`
-      <div style="width:20px;height:20px;background:mediumseagreen;display:inline-block;margin-right:8px;"></div>
-      Eksport
-    `);
-
-    legend.append("div").html(`
-      <div style="width:20px;height:20px;background:tomato;display:inline-block;margin-right:8px;"></div>
-      Import
-    `);
+legend.append("div")
+  .attr("class", "legend-item import")
+  .text("Import");
     // Initial visning med det første år i dropdown
     updateTreemap(years[0]);
    // Funktion til at opdatere treemap ved årsskift
@@ -132,11 +127,11 @@ dropdown.on("change", function () {
         .enter()
         .append("tspan")
         .attr("x", 4)
-        .attr("dy", "1.2em")
+        .attr("dy", "1em")
         .text(word => word)
         .style("font-family", "Montserrat, sans-serif")
         .style("font-size", "14px")
-        .style("fill", "#28282B");
+        .style("fill", "#28282B")
 // Opdaterer eksisterende grupper med overgang
        treemapGroups.transition()
         .duration(500)

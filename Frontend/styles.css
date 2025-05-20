@@ -305,3 +305,31 @@ header {
   border-radius: 5px;
   padding: 15px;
 }
+#legend {
+  margin-top: 10px;
+  font-family: Montserrat, sans-serif;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.legend-item::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin-right: 8px;
+  border-radius: 2px;
+}
+
+.legend-item.eksport::before {
+  background-color: mediumseagreen;
+}
+
+.legend-item.import::before {
+  background-color: tomato;
+}

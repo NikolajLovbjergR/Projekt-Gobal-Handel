@@ -128,8 +128,9 @@ dropdown.on("change", function () {
         .attr("x", 4)
         .attr("dy", "1.2em")
         .text(word => word)
-        .style("font-size", "12px")
-        .style("fill", "white");
+        .style("font-family", "Montserrat, sans-serif")
+        .style("font-size", "14px")
+        .style("fill", "#28282B");
 
        treemapGroups.transition()
         .duration(500)

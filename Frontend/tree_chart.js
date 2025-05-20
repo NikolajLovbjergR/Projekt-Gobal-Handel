@@ -96,15 +96,15 @@ dropdown.on("change", function () {
       };
 
 
-      const nodes = svg.selectAll("g.node")
+       const treemapGroups = svg.selectAll("g.treemap-group")
         .data(root.leaves(), d => d.data.name + d.data.type + d.data.land);
 
-      const nodeEnter = nodes.enter()
+      const treemapNewGroups = treemapGroups.enter()
         .append("g")
-        .attr("class", "node")
+        .attr("class", "treemap-group")
         .attr("transform", d => `translate(${d.x0},${d.y0})`);
 
-      nodeEnter.append("rect")
+      treemapNewGroups.append("rect")
         .attr("width", d => d.x1 - d.x0)
         .attr("height", d => d.y1 - d.y0)
         .attr("fill", d => colorScale[d.data.type](d.data.value))
@@ -113,13 +113,12 @@ dropdown.on("change", function () {
             .html(`<strong>${d.data.name}</strong><br>${d.data.type} fra <em>${d.data.land}</em>:<br>${d.data.Tid}<br>${d.data.value.toLocaleString()} kr.`);
         })
         .on("mousemove", event => {
-          tooltip
-            .style("left", (event.pageX + 10) + "px")
+          tooltip.style("left", (event.pageX + 10) + "px")
             .style("top", (event.pageY - 20) + "px");
         })
         .on("mouseout", () => tooltip.style("display", "none"));
 
-      nodeEnter.append("text")
+      treemapNewGroups.append("text")
         .attr("x", 4)
         .attr("y", 14)
         .selectAll("tspan")
@@ -133,14 +132,14 @@ dropdown.on("change", function () {
         .style("font-size", "14px")
         .style("fill", "#28282B");
 
-      nodes.transition()
+       treemapGroups.transition()
         .duration(500)
         .attr("transform", d => `translate(${d.x0},${d.y0})`)
         .select("rect")
         .attr("width", d => d.x1 - d.x0)
         .attr("height", d => d.y1 - d.y0);
 
-      nodes.exit().remove();
+      treemapGroups.exit().remove();
     }
   })
   .catch(error => {

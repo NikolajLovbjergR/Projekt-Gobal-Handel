@@ -5,7 +5,8 @@
     "type": "module",
     "scripts": {
       "createDb": "node DB/createDb.js",
-      "dev": "nodemon Backend/server.js"
+      "dev": "nodemon Backend/server.js",
+      "build": "nodemon Backend/server.js"
     },
     "dependencies": {
       "cors": "^2.8.5",

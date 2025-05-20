@@ -2,7 +2,7 @@
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 
 // Definér marginer og beregn indre bredde og højde for tegneområdet
-const margin = { top: 40, right: 30, bottom: 50, left: 120 },
+const margin = { top: 40, right: 30, bottom: 60, left: 120 },
       width = 1100 - margin.left - margin.right,
       height = 600 - margin.top - margin.bottom;
 
@@ -69,7 +69,13 @@ fetch("/api/samlede")
       y.domain(yearData.map(d => d.land));
 
       // Opdater akser med overgang
-      xAxis.transition().duration(800).call(d3.axisBottom(x).ticks(10));
+      xAxis.transition().duration(800)
+      .call(d3.axisBottom(x).ticks(10))
+      .selectAll("text")
+          .style("text-anchor", "end")
+          .attr("dx", "-0.8em")
+          .attr("dy", "0.15em")
+          .attr("transform", "rotate(-45)");
       yAxis.transition().duration(800).call(d3.axisLeft(y));
 
       // Data binding: find eksisterende bar-grupper

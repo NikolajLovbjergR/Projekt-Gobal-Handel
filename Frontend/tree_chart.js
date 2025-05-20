@@ -43,10 +43,7 @@ dropdown.on("change", function () {
   .append("div")
   .attr("id", "legend")
   .style("margin-top", "10px")
-  .style("display", "flex")
-  .style("justify-content", "center")  // Centering
-  .style("gap", "30px")  // Adjust gap as needed
-  .style("font-family", "sans-serif");
+  .style("font-family", "Montserrat, sans-seriff");
 
 
     legend.append("div").html(`

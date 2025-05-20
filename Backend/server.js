@@ -1,7 +1,6 @@
 import express from 'express';
 import pg from 'pg';
 import dotenv from 'dotenv';
-import cors from 'cors';
 
 dotenv.config(); 
 console.log('Connecting to database', process.env.PG_DATABASE);
@@ -20,8 +19,7 @@ console.log('Database connection established on', dbResult.rows[0].now);
 console.log('Initialising webserver...');
 const port = 3001;
 const server = express();
-server.use(cors());
-server.use(express.json());
+server.use(express.static('Frontend'));
 
 server.listen(port, onServerReady);
 

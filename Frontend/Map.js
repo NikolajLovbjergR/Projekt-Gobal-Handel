@@ -1,15 +1,15 @@
-import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
-import { feature } from 'https://cdn.jsdelivr.net/npm/topojson-client@3/+esm';
+import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm'; // importere D3
+import { feature } from 'https://cdn.jsdelivr.net/npm/topojson-client@3/+esm'; // importere feature en funsktion fra TopoJSON der konvertere til geoJSON
 
-const svg = d3.select('#map-svg');
+const svg = d3.select('#map-svg'); // Vælger SVG elementet i HTML som kortet skal vises i
 
-const projection = d3.geoMercator()
-  .scale(250)
-  .translate([1350 / 2, 850 / 1.55]);
+const projection = d3.geoMercator() // Vælger type kortprojektion i vores tilfælde 'Mercator'
+  .scale(200)
+  .translate([1050 / 2, 550 / 1.55]);
 
-const pathGenerator = d3.geoPath().projection(projection);
+const pathGenerator = d3.geoPath().projection(projection); // Bruges til at konvertere GeoJSON objecter til SVG-paths baseret på projection
 
-const handelsdata = {};
+const handelsdata = {}; // Et tomt object der senere skal holde handelsdata per land og år
 
 // Her hardcoder jeg lokationerne hvor linjerne skal ende på vores map
 const locations = {
@@ -30,19 +30,19 @@ const locations = {
 d3.json('https://unpkg.com/world-atlas@2.0.2/countries-110m.json').then(worldData => {
   const countries = feature(worldData, worldData.objects.countries).features; // Her bliver TopoJSON konveteret til geoJSON som D3 kan forstå
 
+// Her tegner vi lande ind på kortet
   svg.selectAll('path')
-    .data(countries)
+    .data(countries) // For hvert land laver vi et omrids i #28282B hvor vi bruger pathGenerator til at beregne formen
     .enter()
     .append('path')
     .attr('class', 'country')
     .attr('d', pathGenerator)
-    .attr('fill', '#ccc') // default fill
     .attr('stroke', '#28282B');
 
-  fetch('/api/handel')
+  fetch('/api/handel') // Henter handelsdata fra vores backend via /api/handel
     .then(res => res.json())
     .then(data => {
-data.forEach(entry => {
+data.forEach(entry => { // Her gemmer vi dataen i vores tomme handelsdata object
   const country = entry.land?.toLowerCase();
   const year = entry.tid;
   if (!handelsdata[country]) handelsdata[country] = {};
@@ -52,16 +52,16 @@ data.forEach(entry => {
   };
 });
 
-      // Info box on click
-svg.selectAll('path')
+
+svg.selectAll('path') // Ved at klikke på et land vises handelsdata i en infoboks 
   .on('click', (event, d) => {
     const infoBox = document.getElementById('info-box');
-    const name = d.properties.name;
+    const name = d.properties.name; // Her finder vi landenes navn og matcher det med vores data
     const key = name.toLowerCase();
     const countryData = handelsdata[key];
 
     if (infoBox) {
-      if (countryData) {
+      if (countryData) {  // Her viser vi handelsdata og giver beskeden 'Ingen handelsdata' hvis der ikke er nogen data
         let html = `<strong>${name}</strong><br>`;
         const years = Object.keys(countryData).sort();
         years.forEach(year => {
@@ -80,16 +80,18 @@ svg.selectAll('path')
     }
   });
 
-        // Tegn linjer
+  // Her tegner og animere vi linjerne på kortet
   const fromGeo = locations['Denmark'];
   Object.entries(locations).forEach(([name, toGeo]) => {
     if (name === 'Denmark') return;
 
+    // Fra danmark lokation til de 10 landes kordinater som er defineret længere oppe
     const line = {
       type: 'LineString',
       coordinates: [fromGeo, toGeo]
     };
 
+    // Her animere vi linjerne så det ligner de bevæger sig 
     const path = svg.append('path')
       .datum(line)
       .attr('d', pathGenerator)
@@ -106,6 +108,7 @@ svg.selectAll('path')
 
     const totalLength = path.node().getTotalLength();
 
+    // En function der laver selve animationen. Starter med at linjen er usyndlig, animere så den tegnes gradvist over 800ms og så holder en 5s pause før animationen starter forfra
     function animate() {
       path
         .attr('stroke-dashoffset', totalLength)

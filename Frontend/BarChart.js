@@ -2,7 +2,7 @@
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 
 // Margener og tegneområde
-const margin = { top: 40, right: 30, bottom: 50, left: 120 },
+const margin = { top: 40, right: 30, bottom: 60, left: 120 },
       width = 900 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 

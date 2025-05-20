@@ -14,8 +14,8 @@ fetch("/api/linechart")
 
     // Definer margener og beregn bredde og højde på selve tegneområdet
     const margin = { top: 60, right: 180, bottom: 60, left: 70 },
-          width = 1000 - margin.left - margin.right,
-          height = 600 - margin.top - margin.bottom;
+          width = 900 - margin.left - margin.right,
+          height = 500 - margin.top - margin.bottom;
 
     // Opret og konfigurer SVG-elementet
     const svg = d3.select("#chart")

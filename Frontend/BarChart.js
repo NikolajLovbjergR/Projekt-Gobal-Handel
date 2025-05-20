@@ -1,8 +1,8 @@
 // Importér D3-biblioteket via CDN
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 
-// Definér marginer og beregn indre bredde og højde for tegneområdet
-const margin = { top: 40, right: 30, bottom: 60, left: 120 },
+// Margener og tegneområde
+const margin = { top: 40, right: 30, bottom: 50, left: 120 },
       width = 1100 - margin.left - margin.right,
       height = 600 - margin.top - margin.bottom;
 

@@ -42,22 +42,17 @@ dropdown.on("change", function () {
   updateTreemap(selectedYear);
 });
 // Tilføjer forklaringsboks (legend) med farver for eksport/import
-   const legend = d3.select("#treemap")
+ const legend = d3.select("#treemap")
   .append("div")
-  .attr("id", "legend")
-  .style("margin-top", "10px")
-  .style("font-family", "Montserrat, sans-seriff");
+  .attr("id", "legend");
 
+legend.append("div")
+  .attr("class", "legend-item eksport")
+  .text("Eksport");
 
-    legend.append("div").html(`
-      <div style="width:20px;height:20px;background:mediumseagreen;display:inline-block;margin-right:8px;"></div>
-      Eksport
-    `);
-
-    legend.append("div").html(`
-      <div style="width:20px;height:20px;background:tomato;display:inline-block;margin-right:8px;"></div>
-      Import
-    `);
+legend.append("div")
+  .attr("class", "legend-item import")
+  .text("Import");
     // Initial visning med det første år i dropdown
     updateTreemap(years[0]);
    // Funktion til at opdatere treemap ved årsskift

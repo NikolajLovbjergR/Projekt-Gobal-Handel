@@ -4,8 +4,8 @@ import { feature } from 'https://cdn.jsdelivr.net/npm/topojson-client@3/+esm'; /
 const svg = d3.select('#map-svg'); // Vælger SVG elementet i HTML som kortet skal vises i
 
 const projection = d3.geoMercator() // Vælger type kortprojektion i vores tilfælde 'Mercator'
-  .scale(200)
-  .translate([1050 / 2, 550 / 1.55]);
+  .scale(180)
+  .translate([1050 / 2, 650 / 1.45]);
 
 const pathGenerator = d3.geoPath().projection(projection); // Bruges til at konvertere GeoJSON objecter til SVG-paths baseret på projection
 

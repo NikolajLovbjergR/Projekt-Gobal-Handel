@@ -82,8 +82,8 @@ header {
 /* Map */
 
 .map-container svg {
-  height: 550px;
-  width: 1050px;
+  height: 650px;
+  width: 1250px;
   background-color: #28282B;  
   }
 
@@ -92,7 +92,7 @@ header {
   justify-content: center;
   align-items: center;
   background-color: #28282B;
-  gap: 150px;
+  gap: 10px;
   padding: 25px 0 15px 0;
   }
 
@@ -104,7 +104,6 @@ header {
   padding: 10px;
   font-family: "Montserrat", sans-serif;
   text-align: center;
-  top: 20px;
   right: 20px;
   width: 250px;
   height: auto;

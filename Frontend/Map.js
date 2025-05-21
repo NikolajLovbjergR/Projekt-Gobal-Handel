@@ -11,6 +11,8 @@ const pathGenerator = d3.geoPath().projection(projection); // Bruges til at konv
 
 const handelsdata = {}; // Et tomt object der senere skal holde handelsdata per land og år
 
+const totalHandelPerLand = {};
+
 // Her hardcoder jeg lokationerne hvor linjerne skal ende på vores map
 const locations = {
   Denmark: [10.4515, 56.2639],
@@ -42,14 +44,31 @@ d3.json('https://unpkg.com/world-atlas@2.0.2/countries-110m.json').then(worldDat
   fetch('/api/handel') // Henter handelsdata fra vores backend via /api/handel
     .then(res => res.json())
     .then(data => {
-data.forEach(entry => { // Her gemmer vi dataen i vores tomme handelsdata object
+data.forEach(entry => {
   const country = entry.land?.toLowerCase();
   const year = entry.tid;
+  const imp = parseFloat(entry.total_import);
+  const exp = parseFloat(entry.total_eksport);
+
   if (!handelsdata[country]) handelsdata[country] = {};
   handelsdata[country][year] = {
-    import: parseFloat(entry.total_import),
-    eksport: parseFloat(entry.total_eksport)
+    import: imp,
+    eksport: exp
   };
+
+  if (!totalHandelPerLand[country]) totalHandelPerLand[country] = 0;
+  totalHandelPerLand[country] += imp + exp;
+});
+
+// Lav en sorteret liste over lande efter samlet handel og tilføj rank
+const sortedLande = Object.entries(totalHandelPerLand)
+  .sort((a, b) => b[1] - a[1])
+  .map(([land], index) => ({ land, rank: index + 1 }));
+
+const ranks = {};
+sortedLande.forEach(({ land, rank }) => {
+  ranks[land] = rank;
+
 });
 
 
@@ -60,9 +79,10 @@ svg.selectAll('path') // Ved at klikke på et land vises handelsdata i en infobo
     const key = name.toLowerCase();
     const countryData = handelsdata[key];
 
-    if (infoBox) {
+    if (infoBox) { // infoBox er den lille box der kommer op når man trykker på et land
       if (countryData) {  // Her viser vi handelsdata og giver beskeden 'Ingen handelsdata' hvis der ikke er nogen data
-        let html = `<strong>${name}</strong><br>`;
+        const rank = ranks[key] ? ` #${ranks[key]}` : '';
+        let html = `<strong>${name}${rank}</strong><br>`;
         const years = Object.keys(countryData).sort();
         years.forEach(year => {
           const entry = countryData[year];

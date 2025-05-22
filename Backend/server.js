@@ -85,29 +85,14 @@ server.get('/api/linechart', async (req, res) => {
 server.get('/api/treemap', async (req, res) => {
   try {
     const result = await db.query(`
-        SELECT year, land, produkt, type, værdi FROM (
-        -- Eksportdata 
-        SELECT
-          tid AS year, land, sitc AS produkt, 'Eksport' AS type, SUM(indhold) AS værdi,
-        -- Omdøber 'tid' til 'year', Landet der eksporterer, SITC-kode som produktkategori, Tilføjer fast værdi 'Eksport' som type, Summerer eksportmængde til 'værdi'
-          ROW_NUMBER() OVER (PARTITION BY tid, sitc ORDER BY SUM(indhold) DESC) AS rk
-        -- Starter rangering pr. år og produkt
-        FROM eksport
-        GROUP BY tid, sitc, land
-        -- Grupper for at kunne summere pr. kombination
-        UNION ALL
-
-        SELECT
-          tid, land, sitc, 'Import' AS type, SUM(indhold),
-          ROW_NUMBER() OVER (PARTITION BY tid, sitc ORDER BY SUM(indhold) DESC) 
-        FROM import
-        GROUP BY tid, sitc, land
-      ) AS ranked 
-       -- giver den kombinerede tabel et navn 
-      WHERE rk = 1
-      -- vælger kun det land med højeste værdi pr. år og produkt 
-      ORDER BY year, type, værdi DESC
-      -- Sorterer resultatet efter år, så eksport/import, så værdi
+       SELECT tid AS year, land, sitc AS produkt, 'Eksport' AS type, SUM(indhold) AS værdi
+      FROM eksport
+      GROUP BY tid, land, sitc
+      UNION ALL
+      SELECT tid AS year, land, sitc AS produkt, 'Import', SUM(indhold)
+      FROM import
+      GROUP BY tid, land, sitc
+      
     `);
     res.json(result.rows);
   } catch (err) {

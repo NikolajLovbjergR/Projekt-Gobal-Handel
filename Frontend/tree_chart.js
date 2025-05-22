@@ -1,10 +1,10 @@
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
-// Importerer D3-biblioteket fra CDN
 
 // Definér marginer og dimensioner for treemappet
 const margin = { top: 5, right: 25, bottom: 10, left: 0 },
       width = 1250 - margin.left - margin.right,
       height = 650 - margin.top - margin.bottom;
+
 // Opretter SVG-container som diagrammet skal tegnes i
 const svg = d3.select("#treemap")
   .append("svg")
@@ -12,54 +12,80 @@ const svg = d3.select("#treemap")
   .attr("height", height + margin.top + margin.bottom)
   .append("g")
   .attr("transform", `translate(${margin.left},${margin.top})`);
+
 // Tilføjer tooltip som vises ved mouseover på rektangler
 const tooltip = d3.select("body")
   .append("div")
-  .attr("class", "tooltip-tree")
+  .attr("class", "tooltip-tree");
+
 // Henter data fra API-endpoint
 fetch("/api/treemap")
   .then(res => res.json())
   .then(data => {
-     // Sikrer at værdier er numeriske og årstal er strenge
+    // Sikrer at værdier er numeriske og årstal er strenge
     data.forEach(d => {
       d.værdi = +d.værdi;
       d.year = d.year.toString();
     });
- // Finder alle unikke år og sorterer dem til brug i dropdown
-   const years = [...new Set(data.map(d => d.year))].sort();
 
-const dropdown = d3.select("#yearDropdown");
-// Tilføjer dropdown-muligheder for hvert år
-dropdown.selectAll("option")
-  .data(years)
-  .enter()
-  .append("option")
-  .attr("value", d => d)
-  .text(d => d);
-// Når brugeren vælger et år, opdateres treemappet
-dropdown.on("change", function () {
-  const selectedYear = this.value;
-  updateTreemap(selectedYear);
-});
-// Tilføjer forklaringsboks (legend) med farver for eksport/import
- const legend = d3.select("#treemap")
-  .append("div")
-  .attr("id", "legend");
+   // Opretter et objekt til at gemme den højeste værdi per (år, produkt, type)
+const top = {};
 
-legend.append("div")
-  .attr("class", "legend-item eksport")
-  .text("Eksport");
+for (const row of data) {
+  // Danner en unik nøgle ud fra år, produkt og type (Eksport/Import)
+  const key = `${row.year}-${row.produkt}-${row.type}`;
 
-legend.append("div")
-  .attr("class", "legend-item import")
-  .text("Import");
+  // Gemmer kun rækken hvis der ikke er gemt noget endnu,
+  // eller hvis denne række har en højere værdi end den tidligere gemte
+  if (!top[key] || row.værdi > top[key].værdi) {
+    top[key] = row;
+  }
+}
+// Konverterer objektet til en liste med kun de bedste rækker
+const filteredData = Object.values(top);
+
+
+    // Finder alle unikke år og sorterer dem til brug i dropdown
+    const years = [...new Set(filteredData.map(d => d.year))].sort();
+
+    const dropdown = d3.select("#yearDropdown");
+
+    // Tilføjer dropdown-muligheder for hvert år
+    dropdown.selectAll("option")
+      .data(years)
+      .enter()
+      .append("option")
+      .attr("value", d => d)
+      .text(d => d);
+
+    // Når brugeren vælger et år, opdateres treemappet
+    dropdown.on("change", function () {
+      const selectedYear = this.value;
+      updateTreemap(selectedYear);
+    });
+
+    // Tilføjer forklaringsboks (legend) med farver for eksport/import
+    const legend = d3.select("#treemap")
+      .append("div")
+      .attr("id", "legend");
+
+    legend.append("div")
+      .attr("class", "legend-item eksport")
+      .text("Eksport");
+
+    legend.append("div")
+      .attr("class", "legend-item import")
+      .text("Import");
+
     // Initial visning med det første år i dropdown
     updateTreemap(years[0]);
-   // Funktion til at opdatere treemap ved årsskift
+
+    // Funktion til at opdatere treemap ved årsskift
     function updateTreemap(selectedYear) {
-       // Filtrerer data til kun at vise det valgte år
-      const yearData = data.filter(d => d.year === selectedYear);
- // Konstruerer hierarkisk datastruktur opdelt i Eksport og Import
+      // Filtrerer data til kun at vise det valgte år
+      const yearData = filteredData.filter(d => d.year === selectedYear);
+
+      // Konstruerer hierarkisk datastruktur opdelt i Eksport og Import
       const hierarchyData = {
         name: "root",
         children: ["Eksport", "Import"].map(type => ({
@@ -75,27 +101,26 @@ legend.append("div")
             }))
         }))
       };
- // Konverterer til D3-hierarki med summering af værdier
-      const root = d3.hierarchy(hierarchyData)
-        .sum(d => d.value);
- // Definerer treemap-layoutet med størrelse og padding
-      const treemapLayout = d3.treemap()
-        .size([width, height])
-        .padding(1);
 
+      // Konverterer til D3-hierarki med summering af værdier
+      const root = d3.hierarchy(hierarchyData).sum(d => d.value);
+
+      // Definerer treemap-layoutet med størrelse og padding
+      const treemapLayout = d3.treemap().size([width, height]).padding(1);
       treemapLayout(root);
-// Opretter farveskalaer for Eksport og Import
+
+      // Opretter farveskalaer for Eksport og Import
       const colorScale = {
         "Eksport": d3.scaleLinear()
-            .domain([0, d3.max(yearData, d => d.værdi)])
-            .range(['#b4e8c9', '#27ae60']),
+          .domain([0, d3.max(yearData, d => d.værdi)])
+          .range(['#b4e8c9', '#27ae60']),
         "Import": d3.scaleLinear()
-            .domain([0, d3.max(yearData, d => d.værdi)])
-            .range(['#ffcccb', '#c0392b'])
+          .domain([0, d3.max(yearData, d => d.værdi)])
+          .range(['#ffcccb', '#c0392b'])
       };
 
- // Binder data til eksisterende treemap-grupper
-       const treemapGroups = svg.selectAll("g.treemap-group")
+      // Binder data til eksisterende treemap-grupper
+      const treemapGroups = svg.selectAll("g.treemap-group")
         .data(root.leaves(), d => d.data.name + d.data.type + d.data.land);
 
       // Opretter nye grupper ved behov
@@ -103,7 +128,8 @@ legend.append("div")
         .append("g")
         .attr("class", "treemap-group")
         .attr("transform", d => `translate(${d.x0},${d.y0})`);
-// Tegner rektangler for hver datapunkt
+
+      // Tegner rektangler for hver datapunkt
       treemapNewGroups.append("rect")
         .attr("width", d => d.x1 - d.x0)
         .attr("height", d => d.y1 - d.y0)
@@ -131,19 +157,21 @@ legend.append("div")
         .text(word => word)
         .style("font-family", "Montserrat, sans-serif")
         .style("font-size", "14px")
-        .style("fill", "#28282B")
-// Opdaterer eksisterende grupper med overgang
-       treemapGroups.transition()
+        .style("fill", "#28282B");
+
+      // Opdaterer eksisterende grupper med overgang
+      treemapGroups.transition()
         .duration(500)
         .attr("transform", d => `translate(${d.x0},${d.y0})`)
         .select("rect")
         .attr("width", d => d.x1 - d.x0)
         .attr("height", d => d.y1 - d.y0);
-  // Fjerner ubrugte grupper
+
+      // Fjerner ubrugte grupper
       treemapGroups.exit().remove();
     }
   })
   .catch(error => {
-    //logger hvis der sker fejl 
-    console.error("Fejl ved hentning af treemap-data:", error);
+    // Logger hvis der sker fejl 
+    console.error("Fejl ved hentning af treemap-data:", error); 
   });

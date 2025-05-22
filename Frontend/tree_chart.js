@@ -110,7 +110,7 @@ legend.append("div")
         .attr("fill", d => colorScale[d.data.type](d.data.value))
         .on("mouseover", (event, d) => {
           tooltip.style("display", "block")
-            .html(`<strong>${d.data.name}</strong><br>${d.data.type} fra <em>${d.data.land}</em>:<br>${d.data.Tid}<br>${d.data.value.toLocaleString()} kr.`);
+            .html(`<strong>${d.data.name}</strong><br>${d.data.type} <em>${d.data.land}</em>:<br>${d.data.Tid}<br>${d.data.value.toLocaleString()} kr.`);
         })
         .on("mousemove", event => {
           tooltip.style("left", (event.pageX + 10) + "px")

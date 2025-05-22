@@ -28,25 +28,8 @@ fetch("/api/treemap")
       d.year = d.year.toString();
     });
 
-   // Opretter et objekt til at gemme den højeste værdi per (år, produkt, type)
-const top = {};
-
-for (const row of data) {
-  // Danner en unik nøgle ud fra år, produkt og type (Eksport/Import)
-  const key = `${row.year}-${row.produkt}-${row.type}`;
-
-  // Gemmer kun rækken hvis der ikke er gemt noget endnu,
-  // eller hvis denne række har en højere værdi end den tidligere gemte
-  if (!top[key] || row.værdi > top[key].værdi) {
-    top[key] = row;
-  }
-}
-// Konverterer objektet til en liste med kun de bedste rækker
-const filteredData = Object.values(top);
-
-
     // Finder alle unikke år og sorterer dem til brug i dropdown
-    const years = [...new Set(filteredData.map(d => d.year))].sort();
+    const years = [...new Set(data.map(d => d.year))].sort();
 
     const dropdown = d3.select("#yearDropdown");
 
@@ -83,7 +66,7 @@ const filteredData = Object.values(top);
     // Funktion til at opdatere treemap ved årsskift
     function updateTreemap(selectedYear) {
       // Filtrerer data til kun at vise det valgte år
-      const yearData = filteredData.filter(d => d.year === selectedYear);
+      const yearData = data.filter(d => d.year === selectedYear);
 
       // Konstruerer hierarkisk datastruktur opdelt i Eksport og Import
       const hierarchyData = {
@@ -103,7 +86,9 @@ const filteredData = Object.values(top);
       };
 
       // Konverterer til D3-hierarki med summering af værdier
-      const root = d3.hierarchy(hierarchyData).sum(d => d.value);
+      // Sorterer børn alfabetisk (eller efter dataens rækkefølge), ikke værdi
+      const root = d3.hierarchy(hierarchyData)
+        .sum(d => d.value);
 
       // Definerer treemap-layoutet med størrelse og padding
       const treemapLayout = d3.treemap().size([width, height]).padding(1);

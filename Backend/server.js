@@ -85,13 +85,32 @@ server.get('/api/linechart', async (req, res) => {
 server.get('/api/treemap', async (req, res) => {
   try {
     const result = await db.query(`
-       SELECT tid AS year, land, sitc AS produkt, 'Eksport' AS type, SUM(indhold) AS værdi
-      FROM eksport
-      GROUP BY tid, land, sitc
-      UNION ALL
-      SELECT tid AS year, land, sitc AS produkt, 'Import', SUM(indhold)
-      FROM import
-      GROUP BY tid, land, sitc
+      SELECT year, land, produkt, type, værdi FROM (
+        SELECT
+          tid AS year,
+          land,
+          sitc AS produkt,
+          'Eksport' AS type,
+          SUM(indhold) AS værdi,
+          ROW_NUMBER() OVER (PARTITION BY tid, sitc ORDER BY SUM(indhold) DESC) AS rk
+        FROM eksport
+        GROUP BY tid, sitc, land
+
+        UNION ALL
+
+        SELECT
+          tid,
+          land,
+          sitc,
+          'Import' AS type,
+          SUM(indhold),
+          ROW_NUMBER() OVER (PARTITION BY tid, sitc ORDER BY SUM(indhold) DESC)
+        FROM import
+        GROUP BY tid, sitc, land
+      ) AS ranked
+      WHERE rk = 1
+      ORDER BY year, type, værdi DESC;
+    ;
       
     `);
     res.json(result.rows);

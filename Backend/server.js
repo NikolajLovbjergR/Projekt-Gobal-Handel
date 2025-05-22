@@ -35,16 +35,16 @@ function onServerReady() {
 server.get('/api/handel', async (req, res) => {
   try {
     const result = await db.query(`
-      SELECT
-        COALESCE(imp.land, exp.land) AS land,
-        COALESCE(imp.tid, exp.tid) AS tid,
-        SUM(imp.indhold) AS total_import,
-        SUM(exp.indhold) AS total_eksport
-      FROM
-        import imp
-      FULL OUTER JOIN eksport exp ON imp.land = exp.land AND imp.tid = exp.tid
-      GROUP BY COALESCE(imp.land, exp.land), COALESCE(imp.tid, exp.tid)
-      ORDER BY land, tid;
+    SELECT
+      imp.land AS land,
+      imp.tid AS tid,
+      SUM(imp.indhold) AS total_import,
+      SUM(COALESCE(exp.indhold, 0)) AS total_eksport
+    FROM
+      import imp
+    LEFT JOIN eksport exp ON imp.land = exp.land AND imp.tid = exp.tid
+    GROUP BY imp.land, imp.tid
+    ORDER BY land, tid;
     `);
     res.json(result.rows);
   } catch (err) {

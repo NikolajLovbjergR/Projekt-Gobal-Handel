@@ -57,7 +57,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 200px 0 200px 0;
+  margin: 150px 0 150px 0;
   gap: 100px;
 }
 
@@ -82,8 +82,8 @@ header {
 /* Map */
 
 .map-container svg {
-  height: 550px;
-  width: 1050px;
+  height: 650px;
+  width: 1250px;
   background-color: #28282B;  
   }
 
@@ -92,7 +92,7 @@ header {
   justify-content: center;
   align-items: center;
   background-color: #28282B;
-  gap: 100px;
+  gap: 10px;
   padding: 25px 0 15px 0;
   }
 
@@ -104,7 +104,6 @@ header {
   padding: 10px;
   font-family: "Montserrat", sans-serif;
   text-align: center;
-  top: 20px;
   right: 20px;
   width: 250px;
   height: auto;
@@ -286,13 +285,13 @@ header {
   font-weight: 700;
   font-size: 28px;
   text-align: center;
-  margin: 150px 0 50px 0;
+  margin: 100px 0 50px 0;
 }
 
 .yearselect {
   display: flex;
   justify-content: center;
-  align-items: center;
+  gap: 5px;
 }
 
 #treemap {
@@ -334,9 +333,9 @@ header {
 }
 
 .legend-item.eksport::before {
-  background-color: mediumseagreen;
+  background-color: #27ae60;
 }
 
 .legend-item.import::before {
-  background-color: tomato;
+  background-color: #c0392b;
 }

@@ -2,8 +2,8 @@ import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 // Importerer D3-biblioteket fra CDN
 
 // Definér marginer og dimensioner for treemappet
-const margin = { top: 5, right: 0, bottom: 10, left: 0 },
-      width = 1175 - margin.left - margin.right,
+const margin = { top: 5, right: 25, bottom: 10, left: 0 },
+      width = 1250 - margin.left - margin.right,
       height = 650 - margin.top - margin.bottom;
 // Opretter SVG-container som diagrammet skal tegnes i
 const svg = d3.select("#treemap")
@@ -88,7 +88,7 @@ legend.append("div")
       const colorScale = {
         "Eksport": d3.scaleLinear()
             .domain([0, d3.max(yearData, d => d.værdi)])
-            .range(['lightgreen', '#27ae60']),
+            .range(['#b4e8c9', '#27ae60']),
         "Import": d3.scaleLinear()
             .domain([0, d3.max(yearData, d => d.værdi)])
             .range(['#ffcccb', '#c0392b'])

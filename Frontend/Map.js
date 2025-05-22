@@ -62,7 +62,7 @@ data.forEach(entry => {
 
 // Lav en sorteret liste over lande efter samlet handel og tilføj rank
 const sortedLande = Object.entries(totalHandelPerLand)
-  .sort((a, b) => b[1] - a[1])
+  .sort((a, b) => b[1] - a[1]) // Her sortere jeg så det største land er nummer 1
   .map(([land], index) => ({ land, rank: index + 1 }));
 
 const ranks = {};

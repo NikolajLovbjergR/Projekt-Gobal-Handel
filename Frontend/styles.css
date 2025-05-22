@@ -333,9 +333,9 @@ header {
 }
 
 .legend-item.eksport::before {
-  background-color: mediumseagreen;
+  background-color: #27ae60;
 }
 
 .legend-item.import::before {
-  background-color: tomato;
+  background-color: #c0392b;
 }

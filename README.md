@@ -36,7 +36,7 @@ Samfundsinteresserede borgere, undervisere, gymnasieelever og studerende, der ø
 **Acceptkriterier:**
 - Visualisering med verdenskort skal være tilgængelig
 - Kortet viser linjer fra Danmark til andre lande
-- Hover viser eksport- og importtal
+- Klik på land viser eksport- og importtal
 
 ### User Story #2 – Sammenlign handelspartnere i søjlediagram
 **Som bruger** ønsker jeg at sammenligne Danmarks største import- og eksportlande  

@@ -19,10 +19,12 @@ const tooltip = d3.select("body")
   .attr("class", "tooltip-tree");
 
 // Henter data fra API-endpoint
+// Henter data fra serverens /api/treemap-endpoint og konverterer svaret til JSON-format.
 fetch("/api/treemap")
   .then(res => res.json())
   .then(data => {
     // Sikrer at værdier er numeriske og årstal er strenge
+    // Konverterer 'værdi' til tal og 'year' til tekststreng for hvert element i datasættet.
     data.forEach(d => {
       d.værdi = +d.værdi;
       d.year = d.year.toString();
@@ -68,7 +70,8 @@ fetch("/api/treemap")
       // Filtrerer data til kun at vise det valgte år
       const yearData = data.filter(d => d.year === selectedYear);
 
-      // Konstruerer hierarkisk datastruktur opdelt i Eksport og Import
+    // Opretter et hierarkisk datasæt med en "root"-node, opdelt i "Eksport" og "Import",
+    // hvor hver undergruppe indeholder produkter med tilhørende information.
       const hierarchyData = {
         name: "root",
         children: ["Eksport", "Import"].map(type => ({
@@ -85,8 +88,7 @@ fetch("/api/treemap")
         }))
       };
 
-      // Konverterer til D3-hierarki med summering af værdier
-      // Sorterer børn alfabetisk (eller efter dataens rækkefølge), ikke værdi
+      // Konverterer det hierarkiske datasæt til et D3-hierarki og beregner summen af 'value' for hver gren.
       const root = d3.hierarchy(hierarchyData)
         .sum(d => d.value);
 
@@ -97,6 +99,7 @@ fetch("/api/treemap")
       // Opretter farveskalaer for Eksport og Import
       const colorScale = {
         "Eksport": d3.scaleLinear()
+        // Siger hvor små og store værdier starter og slutter.
           .domain([0, d3.max(yearData, d => d.værdi)])
           .range(['#b4e8c9', '#27ae60']),
         "Import": d3.scaleLinear()
@@ -108,13 +111,14 @@ fetch("/api/treemap")
       const treemapGroups = svg.selectAll("g.treemap-group")
         .data(root.leaves(), d => d.data.name + d.data.type + d.data.land);
 
-      // Opretter nye grupper ved behov
+      // Opretter nye grupper for hvert treemap-element og placerer dem i SVG'en baseret på deres position (x0, y0)
       const treemapNewGroups = treemapGroups.enter()
         .append("g")
         .attr("class", "treemap-group")
         .attr("transform", d => `translate(${d.x0},${d.y0})`);
 
-      // Tegner rektangler for hver datapunkt
+    // Tilføjer rektangler til hver treemap-gruppe med passende størrelse og farve.
+    // Viser tooltip med information, når man holder musen over, og skjuler den igen ved musens afgang.
       treemapNewGroups.append("rect")
         .attr("width", d => d.x1 - d.x0)
         .attr("height", d => d.y1 - d.y0)
@@ -130,6 +134,7 @@ fetch("/api/treemap")
         .on("mouseout", () => tooltip.style("display", "none"));
 
       // Tilføjer navnet som tekst inde i hvert rektangel
+      // Tilføjer tekst til hver treemap-gruppe, opdelt i flere linjer hvis navnet indeholder mellemrum.
       treemapNewGroups.append("text")
         .attr("x", 4)
         .attr("y", 14)
@@ -144,7 +149,7 @@ fetch("/api/treemap")
         .style("font-size", "14px")
         .style("fill", "#28282B");
 
-      // Opdaterer eksisterende grupper med overgang
+      // Opdaterer position og størrelse på eksisterende treemap-grupper med en glidende overgang på 500 ms
       treemapGroups.transition()
         .duration(500)
         .attr("transform", d => `translate(${d.x0},${d.y0})`)

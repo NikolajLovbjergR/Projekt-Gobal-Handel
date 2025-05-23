@@ -11,7 +11,7 @@ const pathGenerator = d3.geoPath().projection(projection); // Bruges til at konv
 
 const handelsdata = {}; // Et tomt object der senere skal holde handelsdata per land og år
 
-const totalHandelPerLand = {};
+const totalHandelPerLand = {}; // Et tomt object der senere skal holde total handel per land
 
 // Her hardcoder jeg lokationerne hvor linjerne skal ende på vores map
 const locations = {
@@ -34,7 +34,7 @@ d3.json('https://unpkg.com/world-atlas@2.0.2/countries-110m.json').then(worldDat
 
 // Her tegner vi lande ind på kortet
   svg.selectAll('path')
-    .data(countries) // For hvert land laver vi et omrids i #28282B hvor vi bruger pathGenerator til at beregne formen
+    .data(countries) // For hvert land laver vi et omrids med farven #28282B hvor vi bruger pathGenerator til at beregne formen
     .enter()
     .append('path')
     .attr('class', 'country')
@@ -44,29 +44,29 @@ d3.json('https://unpkg.com/world-atlas@2.0.2/countries-110m.json').then(worldDat
   fetch('/api/handel') // Henter handelsdata fra vores backend via /api/handel
     .then(res => res.json())
     .then(data => {
-data.forEach(entry => {
-  const country = entry.land?.toLowerCase();
-  const year = entry.tid;
-  const imp = parseFloat(entry.total_import);
+data.forEach(entry => {                       // Går igennem hvert element i data-arrayet
+  const country = entry.land?.toLowerCase();  // ? gør at den kun forsøger .toLowerCase hvis et land eksistere. For at undgå fejl ved undefined
+  const year = entry.tid;                     // Henter år
+  const imp = parseFloat(entry.total_import); // De her 2 konvertere import/eksport værdierne fra string til float så man kan regne med dem
   const exp = parseFloat(entry.total_eksport);
 
-  if (!handelsdata[country]) handelsdata[country] = {};
-  handelsdata[country][year] = {
+  if (!handelsdata[country]) handelsdata[country] = {}; // Hvis et land 
+  handelsdata[country][year] = {              // Gemmer imp/eksport data for bestemt land og år i handelsdata
     import: imp,
     eksport: exp
   };
 
-  if (!totalHandelPerLand[country]) totalHandelPerLand[country] = 0;
-  totalHandelPerLand[country] += imp + exp;
+  if (!totalHandelPerLand[country]) totalHandelPerLand[country] = 0; // Hvis landet ikke findes i totalHandelPerLand bliver det til 0
+  totalHandelPerLand[country] += imp + exp;   // Ligger import og eksport sammen og går det til landets samlede handel
 });
 
 // Lav en sorteret liste over lande efter samlet handel og tilføj rank
-const sortedLande = Object.entries(totalHandelPerLand)
-  .sort((a, b) => b[1] - a[1]) // Her sortere jeg så det største land er nummer 1
-  .map(([land], index) => ({ land, rank: index + 1 }));
+const sortedLande = Object.entries(totalHandelPerLand) // Laver totalHandelPerLand om til et array
+  .sort((a, b) => b[1] - a[1]) // Her sortere jeg så det land med mest handel er nummer 1
+  .map(([land], index) => ({ land, rank: index + 1 })); // Mapper hvert [land, værdi] par til et nyt object med land og rank. index +1 gør at første land får nummer 1
 
-const ranks = {};
-sortedLande.forEach(({ land, rank }) => {
+const ranks = {};                             // Her gemmer vi rank til landene 
+sortedLande.forEach(({ land, rank }) => {     // Gennemgår de sorterede lande og ligger hver land og rank ind i ranks objectet
   ranks[land] = rank;
 
 });

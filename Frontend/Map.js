@@ -50,7 +50,7 @@ data.forEach(entry => {                       // Går igennem hvert element i da
   const imp = parseFloat(entry.total_import); // De her 2 konvertere import/eksport værdierne fra string til float så man kan regne med dem
   const exp = parseFloat(entry.total_eksport);
 
-  if (!handelsdata[country]) handelsdata[country] = {}; // Hvis et land 
+  if (!handelsdata[country]) handelsdata[country] = {}; // Tjekker om der findes data for et land i handelsdata og opretter et tomt objekt hvis der ikke er
   handelsdata[country][year] = {              // Gemmer imp/eksport data for bestemt land og år i handelsdata
     import: imp,
     eksport: exp

@@ -99,10 +99,7 @@ server.get('/api/treemap', async (req, res) => {
         UNION ALL
 
         SELECT
-          tid,
-          land,
-          sitc,
-          'Import' AS type,
+          tid, land, sitc, 'Import' AS type,
           SUM(indhold),
           ROW_NUMBER() OVER (PARTITION BY tid, sitc ORDER BY SUM(indhold) DESC)
         FROM import

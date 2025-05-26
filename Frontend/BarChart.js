@@ -17,14 +17,14 @@ const svg = d3.select("#bar-svg")
 const x = d3.scaleLinear().range([0, width]); // lineær skala til både import og eksport
 const y = d3.scaleBand().range([0, height]).padding(0.2); // kategorisk skala for lande
 
-// Opret akser (placeret men ikke udfyldt endnu)
+// Opret akser 
 const xAxis = svg.append("g").attr("transform", `translate(0,${height})`); // nederst
 const yAxis = svg.append("g"); // venstre
 
 // Dropdown-element til valg af år
 const dropdown = d3.select("#yearSelect");
 
-// Opret tooltip (usynlig til at starte med)
+// Opret tooltip 
 const tooltip = d3.select("body").append("div")
   .attr("class", "tooltip");
 

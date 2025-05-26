@@ -36,7 +36,7 @@ Samfundsinteresserede borgere, undervisere, gymnasieelever og studerende, der ø
 **Acceptkriterier:**
 - Visualisering med verdenskort skal være tilgængelig
 - Kortet viser linjer fra Danmark til andre lande
-- Hover viser eksport- og importtal
+- Klik på land viser eksport- og importtal
 
 ### User Story #2 – Sammenlign handelspartnere i søjlediagram
 **Som bruger** ønsker jeg at sammenligne Danmarks største import- og eksportlande  
@@ -70,53 +70,3 @@ Samfundsinteresserede borgere, undervisere, gymnasieelever og studerende, der ø
 - Hover viser præcise værdier
 - Grafen opdateres dynamisk
 
-## Teknologier og værktøjer
-- HTML, CSS, JavaScript
-- D3.js (datavisualisering)
-- Node.js + Express (backend og API)
-- PostgreSQL (database)
-- GitHub Projects + Issues (SCRUM board)
-
-## Projektplan – 6. maj til 23. maj 2025
-
-### Fase 1 – Forståelse og opsætning (Uge 19: 6.–10. maj)
-- Problemformulering, underspørgsmål
-- User stories og målgruppebeskrivelse
-- Hent og rens data (CSV fra Danmarks Statistik)
-- Design datamodel og opret database med `createDb.js`
-- Importér data til PostgreSQL
-- Opsætning af GitHub-repo og `.gitignore`
-- Test D3.js med dummydata og start kort-visualisering
-- Statusmøde 1: Torsdag 8. maj
-
-### Fase 2 – Funktionalitet og visualisering (Uge 20: 12.–16. maj)
-- Interaktivt verdenskort (`map_chart.js`)
-- Bar chart: import og eksport (`bar_chart.js`)
-- Treemap: varekategorier (`tree_chart.js`)
-- Tidslinje: udvikling fra 2018–2024 (`line_chart.js`)
-- Filtrering: år, type, kategori
-- Forbind backend (`server.js`) og frontend via fetch/AJAX
-- Test på desktop og mobil
-- Statusmøde 2: Torsdag 15. maj
-
-### Fase 3 – Færdiggørelse og æstetik (Uge 21: 19.–23. maj)
-- Forbedring af layout og design
-- Loading states, fejlbeskeder, fallback
-- Skriv README, dokumentation, og kommentér kode
-- Lav slideshow til præsentation
-- Host frontend og backend
-- Opret afleveringslink til Canvas
-- Aflevering: Fredag 23. maj kl. 12:00
-- Show-off: Fredag 23. maj kl. 12:30
-
-### Fase 4 – Præsentation og evaluering (Uge 22: 27. maj)
-- Gruppefremlæggelse for undervisere
-- 10 minutters oplæg + 30 min spørgsmål
-- Demonstrér løsning, metode og teknologi
-
-## SCRUM-arbejdsform
-- Daglige standups: Hvad lavede jeg i går? Hvad laver jeg i dag? Blokeringer?
-- Board: GitHub Projects (TO DO → DOING → DONE)
-- Møder:
-  - 8. maj: Koncept og skelet
-  - 15. maj: Demo og funktioner
